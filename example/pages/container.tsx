@@ -9,6 +9,7 @@ import Content from "./content";
 
 import RoughDivTable from "../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../src/action-links";
+import { Space } from "../../src";
 
 const renderChildPage = (routerTree: IRouteParseResult) => {
   if (routerTree != null) {
@@ -44,6 +45,18 @@ let Container: SFC<{ router: any }> = (props) => {
           }}
           pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }}
         />
+
+        <Space height={40} />
+
+        <RoughDivTable
+          dataSource={data}
+          labels={["name", "value", "Operations"]}
+          lastColumnWidth={80}
+          rowPadding={60}
+          renderColumns={(item) => {
+            return [item.name, item.value, <ActionLinks actions={actions} spaced />];
+          }}
+        />
       </div>
 
       {renderChildPage(props.router)}
@@ -55,6 +68,7 @@ export default Container;
 
 const styleContainer = css`
   font-family: "Helvetica";
+  padding: 40px;
 `;
 
 const styleTitle = css`
@@ -63,5 +77,4 @@ const styleTitle = css`
 
 let styleTableArea = css`
   width: 800px;
-  border: 1px solid #eee;
 `;

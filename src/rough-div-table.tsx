@@ -94,7 +94,7 @@ export default class RoughDivTable extends React.Component<IProps, IState> {
     }
 
     return (
-      <div className={cx(flex, column, styleTableContainer, this.props.className)}>
+      <div className={cx(flex, column, styleContainer, this.props.className)}>
         {headElement}
         <div className={styleBody}>{bodyElement}</div>
         {this.props.pageOptions != null ? this.renderPagination() : null}
@@ -166,7 +166,9 @@ let styleTransparent = css`
   color: transparent;
 `;
 
-const styleTableContainer = css``;
+const styleContainer = css`
+  border: 1px solid rgba(220, 223, 230, 1);
+`;
 
 const styleSelectedRow = css`
   background-color: #e6f7ff;

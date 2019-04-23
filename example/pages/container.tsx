@@ -36,7 +36,7 @@ let Container: SFC<{ router: any }> = (props) => {
 
       <div className={styleTableArea}>
         <RoughDivTable
-          dataSource={data}
+          data={data}
           labels={["name", "value", "Operations"]}
           lastColumnWidth={80}
           rowPadding={60}
@@ -49,7 +49,7 @@ let Container: SFC<{ router: any }> = (props) => {
         <Space height={40} />
 
         <RoughDivTable
-          dataSource={data}
+          data={data}
           labels={["name", "value", "Operations"]}
           lastColumnWidth={80}
           rowPadding={60}

@@ -5,13 +5,16 @@ import { Pagination } from "antd";
 
 interface IProps {
   className?: string;
-  dataSource: { [k: string]: any }[];
+  data: { [k: string]: any }[];
+  /** Displayed in headers */
   labels: (string | ReactNode)[];
   renderColumns: (record: any) => (string | ReactNode)[];
   rowPadding?: number;
+  /** Use number of string to specify CSS width */
   columnWidths?: any[];
   lastColumnWidth?: number;
   styleCell?: string;
+  /** Display empty symbol rather than set it transparent */
   showEmptySymbol?: boolean;
   selectedKeys?: string[];
   rowKey?: string;
@@ -23,6 +26,8 @@ interface IProps {
     pageSize: number;
     onChange: (x: number) => void;
   };
+  /** Default locale is "no data" */
+  emptyLocale?: string;
 }
 
 interface IState {}
@@ -31,7 +36,7 @@ export default class RoughDivTable extends React.Component<IProps, IState> {
   render() {
     const { selectedKeys, rowPadding = 80, columnWidths = [], showEmptySymbol, rowKey = "id", labels } = this.props;
 
-    let hasData = this.props.dataSource.length > 0;
+    let hasData = this.props.data.length > 0;
 
     let getColumnWidthStyle = (idx: number) => {
       let width = columnWidths[idx];
@@ -66,7 +71,7 @@ export default class RoughDivTable extends React.Component<IProps, IState> {
     let bodyElement: any = this.renderNoData();
 
     if (hasData) {
-      bodyElement = this.props.dataSource.map((record, idx) => {
+      bodyElement = this.props.data.map((record, idx) => {
         let cells = this.props.renderColumns(record);
 
         let rowClassName: string;
@@ -122,7 +127,7 @@ export default class RoughDivTable extends React.Component<IProps, IState> {
   }
 
   renderNoData() {
-    return <div className={cx(center, padding16, styleEmpty)}>{"No data"}</div>;
+    return <div className={cx(center, padding16, styleEmpty)}>{this.props.emptyLocale || "No data"}</div>;
   }
 }
 

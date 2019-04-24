@@ -173,7 +173,7 @@ let styleTransparent = css`
   color: transparent;
 `;
 
-const styleContainer = css``;
+const styleContainer = null;
 
 const styleSelectedRow = css`
   background-color: #e6f7ff;

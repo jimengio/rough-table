@@ -16,7 +16,7 @@ let ActionLinks: SFC<{
   let items: (IActionLinkItem)[] = interpose(props.actions, null);
 
   return (
-    <div className={cx(rowCenter, props.className)}>
+    <div className={cx(styleContainer, props.className)}>
       {items.map((item, idx) => {
         if (item == null) {
           if (props.spaced) {
@@ -50,4 +50,8 @@ let styleLink = css`
   font-size: 14px;
   color: rgba(35, 143, 243, 1);
   cursor: pointer;
+`;
+
+let styleContainer = css`
+  display: inline-block;
 `;

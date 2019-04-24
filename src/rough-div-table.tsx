@@ -8,7 +8,7 @@ interface IProps {
   data: { [k: string]: any }[];
   /** Displayed in headers */
   labels: (string | ReactNode)[];
-  renderColumns: (record: any) => (string | ReactNode)[];
+  renderColumns: (record: any, idx?: number) => (string | ReactNode)[];
   rowPadding?: number;
   /** Use number of string to specify CSS width */
   columnWidths?: any[];
@@ -72,7 +72,7 @@ export default class RoughDivTable extends React.Component<IProps, IState> {
 
     if (hasData) {
       bodyElement = this.props.data.map((record, idx) => {
-        let cells = this.props.renderColumns(record);
+        let cells = this.props.renderColumns(record, idx);
 
         let rowClassName: string;
         if (selectedKeys != null && selectedKeys.includes(record[rowKey])) {

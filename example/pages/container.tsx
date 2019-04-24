@@ -57,6 +57,18 @@ let Container: SFC<{ router: any }> = (props) => {
             return [item.name, item.value, <ActionLinks actions={actions} spaced />];
           }}
         />
+
+        <Space height={40} />
+
+        <RoughDivTable
+          data={[]}
+          labels={["name", "value", "Operations"]}
+          lastColumnWidth={80}
+          rowPadding={60}
+          renderColumns={(item) => {
+            return [item.name, item.value, <ActionLinks actions={actions} spaced />];
+          }}
+        />
       </div>
 
       {renderChildPage(props.router)}

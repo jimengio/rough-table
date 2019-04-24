@@ -162,6 +162,7 @@ const styleCursorPointer = css`
 
 const styleEmpty = css`
   color: #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
 `;
 
 const styleEmptyCell = css`

@@ -140,6 +140,7 @@ const styleHeaderBar = css`
   font-weight: bold;
   background-color: #f2f2f2;
   border: none;
+  border-bottom: 1px solid #e5e5e5;
 `;
 
 const styleBody = css`
@@ -152,7 +153,7 @@ const styleRow = css`
   }
 
   padding-left: 80px;
-  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
 `;
 
 const styleCursorPointer = css`
@@ -171,9 +172,7 @@ let styleTransparent = css`
   color: transparent;
 `;
 
-const styleContainer = css`
-  border: 1px solid rgba(220, 223, 230, 1);
-`;
+const styleContainer = css``;
 
 const styleSelectedRow = css`
   background-color: #e6f7ff;
@@ -184,6 +183,5 @@ let padding16 = css`
 `;
 
 let stylePageArea = css`
-  border-top: 1px solid #e5e5e5;
   padding: 16px 8px;
 `;

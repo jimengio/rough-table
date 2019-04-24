@@ -1,6 +1,6 @@
 {
   "name": "@jimengio/rough-table",
-  "version": "0.0.1-a3",
+  "version": "0.0.1-a4",
   "description": "",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -15,6 +15,7 @@
     "compile": "tsc -d --project tsconfig-compile.json --outDir lib/",
     "prepare": "yarn compile",
     "upload": "rsync -avr --progress dist/ fe.jimu.io:~/repo/jimengio/rough-table",
+    "prepublishOnly": "yarn release && yarn upload",
     "postinstall": "rm -rfv node_modules/@types/*/node_modules/@types/react"
   },
   "keywords": [],

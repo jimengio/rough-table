@@ -24,24 +24,24 @@ const renderChildPage = (routerTree: IRouteParseResult) => {
 };
 
 let Container: SFC<{ router: any }> = (props) => {
-  let actions: IActionLinkItem[] = [{ text: "Edit", onClick: () => {} }, { text: "Edit", onClick: () => {} }];
+  let actions: IActionLinkItem[] = [{ text: "修改", onClick: () => {} }, { text: "删除", onClick: () => {} }];
   let data = [
-    { name: "a ", value: "ada das dasd asd asdasd a sdf sdf sdf sd fsfsdasd sd" },
-    { name: "b ss", value: "bdfgdfgd gd gert ertertertert sdf sd ertert" },
+    { code: "001", name: "螺丝", model: "DDR6", source: "外购", type: "产品" },
+    { code: "003", name: "扳手", model: "DDR6", source: "外购", type: "产品" },
+    { code: "004", name: "堵头", model: "33-36", source: "外购", type: "产品" },
+    { code: "044", name: "软管", model: "HO", source: "外购", type: "产品" },
   ];
 
   return (
     <div className={styleContainer}>
-      <div className={styleTitle}>Container</div>
-
       <div className={styleTableArea}>
         <RoughDivTable
           data={data}
-          labels={["name", "value", "Operations"]}
+          labels={["物料编号", "名称", "型号", "来源", "类型", "操作"]}
           lastColumnWidth={80}
           rowPadding={60}
           renderColumns={(item) => {
-            return [item.name, item.value, <ActionLinks actions={actions} spaced />];
+            return [item.code, item.name, item.model, item.source, item.type, <ActionLinks actions={actions} spaced />];
           }}
           pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }}
         />
@@ -50,11 +50,11 @@ let Container: SFC<{ router: any }> = (props) => {
 
         <RoughDivTable
           data={data}
-          labels={["name", "value", "Operations"]}
+          labels={["物料编号", "名称", "型号", "操作"]}
           lastColumnWidth={80}
           rowPadding={60}
           renderColumns={(item) => {
-            return [item.name, item.value, <ActionLinks actions={actions} spaced />];
+            return [item.code, item.name, item.model, <ActionLinks actions={actions} spaced />];
           }}
         />
 
@@ -62,11 +62,12 @@ let Container: SFC<{ router: any }> = (props) => {
 
         <RoughDivTable
           data={[]}
-          labels={["name", "value", "Operations"]}
+          labels={["物料编号", "名称", "型号", "操作"]}
           lastColumnWidth={80}
           rowPadding={60}
+          emptyLocale={"暂无数据"}
           renderColumns={(item) => {
-            return [item.name, item.value, <ActionLinks actions={actions} spaced />];
+            return [item.code, item.name, item.model, <ActionLinks actions={actions} spaced />];
           }}
         />
       </div>

@@ -132,8 +132,8 @@ export default class RoughDivTable extends React.Component<IProps, IState> {
 }
 
 const styleCell = css`
-  padding: 12px 8px;
-  line-height: 21px;
+  padding: 10px 8px;
+  line-height: 20px;
 `;
 
 const styleHeaderBar = css`

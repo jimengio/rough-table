@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import { css, cx } from "emotion";
 import { center, column, flex, rowParted, row } from "@jimengio/shared-utils";
 import { Pagination } from "antd";
+import JimoIcon, { EJimoIcon } from "@jimengio/jimo-icons";
 
 interface IProps {
   className?: string;
@@ -127,7 +128,12 @@ export default class RoughDivTable extends React.Component<IProps, IState> {
   }
 
   renderNoData() {
-    return <div className={cx(center, padding16, styleEmpty)}>{this.props.emptyLocale || "No data"}</div>;
+    return (
+      <div className={cx(center, padding16, styleEmpty)}>
+        <JimoIcon name={EJimoIcon.emptyData} className={styleEmptyIcon} />
+        <span>{this.props.emptyLocale || "No data"}</span>
+      </div>
+    );
   }
 }
 
@@ -163,6 +169,7 @@ const styleCursorPointer = css`
 const styleEmpty = css`
   color: #e5e5e5;
   border-bottom: 1px solid #e5e5e5;
+  font-size: 12px;
 `;
 
 const styleEmptyCell = css`
@@ -185,4 +192,9 @@ let padding16 = css`
 
 let stylePageArea = css`
   padding: 16px 8px;
+`;
+
+let styleEmptyIcon = css`
+  font-size: 80px;
+  margin-bottom: 8px;
 `;

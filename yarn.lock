@@ -107,6 +107,11 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.2.tgz#63985d3d8b02530e0869962f4da09142ee8e200e"
   integrity sha512-n/VQ4mbfr81aqkx/XmVicOLjviMuy02eenSdJY33SVA7S2J42EU0P1H0mOogfYedb3wXA0d/LVtBrgTSm04WEA==
 
+"@jimengio/jimo-icons@^0.1.19":
+  version "0.1.19"
+  resolved "https://registry.yarnpkg.com/@jimengio/jimo-icons/-/jimo-icons-0.1.19.tgz#cec2add7ac69e15395a607ba6dbbd9de67f8810f"
+  integrity sha512-dbg9qDmXsfM//6fsqQVcrw/oYr5HggeReD4IVbjt63pw23ut3OMp2X7vk7b0hM50M6jn6Xw2z0x/DDvBXHTl1w==
+
 "@jimengio/ruled-router@^0.2.9":
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/@jimengio/ruled-router/-/ruled-router-0.2.9.tgz#beb8717289fe17e31f9e732e14f4fc2d2c8d3d59"

@@ -9,7 +9,7 @@ import Content from "./content";
 
 import RoughDivTable from "../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../src/action-links";
-import { Space } from "../../src";
+import Space from "../../src/space";
 
 const renderChildPage = (routerTree: IRouteParseResult) => {
   if (routerTree != null) {
@@ -30,7 +30,22 @@ let data = [
   { code: "044", name: "软管", model: "HO", source: "外购", type: "产品" },
 ];
 
-let actions: IActionLinkItem[] = [{ text: "修改", onClick: () => {} }, { text: "删除", onClick: () => {} }];
+let actions: IActionLinkItem[] = [
+  {
+    text: "修改",
+    onClick: () => {},
+  },
+  {
+    text: "删除",
+    onClick: () => {},
+  },
+  {
+    hidden: true,
+    text: "恢复",
+    onClick: () => {},
+  },
+  null,
+];
 
 let Container: FC<{ router: any }> = (props) => {
   let [selected, setSelected] = useState<string>(null);

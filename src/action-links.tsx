@@ -5,6 +5,8 @@ import Space from "./space";
 
 export interface IActionLinkItem {
   text: string;
+  /** hidden or null item to skip rendering the link */
+  hidden?: boolean;
   onClick: () => void;
 }
 
@@ -13,7 +15,14 @@ let ActionLinks: SFC<{
   className?: string;
   spaced?: boolean;
 }> = (props) => {
-  let items: (IActionLinkItem)[] = interpose(props.actions, null);
+  let actions = props.actions.filter((x) => {
+    if (x == null) return false;
+    if (x.hidden != null && x.hidden === true) return false;
+    return true;
+  });
+
+  // null for rendering spaces...
+  let items: (IActionLinkItem)[] = interpose(actions, null);
 
   return (
     <div className={cx(styleContainer, props.className)}>

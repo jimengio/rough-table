@@ -1,113 +1,82 @@
 import React, { FC, useState } from "react";
 import { parseRoutePath, IRouteParseResult } from "@jimengio/ruled-router";
-import { css } from "emotion";
+import { css, cx } from "emotion";
 
 import "antd/dist/antd.css";
 
 import Home from "./home";
-import Content from "./content";
 
-import RoughDivTable from "../../src/rough-div-table";
-import ActionLinks, { IActionLinkItem } from "../../src/action-links";
-import Space from "../../src/space";
+import { row, fullscreen } from "@jimengio/shared-utils";
+import { genRouter } from "controller/generated-router";
+import PageWholeBorders from "./pages/whole-borders";
+import PagePaginated from "./pages/paginated";
+import PageEmpty from "./pages/empty";
+import PageSelected from "./pages/selected";
 
-const renderChildPage = (routerTree: IRouteParseResult) => {
+const renderBody = (routerTree: IRouteParseResult) => {
   if (routerTree != null) {
     switch (routerTree.name) {
-      case "home":
+      case genRouter.basic.name:
+        return <PageWholeBorders />;
+      case genRouter.paginated.name:
+        return <PagePaginated />;
+      case genRouter.empty.name:
+        return <PageEmpty />;
+      case genRouter.wholeBorders.name:
+        return <PageWholeBorders />;
+      case genRouter.selected.name:
+        return <PageSelected />;
+
+      case genRouter.home.name:
         return <Home />;
-      case "content":
-        return <Content />;
     }
   }
   return <div>NOTHING</div>;
 };
 
-let data = [
-  { code: "001", name: "螺丝", model: "DDR6", source: "外购", type: "产品" },
-  { code: "003", name: "扳手", model: "DDR6", source: "外购", type: "产品" },
-  { code: "004", name: "堵头", model: "33-36", source: "外购", type: "产品" },
-  { code: "044", name: "软管", model: "HO", source: "外购", type: "产品" },
-];
-
-let actions: IActionLinkItem[] = [
+let entries = [
   {
-    text: "修改",
-    onClick: () => {},
+    title: "Basic",
+    name: genRouter.basic.name,
+    go: genRouter.basic.go,
   },
   {
-    text: "删除",
-    onClick: () => {},
+    title: "Selected",
+    name: genRouter.selected.name,
+    go: genRouter.selected.go,
   },
   {
-    hidden: true,
-    text: "恢复",
-    onClick: () => {},
+    title: "Empty",
+    name: genRouter.empty.name,
+    go: genRouter.empty.go,
   },
-  null,
+  {
+    title: "Whole borders",
+    name: genRouter.wholeBorders.name,
+    go: genRouter.wholeBorders.go,
+  },
+  {
+    title: "Paginated",
+    name: genRouter.paginated.name,
+    go: genRouter.paginated.go,
+  },
 ];
 
 let Container: FC<{ router: any }> = (props) => {
   let [selected, setSelected] = useState<string>(null);
 
   return (
-    <div className={styleContainer}>
-      <div className={styleTableArea}>
-        <div className={styleTitle}>Click to select a row</div>
-        <RoughDivTable
-          data={data}
-          labels={["物料编号", "名称", "型号", "操作"]}
-          lastColumnWidth={80}
-          rowPadding={60}
-          renderColumns={(item) => {
-            return [item.code, item.name, item.model, <ActionLinks actions={actions} spaced />];
-          }}
-        />
-        <Space height={40} />
-        <div className={styleTitle}>Paginated</div>
-        <RoughDivTable
-          data={data}
-          labels={["物料编号", "名称", "型号", "来源", "类型", "操作"]}
-          lastColumnWidth={80}
-          rowPadding={60}
-          renderColumns={(item) => {
-            return [item.code, item.name, item.model, item.source, item.type, <ActionLinks actions={actions} spaced />];
-          }}
-          pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }}
-        />
-        <Space height={40} />
-        <div className={styleTitle}>Empty</div>
-        <RoughDivTable
-          data={[]}
-          labels={["物料编号", "名称", "型号", "操作"]}
-          lastColumnWidth={80}
-          rowPadding={60}
-          emptyLocale={"暂无数据"}
-          renderColumns={(item) => {
-            return [item.code, item.name, item.model, <ActionLinks actions={actions} spaced />];
-          }}
-        />
-        <Space height={40} />
-        <div className={styleTitle}>Click to select a row</div>
-        <RoughDivTable
-          data={data}
-          labels={["物料编号", "名称", "型号", "操作"]}
-          rowKey="code"
-          selectedKeys={[selected]}
-          onRowClick={(record) => {
-            setSelected(record.code);
-          }}
-          lastColumnWidth={80}
-          rowPadding={60}
-          emptyLocale={"暂无数据"}
-          renderColumns={(item) => {
-            return [item.code, item.name, item.model, <ActionLinks actions={actions} spaced />];
-          }}
-        />
+    <div className={cx(fullscreen, row, styleContainer)}>
+      <div className={styleSidebar}>
+        {entries.map((entry) => {
+          return (
+            <div key={entry.title} onClick={entry.go} className={cx(styleEntry, props.router.name === entry.name ? styleSelectedEntry : null)}>
+              {entry.title}
+            </div>
+          );
+        })}
       </div>
-      <Space height={40} />
-
-      {renderChildPage(props.router)}
+      <div className={styleBody}>{renderBody(props.router)}</div>
     </div>
   );
 };
@@ -116,13 +85,26 @@ export default Container;
 
 const styleContainer = css`
   font-family: "Helvetica";
-  padding: 40px;
 `;
 
-const styleTitle = css`
-  margin-bottom: 16px;
+let styleSidebar = css`
+  padding: 16px 0px;
+  width: 240px;
+  line-height: 32px;
+  border-right: 1px solid #eee;
 `;
 
-let styleTableArea = css`
+let styleBody = css`
+  padding: 16px;
   width: 800px;
+`;
+
+let styleSelectedEntry = css`
+  background-color: blue;
+  color: white;
+`;
+
+let styleEntry = css`
+  cursor: pointer;
+  padding: 0 8px;
 `;

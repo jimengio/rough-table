@@ -15,6 +15,7 @@ interface IProps {
   columnWidths?: any[];
   lastColumnWidth?: number;
   styleCell?: string;
+  wholeBorders?: boolean;
   /** Display empty symbol rather than set it transparent */
   showEmptySymbol?: boolean;
   selectedKeys?: string[];
@@ -100,7 +101,7 @@ export default class RoughDivTable extends React.Component<IProps, IState> {
     }
 
     return (
-      <div className={cx(flex, column, styleContainer, this.props.className)}>
+      <div className={cx(flex, column, styleContainer, this.props.wholeBorders ? styleWholeBorders : null, this.props.className)}>
         {headElement}
         <div className={styleBody}>{bodyElement}</div>
         {this.props.pageOptions != null ? this.renderPagination() : null}
@@ -160,6 +161,11 @@ const styleRow = css`
 
   padding-left: 80px;
   border-bottom: 1px solid #e5e5e5;
+`;
+
+let styleWholeBorders = css`
+  border-left: 1px solid #e5e5e5;
+  border-right: 1px solid #e5e5e5;
 `;
 
 const styleCursorPointer = css`

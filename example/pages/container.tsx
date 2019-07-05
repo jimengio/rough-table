@@ -12,6 +12,7 @@ import PageWholeBorders from "./pages/whole-borders";
 import PagePaginated from "./pages/paginated";
 import PageEmpty from "./pages/empty";
 import PageSelected from "./pages/selected";
+import PageWide from "./pages/wide";
 
 const renderBody = (routerTree: IRouteParseResult) => {
   if (routerTree != null) {
@@ -26,6 +27,8 @@ const renderBody = (routerTree: IRouteParseResult) => {
         return <PageWholeBorders />;
       case genRouter.selected.name:
         return <PageSelected />;
+      case genRouter.wide.name:
+        return <PageWide />;
 
       case genRouter.home.name:
         return <Home />;
@@ -59,6 +62,11 @@ let entries = [
     title: "Paginated",
     name: genRouter.paginated.name,
     go: genRouter.paginated.go,
+  },
+  {
+    title: "Wide",
+    name: genRouter.wide.name,
+    go: genRouter.wide.go,
   },
 ];
 

@@ -49,6 +49,12 @@ export let genRouter = {
     path: () => `/home`,
     go: () => switchPath(`/home`),
   },
+  wide: {
+    name: "wide",
+    raw: "wide",
+    path: () => `/wide`,
+    go: () => switchPath(`/wide`),
+  },
   _: {
     name: "home",
     raw: "",

@@ -49,7 +49,7 @@ export default class RoughDivTable extends React.Component<IProps, IState> {
       if (width != null) {
         return { width };
       } else {
-        return { flex: 1 };
+        return { flexGrow: 1 };
       }
     };
 
@@ -102,8 +102,12 @@ export default class RoughDivTable extends React.Component<IProps, IState> {
 
     return (
       <div className={cx(flex, column, styleContainer, this.props.wholeBorders ? styleWholeBorders : null, this.props.className)}>
-        {headElement}
-        <div className={styleBody}>{bodyElement}</div>
+        <div className={styleContentWrapper}>
+          <div className={styleContentArea}>
+            {headElement}
+            <div className={styleBody}>{bodyElement}</div>
+          </div>
+        </div>
         {this.props.pageOptions != null ? this.renderPagination() : null}
       </div>
     );
@@ -141,6 +145,7 @@ export default class RoughDivTable extends React.Component<IProps, IState> {
 const styleCell = css`
   padding: 10px 8px;
   line-height: 20px;
+  flex-shrink: 0;
 `;
 
 const styleHeaderBar = css`
@@ -161,6 +166,8 @@ const styleRow = css`
 
   padding-left: 80px;
   border-bottom: 1px solid #e5e5e5;
+
+  width: 100%;
 `;
 
 let styleWholeBorders = css`
@@ -203,4 +210,13 @@ let stylePageArea = css`
 let styleEmptyIcon = css`
   font-size: 80px;
   margin-bottom: 8px;
+`;
+
+let styleContentWrapper = css`
+  overflow: auto;
+`;
+
+/** requires Chrome 46 */
+let styleContentArea = css`
+  min-width: max-content;
 `;

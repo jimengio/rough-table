@@ -21,7 +21,7 @@ let PageWide: FC<{}> = (props) => {
         lastColumnWidth={80}
         rowPadding={60}
         renderColumns={(item) => {
-          return countMany;
+          return countMany.map((x) => `DATA${x}`);
         }}
         pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }}
       />

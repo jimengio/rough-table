@@ -102,8 +102,10 @@ export default class RoughDivTable extends React.Component<IProps, IState> {
 
     return (
       <div className={cx(flex, column, styleContainer, this.props.wholeBorders ? styleWholeBorders : null, this.props.className)}>
-        {headElement}
-        <div className={styleBody}>{bodyElement}</div>
+        <div className={styleContentArea}>
+          {headElement}
+          <div className={styleBody}>{bodyElement}</div>
+        </div>
         {this.props.pageOptions != null ? this.renderPagination() : null}
       </div>
     );
@@ -161,6 +163,7 @@ const styleRow = css`
 
   padding-left: 80px;
   border-bottom: 1px solid #e5e5e5;
+  min-width: max-content;
 `;
 
 let styleWholeBorders = css`
@@ -203,4 +206,8 @@ let stylePageArea = css`
 let styleEmptyIcon = css`
   font-size: 80px;
   margin-bottom: 8px;
+`;
+
+let styleContentArea = css`
+  overflow: auto;
 `;

@@ -7,5 +7,6 @@ export const routerRules: IRouteRule[] = [
   { path: "selected" },
   { path: "whole-borders" },
   { path: "home" },
+  { path: "wide" },
   { path: "", name: "home" },
 ];

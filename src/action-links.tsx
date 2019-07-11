@@ -7,7 +7,7 @@ export interface IActionLinkItem {
   text: string;
   /** hidden or null item to skip rendering the link */
   hidden?: boolean;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
 }
 
 let ActionLinks: SFC<{

@@ -13,7 +13,9 @@ let data = [
 let actions: IActionLinkItem[] = [
   {
     text: "修改",
-    onClick: () => {},
+    onClick: (e) => {
+      e.stopPropagation();
+    },
   },
   {
     text: "删除",

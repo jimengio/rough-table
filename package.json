@@ -16,7 +16,6 @@
     "prepare": "yarn compile",
     "upload": "rsync -avr --progress dist/ fe.jimu.io:~/repo/jimengio/rough-table",
     "gen-router": "webpack --config webpack/router-config.js && node dist/gen-router.js",
-    "prepublishOnly": "yarn release && yarn upload",
     "postinstall": "rm -rfv node_modules/@types/*/node_modules/@types/react"
   },
   "keywords": [],

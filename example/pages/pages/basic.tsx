@@ -9,6 +9,7 @@ let data = [
   { code: "003", name: "扳手", model: "DDR6", source: "外购", type: "产品" },
   { code: "004", name: "堵头", model: "33-36", source: "外购", type: "产品" },
   { code: "044", name: "软管", model: "HO", source: "外购", type: "产品" },
+  { code: "045", name: 0, model: "HO", source: "外购", type: "产品" },
 ];
 
 let actions: IActionLinkItem[] = [

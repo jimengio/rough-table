@@ -91,7 +91,7 @@ export default class RoughDivTable extends React.Component<IProps, IState> {
             {cells.map((cell, cellIdx) => {
               return (
                 <div key={cellIdx} className={cx(styleCell, this.props.styleCell)} style={getColumnWidthStyle(cellIdx)}>
-                  {cell || <span className={cx(styleEmptyCell, showEmptySymbol ? null : styleTransparent)}>-</span>}
+                  {cell != null ? cell : <span className={cx(styleEmptyCell, showEmptySymbol ? null : styleTransparent)}>-</span>}
                 </div>
               );
             })}

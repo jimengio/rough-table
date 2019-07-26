@@ -5,6 +5,7 @@ import { center, column, flex, rowParted } from "@jimengio/shared-utils";
 import { isFunction, some } from "@jimengio/shared-utils";
 import { Pagination } from "antd";
 import Space from "./space";
+import { PaginationProps } from "antd/lib/pagination";
 
 interface IColumnDefinition {
   title: string;
@@ -23,12 +24,7 @@ interface IProps {
   rowKey?: string;
   onRowClick?: (record: any) => void;
   setRowClassName?: (record: any) => string;
-  pageOptions?: {
-    current: number;
-    total: number;
-    pageSize: number;
-    onChange: (x: number) => void;
-  };
+  pageOptions?: PaginationProps;
 }
 
 interface IState {}
@@ -130,12 +126,9 @@ export default class RoughTable extends React.Component<IProps, IState> {
         <div className={rowParted}>
           <span />
           <Pagination
-            size="small"
-            showQuickJumper
-            current={pageOptions.current}
-            total={pageOptions.total}
-            pageSize={pageOptions.pageSize}
-            onChange={pageOptions.onChange}
+            size={pageOptions.size || "small"}
+            showQuickJumper={pageOptions.showQuickJumper != null ? pageOptions.showQuickJumper : true}
+            {...pageOptions}
           />
         </div>
       </>

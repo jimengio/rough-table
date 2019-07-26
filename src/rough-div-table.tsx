@@ -3,6 +3,7 @@ import { css, cx } from "emotion";
 import { center, column, flex, rowParted, row } from "@jimengio/shared-utils";
 import { Pagination } from "antd";
 import JimoIcon, { EJimoIcon } from "@jimengio/jimo-icons";
+import { PaginationProps } from "antd/lib/pagination";
 
 interface IProps {
   className?: string;
@@ -22,12 +23,7 @@ interface IProps {
   rowKey?: string;
   onRowClick?: (record: any) => void;
   setRowClassName?: (record: any) => string;
-  pageOptions?: {
-    current: number;
-    total: number;
-    pageSize: number;
-    onChange: (x: number) => void;
-  };
+  pageOptions?: PaginationProps;
   /** Default locale is "no data" */
   emptyLocale?: string;
 }
@@ -120,12 +116,9 @@ export default class RoughDivTable extends React.Component<IProps, IState> {
         <div className={rowParted}>
           <span />
           <Pagination
-            size="small"
-            showQuickJumper
-            current={pageOptions.current}
-            total={pageOptions.total}
-            pageSize={pageOptions.pageSize}
-            onChange={pageOptions.onChange}
+            size={pageOptions.size || "small"}
+            showQuickJumper={pageOptions.showQuickJumper != null ? pageOptions.showQuickJumper : true}
+            {...pageOptions}
           />
         </div>
       </div>

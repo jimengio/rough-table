@@ -102,7 +102,7 @@ export default class ScrollDivTable extends React.Component<IProps, IState> {
 
     return (
       <div className={cx(flex, column, styleContainer, this.props.wholeBorders ? styleWholeBorders : null, this.props.className)}>
-        <div className={styleContentWrapper}>
+        <div className={cx(flex, column)}>
           <div className={styleContentArea}>
             {headElement}
             <div className={styleBody}>{bodyElement}</div>
@@ -208,10 +208,6 @@ let stylePageArea = css`
 let styleEmptyIcon = css`
   font-size: 80px;
   margin-bottom: 8px;
-`;
-
-let styleContentWrapper = css`
-  overflow: auto;
 `;
 
 /** requires Chrome 46 */

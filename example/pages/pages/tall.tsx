@@ -4,6 +4,7 @@ import { css, cx } from "emotion";
 import RoughDivTable from "../../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
 import { fullHeight } from "@jimengio/shared-utils";
+import ScrollDivTable from "../../../src/scroll-div-table";
 
 let data = [
   { code: "001", name: "螺丝", model: "DDR6", source: "外购", type: "产品" },
@@ -34,18 +35,33 @@ let actions: IActionLinkItem[] = [
 
 let PageTall: FC<{}> = (props) => {
   return (
-    <div className={styleContainer}>
-      <RoughDivTable
-        className={cx(fullHeight)}
-        data={data}
-        labels={["物料编号", "名称", "型号", "操作"]}
-        lastColumnWidth={80}
-        rowPadding={60}
-        renderColumns={(item) => {
-          return [item.code, item.name, item.model, <ActionLinks actions={actions} spaced />];
-        }}
-        pageOptions={{}}
-      />
+    <div>
+      <div className={styleContainer}>
+        <RoughDivTable
+          className={cx(fullHeight)}
+          data={data}
+          labels={["物料编号", "名称", "型号", "操作"]}
+          lastColumnWidth={80}
+          rowPadding={60}
+          renderColumns={(item) => {
+            return [item.code, item.name, item.model, <ActionLinks actions={actions} spaced />];
+          }}
+          pageOptions={{}}
+        />
+      </div>
+      <div className={styleContainer}>
+        <ScrollDivTable
+          className={cx(fullHeight)}
+          data={data}
+          labels={["物料编号", "名称", "型号", "操作"]}
+          lastColumnWidth={80}
+          rowPadding={60}
+          renderColumns={(item) => {
+            return [item.code, item.name, item.model, <ActionLinks actions={actions} spaced />];
+          }}
+          pageOptions={{}}
+        />
+      </div>
     </div>
   );
 };

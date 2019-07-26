@@ -107,6 +107,11 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.2.tgz#63985d3d8b02530e0869962f4da09142ee8e200e"
   integrity sha512-n/VQ4mbfr81aqkx/XmVicOLjviMuy02eenSdJY33SVA7S2J42EU0P1H0mOogfYedb3wXA0d/LVtBrgTSm04WEA==
 
+"@jimengio/doc-frame@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.npm.taobao.org/@jimengio/doc-frame/download/@jimengio/doc-frame-0.1.0.tgz#63d7d3f80b7ce0295c405ff9b7b29f9ee54417fe"
+  integrity sha1-Y9fT+At84ClcQF/5t7KfnuVEF/4=
+
 "@jimengio/jimo-icons@^0.1.19":
   version "0.1.19"
   resolved "https://registry.yarnpkg.com/@jimengio/jimo-icons/-/jimo-icons-0.1.19.tgz#cec2add7ac69e15395a607ba6dbbd9de67f8810f"
@@ -117,12 +122,12 @@
   resolved "https://registry.yarnpkg.com/@jimengio/router-code-generator/-/router-code-generator-0.1.5.tgz#9a8e26dd069c42f71a39c23adb9163f35b87dc00"
   integrity sha512-JpRTBcQ28vQa6FhrNnCGeqwA5ryvR/1Mv9IoWg/PoJrTmAO6N6BpknAqz0aAcqtk4bIh7qEiStvwK9JPeof3ZQ==
 
-"@jimengio/ruled-router@^0.2.9":
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/@jimengio/ruled-router/-/ruled-router-0.2.9.tgz#beb8717289fe17e31f9e732e14f4fc2d2c8d3d59"
-  integrity sha512-vcfLI0j9ye9VtPGrJlGStUv6Mmc3gO0+bCrZ/Sm6a0tm9ellJ2XM2IODnFUCArw+qE5koCn7Y9Z+h9xPp2YulQ==
+"@jimengio/ruled-router@^0.2.15":
+  version "0.2.15"
+  resolved "https://registry.npm.taobao.org/@jimengio/ruled-router/download/@jimengio/ruled-router-0.2.15.tgz#68279a05d40481f79f800d6d2d65081f7c9d687b"
+  integrity sha1-aCeaBdQEgfefgA1tLWUIH3ydaHs=
   dependencies:
-    query-string "^6.4.2"
+    query-string "^6.8.1"
 
 "@jimengio/shared-utils@^0.1.3":
   version "0.1.3"
@@ -4134,10 +4139,10 @@ qs@~2.3.3:
   resolved "https://registry.yarnpkg.com/qs/-/qs-2.3.3.tgz#e9e85adbe75da0bbe4c8e0476a086290f863b404"
   integrity sha1-6eha2+ddoLvkyOBHaghikPhjtAQ=
 
-query-string@^6.4.2:
-  version "6.5.0"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.5.0.tgz#2e1a70125af01f6f04573692d02c09302a1d8bfc"
-  integrity sha512-TYC4hDjZSvVxLMEucDMySkuAS9UIzSbAiYGyA9GWCjLKB8fQpviFbjd20fD7uejCDxZS+ftSdBKE6DS+xucJFg==
+query-string@^6.8.1:
+  version "6.8.1"
+  resolved "https://registry.npm.taobao.org/query-string/download/query-string-6.8.1.tgz#62c54a7ef37d01b538c8fd56f95740c81d438a26"
+  integrity sha1-YsVKfvN9AbU4yP1W+VdAyB1DiiY=
   dependencies:
     decode-uri-component "^0.2.0"
     split-on-first "^1.0.0"

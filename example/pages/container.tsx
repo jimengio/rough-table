@@ -1,6 +1,8 @@
 import React, { FC, useState } from "react";
 import { parseRoutePath, IRouteParseResult } from "@jimengio/ruled-router";
 import { css, cx } from "emotion";
+import { DocSidebar, ISidebarEntry } from "@jimengio/doc-frame";
+import { findRouteTarget } from "@jimengio/ruled-router/lib/dom";
 
 import "antd/dist/antd.css";
 
@@ -13,12 +15,13 @@ import PagePaginated from "./pages/paginated";
 import PageEmpty from "./pages/empty";
 import PageSelected from "./pages/selected";
 import PageWide from "./pages/wide";
+import PageBasic from "./pages/basic";
 
 const renderBody = (routerTree: IRouteParseResult) => {
   if (routerTree != null) {
     switch (routerTree.name) {
       case genRouter.basic.name:
-        return <PageWholeBorders />;
+        return <PageBasic />;
       case genRouter.paginated.name:
         return <PagePaginated />;
       case genRouter.empty.name:
@@ -37,36 +40,30 @@ const renderBody = (routerTree: IRouteParseResult) => {
   return <div>NOTHING</div>;
 };
 
-let entries = [
+let entries: ISidebarEntry[] = [
   {
     title: "Basic",
-    name: genRouter.basic.name,
-    go: genRouter.basic.go,
+    path: genRouter.basic.name,
   },
   {
     title: "Selected",
-    name: genRouter.selected.name,
-    go: genRouter.selected.go,
+    path: genRouter.selected.name,
   },
   {
     title: "Empty",
-    name: genRouter.empty.name,
-    go: genRouter.empty.go,
+    path: genRouter.empty.name,
   },
   {
     title: "Whole borders",
-    name: genRouter.wholeBorders.name,
-    go: genRouter.wholeBorders.go,
+    path: genRouter.wholeBorders.name,
   },
   {
     title: "Paginated",
-    name: genRouter.paginated.name,
-    go: genRouter.paginated.go,
+    path: genRouter.paginated.name,
   },
   {
     title: "Wide",
-    name: genRouter.wide.name,
-    go: genRouter.wide.go,
+    path: genRouter.wide.name,
   },
 ];
 
@@ -75,15 +72,18 @@ let Container: FC<{ router: any }> = (props) => {
 
   return (
     <div className={cx(fullscreen, row, styleContainer)}>
-      <div className={styleSidebar}>
-        {entries.map((entry) => {
-          return (
-            <div key={entry.title} onClick={entry.go} className={cx(styleEntry, props.router.name === entry.name ? styleSelectedEntry : null)}>
-              {entry.title}
-            </div>
-          );
-        })}
-      </div>
+      <DocSidebar
+        items={entries}
+        currentPath={props.router.name}
+        onSwitch={(item) => {
+          let target = findRouteTarget(genRouter, item.path);
+          if (target != null) {
+            target.go();
+          } else {
+            console.error("Unknown page", item);
+          }
+        }}
+      />
       <div className={styleBody}>{renderBody(props.router)}</div>
     </div>
   );
@@ -95,24 +95,7 @@ const styleContainer = css`
   font-family: "Helvetica";
 `;
 
-let styleSidebar = css`
-  padding: 16px 0px;
-  width: 240px;
-  line-height: 32px;
-  border-right: 1px solid #eee;
-`;
-
 let styleBody = css`
   padding: 16px;
   width: 800px;
-`;
-
-let styleSelectedEntry = css`
-  background-color: blue;
-  color: white;
-`;
-
-let styleEntry = css`
-  cursor: pointer;
-  padding: 0 8px;
 `;

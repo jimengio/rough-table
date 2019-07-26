@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { css } from "emotion";
 
-import RoughDivTable from "../../../src/rough-div-table";
+import ScrollDivTable from "../../../src/scroll-div-table";
 
 let countMany = Array.from({ length: 100 }, (_, n) => n);
 
@@ -15,7 +15,7 @@ let data = [
 let PageWide: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
-      <RoughDivTable
+      <ScrollDivTable
         data={data}
         labels={countMany}
         lastColumnWidth={80}

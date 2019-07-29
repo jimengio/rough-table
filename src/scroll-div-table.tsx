@@ -1,10 +1,10 @@
-/** DivTable layouts with Flexbox
- * to render data with plenty of columns, use ScrollTable
+/** Table which supports horizontal scrolling.
+ * code splitted from DivTable
  */
 
 import React, { ReactNode } from "react";
 import { css, cx } from "emotion";
-import { center, column, flex, rowParted, row, expand } from "@jimengio/shared-utils";
+import { center, column, flex, rowParted, row } from "@jimengio/shared-utils";
 import { Pagination } from "antd";
 import JimoIcon, { EJimoIcon } from "@jimengio/jimo-icons";
 import { PaginationProps } from "antd/lib/pagination";
@@ -34,7 +34,7 @@ interface IProps {
 
 interface IState {}
 
-export default class RoughDivTable extends React.Component<IProps, IState> {
+export default class ScrollDivTable extends React.Component<IProps, IState> {
   render() {
     const { selectedKeys, rowPadding = 80, columnWidths = [], showEmptySymbol, rowKey = "id", labels } = this.props;
 
@@ -102,8 +102,12 @@ export default class RoughDivTable extends React.Component<IProps, IState> {
 
     return (
       <div className={cx(flex, column, styleContainer, this.props.wholeBorders ? styleWholeBorders : null, this.props.className)}>
-        {headElement}
-        <div className={cx(expand, styleBody)}>{bodyElement}</div>
+        <div className={cx(flex, column)}>
+          <div className={styleContentArea}>
+            {headElement}
+            <div className={styleBody}>{bodyElement}</div>
+          </div>
+        </div>
         {this.props.pageOptions != null ? this.renderPagination() : null}
       </div>
     );

@@ -16,6 +16,7 @@ import PageEmpty from "./pages/empty";
 import PageSelected from "./pages/selected";
 import PageWide from "./pages/wide";
 import PageBasic from "./pages/basic";
+import PageTall from "./pages/tall";
 
 const renderBody = (routerTree: IRouteParseResult) => {
   if (routerTree != null) {
@@ -32,6 +33,8 @@ const renderBody = (routerTree: IRouteParseResult) => {
         return <PageSelected />;
       case genRouter.wide.name:
         return <PageWide />;
+      case genRouter.tall.name:
+        return <PageTall />;
 
       case genRouter.home.name:
         return <Home />;
@@ -64,6 +67,10 @@ let entries: ISidebarEntry[] = [
   {
     title: "Wide",
     path: genRouter.wide.name,
+  },
+  {
+    title: "Tall",
+    path: genRouter.tall.name,
   },
 ];
 

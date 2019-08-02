@@ -1,3 +1,7 @@
+/** 旧版本的基于 table 实现的表单.
+ * 老代码当中引用比较多, 目前不打算进行更改, 避免影响业务.
+ */
+
 import React, { ReactNode } from "react";
 import produce from "immer";
 import { css, cx } from "emotion";
@@ -198,7 +202,7 @@ const styleEmptyCell = css`
   user-select: none;
 `;
 
-const styleTableContainer = css``;
+const styleTableContainer = null;
 
 const styleBodyContainer = css`
   overflow: auto;

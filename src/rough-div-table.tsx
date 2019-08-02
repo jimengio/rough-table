@@ -2,115 +2,52 @@
  * to render data with plenty of columns, use ScrollTable
  */
 
-import React, { ReactNode } from "react";
+import React, { FC, ReactNode, CSSProperties } from "react";
 import { css, cx } from "emotion";
 import { center, column, flex, rowParted, row, expand } from "@jimengio/shared-utils";
 import { Pagination } from "antd";
-import JimoIcon, { EJimoIcon } from "@jimengio/jimo-icons";
 import { PaginationProps } from "antd/lib/pagination";
+import { ISimpleObject } from "./types";
+import NoDataTableBody, { mergeStyles, getWidthStyle, EmptyCell } from "./common";
 
-interface IProps {
+export interface IRoughTableColumn<T = ISimpleObject> {
+  title: ReactNode;
+  hidden?: boolean;
+  width?: number | string;
   className?: string;
-  data: { [k: string]: any }[];
-  /** Displayed in headers */
-  labels: (string | ReactNode)[];
-  renderColumns: (record: any, idx?: number) => (string | ReactNode)[];
-  rowPadding?: number;
-  /** Use number of string to specify CSS width */
-  columnWidths?: any[];
-  lastColumnWidth?: number;
-  styleCell?: string;
-  wholeBorders?: boolean;
-  /** Display empty symbol rather than set it transparent */
-  showEmptySymbol?: boolean;
-  selectedKeys?: string[];
-  rowKey?: string;
-  onRowClick?: (record: any) => void;
-  setRowClassName?: (record: any) => string;
-  pageOptions?: PaginationProps;
-  /** Default locale is "no data" */
-  emptyLocale?: string;
+  style?: CSSProperties;
+  dataIndex: keyof T;
+  render?: (value: any, record: T) => ReactNode;
 }
 
-interface IState {}
+type RoughDivTableProps<T = any> = FC<{
+  className?: string;
+  data: T[];
+  /** Displayed in headers */
+  columns: IRoughTableColumn<T>[];
+  rowPadding?: number;
+  cellClassName?: string;
 
-export default class RoughDivTable extends React.Component<IProps, IState> {
-  render() {
-    const { selectedKeys, rowPadding = 80, columnWidths = [], showEmptySymbol, rowKey = "id", labels } = this.props;
+  rowKey?: keyof T;
+  selectedKeys?: string[];
+  onRowClick?: (record: any) => void;
 
-    let hasData = this.props.data.length > 0;
+  pageOptions?: PaginationProps;
 
-    let getColumnWidthStyle = (idx: number) => {
-      let width = columnWidths[idx];
-      if (idx + 1 === labels.length) {
-        width = this.props.lastColumnWidth;
-      }
+  /** Default locale is "no data" */
+  emptyLocale?: string;
+  /** Display empty symbol rather than set it transparent */
+  showEmptySymbol?: boolean;
+  wholeBorders?: boolean;
+}>;
 
-      if (width != null) {
-        return { width };
-      } else {
-        return { flexGrow: 1 };
-      }
-    };
+let RoughDivTable: RoughDivTableProps = (props) => {
+  /** Methods */
+  /** Effects */
+  /** Renderers */
 
-    let rowPaddingStyle = {};
-    if (rowPadding != null) {
-      rowPaddingStyle = { paddingLeft: rowPadding, paddingRight: rowPadding };
-    }
-
-    let headElement = (
-      <div className={cx(row, styleRow, styleHeaderBar)} style={rowPaddingStyle}>
-        {labels.map((label, idx) => {
-          return (
-            <div key={idx} className={cx(styleCell, this.props.styleCell)} style={getColumnWidthStyle(idx)}>
-              {label || <span className={styleEmptyCell}>_</span>}
-            </div>
-          );
-        })}
-      </div>
-    );
-
-    let bodyElement: any = this.renderNoData();
-
-    if (hasData) {
-      bodyElement = this.props.data.map((record, idx) => {
-        let cells = this.props.renderColumns(record, idx);
-
-        let rowClassName: string;
-        if (selectedKeys != null && selectedKeys.includes(record[rowKey])) {
-          rowClassName = styleSelectedRow;
-        }
-
-        return (
-          <div
-            key={idx}
-            className={cx(row, styleRow, this.props.onRowClick != null && styleCursorPointer, rowClassName)}
-            style={rowPaddingStyle}
-            onClick={this.props.onRowClick != null ? () => this.props.onRowClick(record) : null}
-          >
-            {cells.map((cell, cellIdx) => {
-              return (
-                <div key={cellIdx} className={cx(styleCell, this.props.styleCell)} style={getColumnWidthStyle(cellIdx)}>
-                  {cell != null ? cell : <span className={cx(styleEmptyCell, showEmptySymbol ? null : styleTransparent)}>-</span>}
-                </div>
-              );
-            })}
-          </div>
-        );
-      });
-    }
-
-    return (
-      <div className={cx(flex, column, styleContainer, this.props.wholeBorders ? styleWholeBorders : null, this.props.className)}>
-        {headElement}
-        <div className={cx(expand, styleBody)}>{bodyElement}</div>
-        {this.props.pageOptions != null ? this.renderPagination() : null}
-      </div>
-    );
-  }
-
-  renderPagination() {
-    let { pageOptions } = this.props;
+  let renderPagination = () => {
+    let { pageOptions } = props;
     return (
       <div className={stylePageArea}>
         <div className={rowParted}>
@@ -123,23 +60,84 @@ export default class RoughDivTable extends React.Component<IProps, IState> {
         </div>
       </div>
     );
+  };
+
+  const { selectedKeys, rowPadding = 80, showEmptySymbol, rowKey = "id" } = props;
+  let columns = props.columns.filter((col) => col != null && !col.hidden);
+
+  let hasData = props.data.length > 0;
+
+  let rowPaddingStyle = {};
+  if (rowPadding != null) {
+    rowPaddingStyle = { paddingLeft: rowPadding, paddingRight: rowPadding };
   }
 
-  renderNoData() {
-    return (
-      <div className={cx(center, padding16, styleEmpty)}>
-        <JimoIcon name={EJimoIcon.emptyData} className={styleEmptyIcon} />
-        <span>{this.props.emptyLocale || "No data"}</span>
-      </div>
-    );
+  let headElement = (
+    <div className={cx(row, styleRow, styleHeaderBar)} style={rowPaddingStyle}>
+      {columns.map((columnConfig, idx) => {
+        return (
+          <div
+            key={idx}
+            className={cx(styleCell, props.cellClassName, columnConfig.className)}
+            style={mergeStyles(columnConfig.style, getWidthStyle(columnConfig.width))}
+          >
+            {columnConfig.title || <EmptyCell showSymbol />}
+          </div>
+        );
+      })}
+    </div>
+  );
+
+  let bodyElement: ReactNode = <NoDataTableBody emptyLocale={props.emptyLocale} />;
+
+  if (hasData) {
+    bodyElement = props.data.map((record, idx) => {
+      let rowClassName: string;
+      if (selectedKeys != null && selectedKeys.includes(record[rowKey])) {
+        rowClassName = styleSelectedRow;
+      }
+
+      return (
+        <div
+          key={idx}
+          className={cx(row, styleRow, props.onRowClick != null && styleCursorPointer, rowClassName)}
+          style={rowPaddingStyle}
+          onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
+        >
+          {props.columns.map((columnConfig, colIdx) => {
+            let value = record[columnConfig.dataIndex as string];
+            if (columnConfig.render != null) {
+              value = columnConfig.render(value, record);
+            }
+            return (
+              <div key={colIdx} className={cx(styleCell, props.cellClassName)} style={mergeStyles(columnConfig.style, getWidthStyle(columnConfig.width))}>
+                {value != null ? value : <EmptyCell showSymbol={showEmptySymbol} />}
+              </div>
+            );
+          })}
+        </div>
+      );
+    });
   }
-}
+
+  return (
+    <div className={cx(flex, column, props.wholeBorders ? styleWholeBorders : null, props.className)}>
+      {headElement}
+      <div className={cx(expand, styleBody)}>{bodyElement}</div>
+      {props.pageOptions != null ? renderPagination() : null}
+    </div>
+  );
+};
+
+export default RoughDivTable;
 
 const styleCell = css`
   padding: 10px 8px;
   line-height: 20px;
   flex-basis: 100px;
   flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const styleHeaderBar = css`
@@ -173,37 +171,12 @@ const styleCursorPointer = css`
   cursor: pointer;
 `;
 
-const styleEmpty = css`
-  color: #e5e5e5;
-  border-bottom: 1px solid #e5e5e5;
-  font-size: 12px;
-`;
-
-const styleEmptyCell = css`
-  user-select: none;
-`;
-
-let styleTransparent = css`
-  color: transparent;
-`;
-
-const styleContainer = null;
-
 const styleSelectedRow = css`
   background-color: #e6f7ff;
 `;
 
-let padding16 = css`
-  padding: 16px;
-`;
-
 let stylePageArea = css`
   padding: 16px 8px;
-`;
-
-let styleEmptyIcon = css`
-  font-size: 80px;
-  margin-bottom: 8px;
 `;
 
 /** requires Chrome 46 */

@@ -44,13 +44,8 @@ interface IProps {
   rowKey?: string;
   onRowClick?: (record: any) => void;
   setRowClassName?: (record: any) => string;
-  /**  antd pagination */
-  pageOptions?: {
-    current: number;
-    total: number;
-    pageSize: number;
-    onChange: (x: number) => void;
-  };
+  /** antd pagination */
+  pageOptions?: PaginationProps;
   /** Default locale is "no data" */
   emptyLocale?: string;
 }
@@ -59,7 +54,7 @@ interface IProps {
 `ActionLinks` creates the links of editing:
 
 ```tsx
-import ActionLinks, { IActionLinkItem } from "@jimengio/rough-table";
+import { ActionLinks, IActionLinkItem } from "@jimengio/rough-table";
 
 let actions: IActionLinkItem[] = [
   {
@@ -71,6 +66,7 @@ let actions: IActionLinkItem[] = [
     onClick: () => {},
   },
 ];
+
 <ActionLinks actions={actions} spaced />;
 ```
 

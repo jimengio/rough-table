@@ -1,6 +1,6 @@
 {
   "name": "@jimengio/rough-table",
-  "version": "0.1.8-a4",
+  "version": "0.1.8",
   "description": "",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -67,7 +67,7 @@
     "@types/react": "*",
     "antd": "*",
     "emotion": "*",
-    "immer": "2.x.x",
+    "immer": "*",
     "react": "*"
   }
 }

@@ -47,17 +47,7 @@ let PageTall: FC<{}> = (props) => {
       </div>
       <div>body 部分上下左右滚动(目前头部也发生滚动)</div>
       <div className={styleContainer}>
-        <ScrollDivTable
-          className={cx(fullHeight)}
-          data={data}
-          labels={["物料编号", "名称", "型号", "操作"]}
-          lastColumnWidth={80}
-          rowPadding={60}
-          renderColumns={(item) => {
-            return [item.code, item.name, item.model, <ActionLinks actions={actions} spaced />];
-          }}
-          pageOptions={{}}
-        />
+        <ScrollDivTable className={cx(fullHeight)} data={data} columns={columns} rowPadding={60} pageOptions={{}} />
       </div>
     </div>
   );

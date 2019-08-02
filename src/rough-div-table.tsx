@@ -90,7 +90,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
 
   let headElement = (
     <div className={cx(row, styleRow, styleHeaderBar)} style={rowPaddingStyle}>
-      {props.columns.map((column, idx) => {
+      {columns.map((column, idx) => {
         return (
           <div key={idx} className={cx(styleCell, props.styleCell)} style={getColumnWidthStyle(columns, idx)}>
             {column.title || <span className={styleEmptyCell}>_</span>}

@@ -2,23 +2,21 @@
  * code splitted from DivTable
  */
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, FC } from "react";
 import { css, cx } from "emotion";
 import { center, column, flex, rowParted, row } from "@jimengio/shared-utils";
 import { Pagination } from "antd";
 import JimoIcon, { EJimoIcon } from "@jimengio/jimo-icons";
 import { PaginationProps } from "antd/lib/pagination";
+import { IRoughTableColumn } from "./rough-div-table";
+import { any } from "prop-types";
 
-interface IProps {
+type ScrollDivTableProps<T = any> = FC<{
   className?: string;
-  data: { [k: string]: any }[];
+  data: { [k: string]: T }[];
   /** Displayed in headers */
-  labels: (string | ReactNode)[];
-  renderColumns: (record: any, idx?: number) => (string | ReactNode)[];
+  columns: IRoughTableColumn<T>[];
   rowPadding?: number;
-  /** Use number of string to specify CSS width */
-  columnWidths?: any[];
-  lastColumnWidth?: number;
   styleCell?: string;
   wholeBorders?: boolean;
   /** Display empty symbol rather than set it transparent */
@@ -30,91 +28,15 @@ interface IProps {
   pageOptions?: PaginationProps;
   /** Default locale is "no data" */
   emptyLocale?: string;
-}
+}>;
 
-interface IState {}
+let ScrollDivTable: ScrollDivTableProps = (props) => {
+  /** Methods */
+  /** Effects */
+  /** Renderers */
 
-export default class ScrollDivTable extends React.Component<IProps, IState> {
-  render() {
-    const { selectedKeys, rowPadding = 80, columnWidths = [], showEmptySymbol, rowKey = "id", labels } = this.props;
-
-    let hasData = this.props.data.length > 0;
-
-    let getColumnWidthStyle = (idx: number) => {
-      let width = columnWidths[idx];
-      if (idx + 1 === labels.length) {
-        width = this.props.lastColumnWidth;
-      }
-
-      if (width != null) {
-        return { width };
-      } else {
-        return { flexGrow: 1 };
-      }
-    };
-
-    let rowPaddingStyle = {};
-    if (rowPadding != null) {
-      rowPaddingStyle = { paddingLeft: rowPadding, paddingRight: rowPadding };
-    }
-
-    let headElement = (
-      <div className={cx(row, styleRow, styleHeaderBar)} style={rowPaddingStyle}>
-        {labels.map((label, idx) => {
-          return (
-            <div key={idx} className={cx(styleCell, this.props.styleCell)} style={getColumnWidthStyle(idx)}>
-              {label || <span className={styleEmptyCell}>_</span>}
-            </div>
-          );
-        })}
-      </div>
-    );
-
-    let bodyElement: any = this.renderNoData();
-
-    if (hasData) {
-      bodyElement = this.props.data.map((record, idx) => {
-        let cells = this.props.renderColumns(record, idx);
-
-        let rowClassName: string;
-        if (selectedKeys != null && selectedKeys.includes(record[rowKey])) {
-          rowClassName = styleSelectedRow;
-        }
-
-        return (
-          <div
-            key={idx}
-            className={cx(row, styleRow, this.props.onRowClick != null && styleCursorPointer, rowClassName)}
-            style={rowPaddingStyle}
-            onClick={this.props.onRowClick != null ? () => this.props.onRowClick(record) : null}
-          >
-            {cells.map((cell, cellIdx) => {
-              return (
-                <div key={cellIdx} className={cx(styleCell, this.props.styleCell)} style={getColumnWidthStyle(cellIdx)}>
-                  {cell != null ? cell : <span className={cx(styleEmptyCell, showEmptySymbol ? null : styleTransparent)}>-</span>}
-                </div>
-              );
-            })}
-          </div>
-        );
-      });
-    }
-
-    return (
-      <div className={cx(flex, column, styleContainer, this.props.wholeBorders ? styleWholeBorders : null, this.props.className)}>
-        <div className={cx(flex, column)}>
-          <div className={styleContentArea}>
-            {headElement}
-            <div className={styleBody}>{bodyElement}</div>
-          </div>
-        </div>
-        {this.props.pageOptions != null ? this.renderPagination() : null}
-      </div>
-    );
-  }
-
-  renderPagination() {
-    let { pageOptions } = this.props;
+  let renderPagination = () => {
+    let { pageOptions } = props;
     return (
       <div className={stylePageArea}>
         <div className={rowParted}>
@@ -127,17 +49,99 @@ export default class ScrollDivTable extends React.Component<IProps, IState> {
         </div>
       </div>
     );
-  }
+  };
 
-  renderNoData() {
+  let renderNoData = () => {
     return (
       <div className={cx(center, padding16, styleEmpty)}>
         <JimoIcon name={EJimoIcon.emptyData} className={styleEmptyIcon} />
-        <span>{this.props.emptyLocale || "No data"}</span>
+        <span>{props.emptyLocale || "No data"}</span>
       </div>
     );
+  };
+
+  const { selectedKeys, rowPadding = 80, showEmptySymbol, rowKey = "id" } = props;
+  let columns = props.columns.filter((col) => col != null && !col.hidden);
+
+  let hasData = props.data.length > 0;
+
+  let getColumnWidthStyle = (idx: number) => {
+    let width = columns[idx].width;
+
+    if (width != null) {
+      return { width };
+    } else {
+      return { flexGrow: 1 };
+    }
+  };
+
+  let rowPaddingStyle = {};
+  if (rowPadding != null) {
+    rowPaddingStyle = { paddingLeft: rowPadding, paddingRight: rowPadding };
   }
-}
+
+  let headElement = (
+    <div className={cx(row, styleRow, styleHeaderBar)} style={rowPaddingStyle}>
+      {columns.map((col, idx) => {
+        return (
+          <div key={idx} className={cx(styleCell, props.styleCell)} style={getColumnWidthStyle(idx)}>
+            {col.title || <span className={styleEmptyCell}>_</span>}
+          </div>
+        );
+      })}
+    </div>
+  );
+
+  let bodyElement: any = renderNoData();
+
+  if (hasData) {
+    bodyElement = props.data.map((record, idx) => {
+      let cells = props.columns.map((columnConfig, j) => {
+        let value = record[columnConfig.dataIndex as string];
+        if (columnConfig.render == null) {
+          return value;
+        }
+        return columnConfig.render(value, record);
+      });
+
+      let rowClassName: string;
+      if (selectedKeys != null && selectedKeys.includes(record[rowKey])) {
+        rowClassName = styleSelectedRow;
+      }
+
+      return (
+        <div
+          key={idx}
+          className={cx(row, styleRow, props.onRowClick != null && styleCursorPointer, rowClassName)}
+          style={rowPaddingStyle}
+          onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
+        >
+          {cells.map((cell, cellIdx) => {
+            return (
+              <div key={cellIdx} className={cx(styleCell, props.styleCell)} style={getColumnWidthStyle(cellIdx)}>
+                {cell != null ? cell : <span className={cx(styleEmptyCell, showEmptySymbol ? null : styleTransparent)}>-</span>}
+              </div>
+            );
+          })}
+        </div>
+      );
+    });
+  }
+
+  return (
+    <div className={cx(flex, column, styleContainer, props.wholeBorders ? styleWholeBorders : null, props.className)}>
+      <div className={cx(flex, column)}>
+        <div className={styleContentArea}>
+          {headElement}
+          <div className={styleBody}>{bodyElement}</div>
+        </div>
+      </div>
+      {props.pageOptions != null ? renderPagination() : null}
+    </div>
+  );
+};
+
+export default ScrollDivTable;
 
 const styleCell = css`
   padding: 10px 8px;

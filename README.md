@@ -8,35 +8,44 @@
 
 Currently the main component maintained is `RoughDivTable`. As the name indicated this component is rendered in `<div/>`s. And it has very few features in order to keep fast.
 
+目前提供做 3 个表格组件:
+
+- `RoughTable` 基于 `<table>` 简单封装的 table
+- `RoughDivTable` 用 `<div>` 配合 Flexbox 简单封装的 table
+- `ScrollDivTable` 用 `<div>` 实现的带横向滚动的 table
+
 ```ts
 import { RoughDivTable } from "@jimengio/rough-table";
 
-<RoughDivTable
-  data={data}
-  labels={["物料编号", "名称", "型号", "来源", "类型", "操作"]}
-  lastColumnWidth={80}
-  rowPadding={60}
-  renderColumns={(item) => {
-    return [item.code, item.name, item.model, item.source, item.type, <ActionLinks actions={actions} spaced />];
-  }}
-  pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }}
-/>;
+let columns: IRoughTableColumn<IData>[] = [
+  { title: "物料编号", dataIndex: "code", render: (item: IData["code"], record: IData) => item },
+  { title: "名称", dataIndex: "name", render: (item: IData["name"], record: IData) => item },
+  { title: "型号", dataIndex: "model", render: (item: IData["model"], record: IData) => item },
+  { title: "操作", dataIndex: "model", width: 80, render: (item: any, record: IData) => <ActionLinks actions={actions} spaced /> },
+];
+
+<RoughDivTable data={data} columns={columns} rowPadding={60} pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }} />;
 ```
 
 Details about props:
 
 ```ts
+export interface IRoughTableColumn<T = any> {
+  title: ReactNode;
+  hidden?: boolean;
+  width?: number | string;
+  className?: string;
+  style?: CSSProperties;
+  dataIndex: keyof T;
+  render?: (value: any, record: T) => ReactNode;
+}
+
 interface IProps {
   className?: string;
   data: { [k: string]: any }[];
-  /** the headers are separated from body on purpose */
-  labels: (string | ReactNode)[];
   /** it renders each item of data into an array */
-  renderColumns: (record: any, idx?: number) => (string | ReactNode)[];
+  columns: IRoughTableColumn<any>;
   rowPadding?: number;
-  /** Use number of string to specify CSS width */
-  columnWidths?: any[];
-  lastColumnWidth?: number;
   styleCell?: string;
   /** Display empty symbol rather than set it transparent */
   showEmptySymbol?: boolean;

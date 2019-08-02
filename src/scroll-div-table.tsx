@@ -2,9 +2,9 @@
  * code splitted from DivTable
  */
 
-import React, { ReactNode, FC } from "react";
+import React, { ReactNode, FC, CSSProperties } from "react";
 import { css, cx } from "emotion";
-import { center, column, flex, rowParted, row } from "@jimengio/shared-utils";
+import { center, column, flex, rowParted, row, immerMerge } from "@jimengio/shared-utils";
 import { Pagination } from "antd";
 import JimoIcon, { EJimoIcon } from "@jimengio/jimo-icons";
 import { PaginationProps } from "antd/lib/pagination";
@@ -65,7 +65,7 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
 
   let hasData = props.data.length > 0;
 
-  let getColumnWidthStyle = (idx: number) => {
+  let getColumnWidthStyle = (idx: number): CSSProperties => {
     let width = columns[idx].width;
 
     if (width != null) {
@@ -84,7 +84,7 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
     <div className={cx(row, styleRow, styleHeaderBar)} style={rowPaddingStyle}>
       {columns.map((col, idx) => {
         return (
-          <div key={idx} className={cx(styleCell, props.styleCell)} style={getColumnWidthStyle(idx)}>
+          <div key={idx} className={cx(styleCell, props.styleCell, col.className)} style={immerMerge(col.style || {}, getColumnWidthStyle(idx))}>
             {col.title || <span className={styleEmptyCell}>_</span>}
           </div>
         );
@@ -96,14 +96,6 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
 
   if (hasData) {
     bodyElement = props.data.map((record, idx) => {
-      let cells = props.columns.map((columnConfig, j) => {
-        let value = record[columnConfig.dataIndex as string];
-        if (columnConfig.render == null) {
-          return value;
-        }
-        return columnConfig.render(value, record);
-      });
-
       let rowClassName: string;
       if (selectedKeys != null && selectedKeys.includes(record[rowKey])) {
         rowClassName = styleSelectedRow;
@@ -116,10 +108,19 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
           style={rowPaddingStyle}
           onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
         >
-          {cells.map((cell, cellIdx) => {
+          {props.columns.map((columnConfig, colIdx) => {
+            let value = record[columnConfig.dataIndex as string];
+            if (columnConfig.render != null) {
+              value = columnConfig.render(value, record);
+            }
+
             return (
-              <div key={cellIdx} className={cx(styleCell, props.styleCell)} style={getColumnWidthStyle(cellIdx)}>
-                {cell != null ? cell : <span className={cx(styleEmptyCell, showEmptySymbol ? null : styleTransparent)}>-</span>}
+              <div
+                key={colIdx}
+                className={cx(styleCell, props.styleCell, columnConfig.className)}
+                style={immerMerge(columnConfig.style || {}, getColumnWidthStyle(colIdx))}
+              >
+                {value != null ? value : <span className={cx(styleEmptyCell, showEmptySymbol ? null : styleTransparent)}>-</span>}
               </div>
             );
           })}
@@ -148,6 +149,8 @@ const styleCell = css`
   line-height: 20px;
   flex-basis: 100px;
   flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const styleHeaderBar = css`

@@ -4,7 +4,7 @@
 
 import React, { FC, ReactNode, CSSProperties } from "react";
 import { css, cx, keyframes } from "emotion";
-import { center, column, flex, rowParted, row, expand } from "@jimengio/shared-utils";
+import { center, column, flex, rowParted, row, expand, immerMerge } from "@jimengio/shared-utils";
 import { Pagination } from "antd";
 import JimoIcon, { EJimoIcon } from "@jimengio/jimo-icons";
 import { PaginationProps } from "antd/lib/pagination";
@@ -92,7 +92,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
     <div className={cx(row, styleRow, styleHeaderBar)} style={rowPaddingStyle}>
       {columns.map((column, idx) => {
         return (
-          <div key={idx} className={cx(styleCell, props.styleCell)} style={getColumnWidthStyle(columns, idx)}>
+          <div key={idx} className={cx(styleCell, props.styleCell, column.className)} style={immerMerge(column.style || {}, getColumnWidthStyle(columns, idx))}>
             {column.title || <span className={styleEmptyCell}>_</span>}
           </div>
         );
@@ -104,14 +104,6 @@ let RoughDivTable: RoughDivTableProps = (props) => {
 
   if (hasData) {
     bodyElement = props.data.map((record, idx) => {
-      let cells = props.columns.map((columnConfig, j) => {
-        let value = record[columnConfig.dataIndex as string];
-        if (columnConfig.render == null) {
-          return value;
-        }
-        return columnConfig.render(value, record);
-      });
-
       let rowClassName: string;
       if (selectedKeys != null && selectedKeys.includes(record[rowKey])) {
         rowClassName = styleSelectedRow;
@@ -124,10 +116,14 @@ let RoughDivTable: RoughDivTableProps = (props) => {
           style={rowPaddingStyle}
           onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
         >
-          {cells.map((cell, cellIdx) => {
+          {props.columns.map((columnConfig, colIdx) => {
+            let value = record[columnConfig.dataIndex as string];
+            if (columnConfig.render != null) {
+              value = columnConfig.render(value, record);
+            }
             return (
-              <div key={cellIdx} className={cx(styleCell, props.styleCell)} style={getColumnWidthStyle(columns, cellIdx)}>
-                {cell != null ? cell : <span className={cx(styleEmptyCell, showEmptySymbol ? null : styleTransparent)}>-</span>}
+              <div key={colIdx} className={cx(styleCell, props.styleCell)} style={getColumnWidthStyle(columns, colIdx)}>
+                {value != null ? value : <span className={cx(styleEmptyCell, showEmptySymbol ? null : styleTransparent)}>-</span>}
               </div>
             );
           })}
@@ -152,6 +148,8 @@ const styleCell = css`
   line-height: 20px;
   flex-basis: 100px;
   flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const styleHeaderBar = css`

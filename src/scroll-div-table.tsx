@@ -4,30 +4,32 @@
 
 import React, { ReactNode, FC, CSSProperties } from "react";
 import { css, cx } from "emotion";
-import { center, column, flex, rowParted, row, immerMerge } from "@jimengio/shared-utils";
+import { center, column, flex, rowParted, row } from "@jimengio/shared-utils";
 import { Pagination } from "antd";
-import JimoIcon, { EJimoIcon } from "@jimengio/jimo-icons";
 import { PaginationProps } from "antd/lib/pagination";
 import { IRoughTableColumn } from "./rough-div-table";
-import { any } from "prop-types";
+import { ISimpleObject } from "./types";
+import NoDataTableBody, { mergeStyles, getWidthStyle, EmptyCell } from "./common";
 
-type ScrollDivTableProps<T = any> = FC<{
+type ScrollDivTableProps<T = ISimpleObject> = FC<{
   className?: string;
-  data: { [k: string]: T }[];
+  data: T[];
   /** Displayed in headers */
   columns: IRoughTableColumn<T>[];
   rowPadding?: number;
-  styleCell?: string;
-  wholeBorders?: boolean;
-  /** Display empty symbol rather than set it transparent */
-  showEmptySymbol?: boolean;
-  selectedKeys?: string[];
+  cellClassName?: string;
+
   rowKey?: string;
+  selectedKeys?: string[];
   onRowClick?: (record: any) => void;
-  setRowClassName?: (record: any) => string;
   pageOptions?: PaginationProps;
+
   /** Default locale is "no data" */
   emptyLocale?: string;
+  /** Display empty symbol rather than set it transparent */
+  showEmptySymbol?: boolean;
+
+  wholeBorders?: boolean;
 }>;
 
 let ScrollDivTable: ScrollDivTableProps = (props) => {
@@ -51,29 +53,10 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
     );
   };
 
-  let renderNoData = () => {
-    return (
-      <div className={cx(center, padding16, styleEmpty)}>
-        <JimoIcon name={EJimoIcon.emptyData} className={styleEmptyIcon} />
-        <span>{props.emptyLocale || "No data"}</span>
-      </div>
-    );
-  };
-
   const { selectedKeys, rowPadding = 80, showEmptySymbol, rowKey = "id" } = props;
   let columns = props.columns.filter((col) => col != null && !col.hidden);
 
   let hasData = props.data.length > 0;
-
-  let getColumnWidthStyle = (idx: number): CSSProperties => {
-    let width = columns[idx].width;
-
-    if (width != null) {
-      return { width };
-    } else {
-      return { flexGrow: 1 };
-    }
-  };
 
   let rowPaddingStyle = {};
   if (rowPadding != null) {
@@ -82,17 +65,21 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
 
   let headElement = (
     <div className={cx(row, styleRow, styleHeaderBar)} style={rowPaddingStyle}>
-      {columns.map((col, idx) => {
+      {columns.map((columnConfig, idx) => {
         return (
-          <div key={idx} className={cx(styleCell, props.styleCell, col.className)} style={immerMerge(col.style || {}, getColumnWidthStyle(idx))}>
-            {col.title || <span className={styleEmptyCell}>_</span>}
+          <div
+            key={idx}
+            className={cx(styleCell, props.cellClassName, columnConfig.className)}
+            style={mergeStyles(columnConfig.style, getWidthStyle(columnConfig.width))}
+          >
+            {columnConfig.title || <EmptyCell showSymbol />}
           </div>
         );
       })}
     </div>
   );
 
-  let bodyElement: any = renderNoData();
+  let bodyElement: ReactNode = <NoDataTableBody emptyLocale={props.emptyLocale} />;
 
   if (hasData) {
     bodyElement = props.data.map((record, idx) => {
@@ -109,7 +96,7 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
           onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
         >
           {props.columns.map((columnConfig, colIdx) => {
-            let value = record[columnConfig.dataIndex as string];
+            let value = record[columnConfig.dataIndex];
             if (columnConfig.render != null) {
               value = columnConfig.render(value, record);
             }
@@ -117,10 +104,10 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
             return (
               <div
                 key={colIdx}
-                className={cx(styleCell, props.styleCell, columnConfig.className)}
-                style={immerMerge(columnConfig.style || {}, getColumnWidthStyle(colIdx))}
+                className={cx(styleCell, props.cellClassName, columnConfig.className)}
+                style={mergeStyles(columnConfig.style, getWidthStyle(columnConfig.width))}
               >
-                {value != null ? value : <span className={cx(styleEmptyCell, showEmptySymbol ? null : styleTransparent)}>-</span>}
+                {value != null ? value : <EmptyCell showSymbol={showEmptySymbol} />}
               </div>
             );
           })}
@@ -130,7 +117,7 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
   }
 
   return (
-    <div className={cx(flex, column, styleContainer, props.wholeBorders ? styleWholeBorders : null, props.className)}>
+    <div className={cx(flex, column, props.wholeBorders ? styleWholeBorders : null, props.className)}>
       <div className={cx(flex, column)}>
         <div className={styleContentArea}>
           {headElement}
@@ -184,37 +171,12 @@ const styleCursorPointer = css`
   cursor: pointer;
 `;
 
-const styleEmpty = css`
-  color: #e5e5e5;
-  border-bottom: 1px solid #e5e5e5;
-  font-size: 12px;
-`;
-
-const styleEmptyCell = css`
-  user-select: none;
-`;
-
-let styleTransparent = css`
-  color: transparent;
-`;
-
-const styleContainer = null;
-
 const styleSelectedRow = css`
   background-color: #e6f7ff;
 `;
 
-let padding16 = css`
-  padding: 16px;
-`;
-
 let stylePageArea = css`
   padding: 16px 8px;
-`;
-
-let styleEmptyIcon = css`
-  font-size: 80px;
-  margin-bottom: 8px;
 `;
 
 /** requires Chrome 46 */

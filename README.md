@@ -46,13 +46,12 @@ interface IProps {
   /** it renders each item of data into an array */
   columns: IRoughTableColumn<any>;
   rowPadding?: number;
-  styleCell?: string;
+  cellClassName?: string;
   /** Display empty symbol rather than set it transparent */
   showEmptySymbol?: boolean;
   selectedKeys?: string[];
   rowKey?: string;
   onRowClick?: (record: any) => void;
-  setRowClassName?: (record: any) => string;
   /** antd pagination */
   pageOptions?: PaginationProps;
   /** Default locale is "no data" */

@@ -1,8 +1,6 @@
 import React, { FC, useState } from "react";
-import { css } from "emotion";
 import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
-import { type } from "os";
 
 interface IData {
   code: string;

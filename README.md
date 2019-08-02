@@ -30,7 +30,12 @@ let columns: IRoughTableColumn<IData>[] = [
 Details about props:
 
 ```ts
-export interface IRoughTableColumn<T = any> {
+// a faked data...
+interface IData {
+  name: string;
+}
+
+export interface IRoughTableColumn<IData> {
   title: ReactNode;
   hidden?: boolean;
   width?: number | string;
@@ -44,14 +49,14 @@ interface IProps {
   className?: string;
   data: { [k: string]: any }[];
   /** it renders each item of data into an array */
-  columns: IRoughTableColumn<any>;
+  columns: IRoughTableColumn<IData>;
   rowPadding?: number;
   cellClassName?: string;
   /** Display empty symbol rather than set it transparent */
   showEmptySymbol?: boolean;
   selectedKeys?: string[];
   rowKey?: string;
-  onRowClick?: (record: any) => void;
+  onRowClick?: (record: IData) => void;
   /** antd pagination */
   pageOptions?: PaginationProps;
   /** Default locale is "no data" */

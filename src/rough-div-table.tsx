@@ -123,7 +123,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   return (
     <div className={cx(flex, column, props.wholeBorders ? styleWholeBorders : null, props.className)}>
       {headElement}
-      <div className={cx(expand, styleBody)}>{bodyElement}</div>
+      <div className={cx(styleBody)}>{bodyElement}</div>
       {props.pageOptions != null ? renderPagination() : null}
     </div>
   );
@@ -149,6 +149,7 @@ const styleHeaderBar = css`
 
 const styleBody = css`
   color: rgba(0, 0, 0, 0.65);
+  flex-grow: 1;
 `;
 
 const styleRow = css`

@@ -107,10 +107,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.2.tgz#63985d3d8b02530e0869962f4da09142ee8e200e"
   integrity sha512-n/VQ4mbfr81aqkx/XmVicOLjviMuy02eenSdJY33SVA7S2J42EU0P1H0mOogfYedb3wXA0d/LVtBrgTSm04WEA==
 
-"@jimengio/doc-frame@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.npm.taobao.org/@jimengio/doc-frame/download/@jimengio/doc-frame-0.1.0.tgz#63d7d3f80b7ce0295c405ff9b7b29f9ee54417fe"
-  integrity sha1-Y9fT+At84ClcQF/5t7KfnuVEF/4=
+"@jimengio/doc-frame@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.npm.taobao.org/@jimengio/doc-frame/download/@jimengio/doc-frame-0.1.1.tgz#96f3444089be71de7e3f16dd184d2d71d9a2a88f"
+  integrity sha1-lvNEQIm+cd5+PxbdGE0tcdmiqI8=
 
 "@jimengio/jimo-icons@^0.1.19":
   version "0.1.19"

@@ -126,14 +126,16 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
 
   return (
     <div className={cx(flex, column, props.className)} data-component="scroll-div-table">
-      <div className={cx(flex, column, styleArea)} data-area="table-area">
-        <div ref={headerRef} className={cx(styleHeaderBar)}>
-          <div className={styleRow} style={mergeStyles({ width: allWidth, minWidth: "100%" }, rowPaddingStyle)}>
-            {headElements}
+      <div className={cx(expand, column)}>
+        <div className={cx(flex, column, styleArea)} data-area="table-area">
+          <div ref={headerRef} className={cx(styleHeaderBar)}>
+            <div className={styleRow} style={mergeStyles({ width: allWidth, minWidth: "100%" }, rowPaddingStyle)}>
+              {headElements}
+            </div>
           </div>
-        </div>
-        <div ref={scrollRef} className={cx(expand, styleContentArea)} data-area="wide-area" onScroll={(event) => handleScroll()}>
-          {bodyElements}
+          <div ref={scrollRef} className={cx(expand, styleContentArea)} data-area="wide-area" onScroll={(event) => handleScroll()}>
+            {bodyElements}
+          </div>
         </div>
       </div>
       {props.pageOptions != null ? renderPagination() : null}
@@ -157,7 +159,6 @@ const styleHeaderBar = css`
   font-weight: bold;
   background-color: #f2f2f2;
   border: none;
-  border-bottom: 1px solid #e5e5e5;
   z-index: 1000;
   overflow: hidden;
 `;
@@ -190,10 +191,14 @@ let styleContentArea = css`
   position: relative;
   width: auto;
   white-space: nowrap;
+  border: 1px solid #e5e5e5;
+  border-width: 0px 1px 1px 1px;
+
+  /* works in Chrome 46+ */
+  max-height: max-content;
 `;
 
 let styleArea = css`
-  border: 1px solid #e5e5e5;
   position: relative;
   overflow: hidden;
 `;

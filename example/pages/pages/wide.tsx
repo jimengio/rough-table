@@ -3,7 +3,7 @@ import { css, cx } from "emotion";
 
 import ScrollDivTable from "../../../src/scroll-div-table";
 import { IRoughTableColumn } from "../../../src/rough-div-table";
-import { fullHeight } from "@jimengio/shared-utils";
+import { fullHeight, flex, column } from "@jimengio/shared-utils";
 
 let countMany = Array.from({ length: 100 }, (_, n) => n);
 
@@ -52,7 +52,15 @@ let columns: IRoughTableColumn<IData>[] = countMany.map((n) => {
 let PageWide: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
-      <ScrollDivTable data={data} columns={columns} rowPadding={60} pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }} />
+      <div className={cx(column, styleTallArea)}>
+        <ScrollDivTable
+          className={flex}
+          data={data}
+          columns={columns}
+          rowPadding={60}
+          pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }}
+        />
+      </div>
 
       <div>body 部分上下左右滚动(目前头部也发生滚动)</div>
       <div className={styleRestricted}>
@@ -68,4 +76,8 @@ let styleContainer = null;
 
 let styleRestricted = css`
   height: 400px;
+`;
+
+let styleTallArea = css`
+  height: 600px;
 `;

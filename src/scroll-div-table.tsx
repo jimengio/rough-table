@@ -45,7 +45,7 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
 
   let handleScroll = () => {
     let leftOffset = scrollRef.current.scrollLeft;
-    headerRef.current.style.left = `${-leftOffset}px`;
+    headerRef.current.scrollLeft = leftOffset;
   };
 
   /** Effects */
@@ -127,8 +127,10 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
   return (
     <div className={cx(flex, column, props.className)} data-component="scroll-div-table">
       <div className={cx(flex, column, styleArea)} data-area="table-area">
-        <div ref={headerRef} className={cx(styleRow, styleHeaderBar)} style={mergeStyles({ width: allWidth, minWidth: "100%" }, rowPaddingStyle)}>
-          {headElements}
+        <div ref={headerRef} className={cx(styleHeaderBar)}>
+          <div className={styleRow} style={mergeStyles({ width: allWidth, minWidth: "100%" }, rowPaddingStyle)}>
+            {headElements}
+          </div>
         </div>
         <div ref={scrollRef} className={cx(expand, styleContentArea)} data-area="wide-area" onScroll={(event) => handleScroll()}>
           {bodyElements}
@@ -157,11 +159,7 @@ const styleHeaderBar = css`
   border: none;
   border-bottom: 1px solid #e5e5e5;
   z-index: 1000;
-
-  position: absolute;
-  left: 0px;
-  top: 0;
-  width: auto;
+  overflow: hidden;
 `;
 
 const styleRow = css`
@@ -192,7 +190,6 @@ let styleContentArea = css`
   position: relative;
   width: auto;
   white-space: nowrap;
-  padding-top: 48px;
 `;
 
 let styleArea = css`

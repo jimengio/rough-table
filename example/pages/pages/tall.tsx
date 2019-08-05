@@ -45,10 +45,6 @@ let PageTall: FC<{}> = (props) => {
       <div className={styleContainer}>
         <RoughDivTable className={cx(fullHeight)} data={data} columns={columns} rowPadding={60} pageOptions={{}} />
       </div>
-      <div>body 部分上下左右滚动(目前头部也发生滚动)</div>
-      <div className={styleContainer}>
-        <ScrollDivTable className={cx(fullHeight)} data={data} columns={columns} rowPadding={60} pageOptions={{}} />
-      </div>
     </div>
   );
 };

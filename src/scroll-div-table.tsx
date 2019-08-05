@@ -2,16 +2,16 @@
  * code splitted from DivTable
  */
 
-import React, { ReactNode, FC, CSSProperties } from "react";
+import React, { ReactNode, FC, CSSProperties, useRef } from "react";
 import { css, cx } from "emotion";
-import { center, column, flex, rowParted, row } from "@jimengio/shared-utils";
+import { center, column, flex, rowParted, row, expand } from "@jimengio/shared-utils";
 import { Pagination } from "antd";
 import { PaginationProps } from "antd/lib/pagination";
 import { IRoughTableColumn } from "./rough-div-table";
 import { ISimpleObject } from "./types";
-import NoDataTableBody, { mergeStyles, getWidthStyle, EmptyCell } from "./common";
+import NoDataTableBody, { mergeStyles, EmptyCell } from "./common";
 
-type ScrollDivTableProps<T = ISimpleObject> = FC<{
+type ScrollDivTableProps<T = any> = FC<{
   className?: string;
   data: T[];
   /** Displayed in headers */
@@ -28,13 +28,28 @@ type ScrollDivTableProps<T = ISimpleObject> = FC<{
   emptyLocale?: string;
   /** Display empty symbol rather than set it transparent */
   showEmptySymbol?: boolean;
-
-  wholeBorders?: boolean;
 }>;
 
 let ScrollDivTable: ScrollDivTableProps = (props) => {
+  const { selectedKeys, rowPadding = 80, showEmptySymbol, rowKey = "id" } = props;
+  let columns = props.columns.filter((col) => col != null && !col.hidden);
+
+  let scrollRef = useRef<HTMLDivElement>();
+  let headerRef = useRef<HTMLDivElement>();
+
+  let defaultCellWidth = 120;
+  let cellWidths: number[] = props.columns.map((columnConfig) => (columnConfig.width as number) || defaultCellWidth);
+  let allWidth = cellWidths.reduce((x, y) => x + y) + rowPadding * 2;
+
   /** Methods */
+
+  let handleScroll = () => {
+    let leftOffset = scrollRef.current.scrollLeft;
+    headerRef.current.style.left = `${-leftOffset}px`;
+  };
+
   /** Effects */
+
   /** Renderers */
 
   let renderPagination = () => {
@@ -53,9 +68,6 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
     );
   };
 
-  const { selectedKeys, rowPadding = 80, showEmptySymbol, rowKey = "id" } = props;
-  let columns = props.columns.filter((col) => col != null && !col.hidden);
-
   let hasData = props.data.length > 0;
 
   let rowPaddingStyle = {};
@@ -63,26 +75,22 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
     rowPaddingStyle = { paddingLeft: rowPadding, paddingRight: rowPadding };
   }
 
-  let headElement = (
-    <div className={cx(row, styleRow, styleHeaderBar)} style={rowPaddingStyle}>
-      {columns.map((columnConfig, idx) => {
-        return (
-          <div
-            key={idx}
-            className={cx(styleCell, props.cellClassName, columnConfig.className)}
-            style={mergeStyles(columnConfig.style, getWidthStyle(columnConfig.width))}
-          >
-            {columnConfig.title || <EmptyCell showSymbol />}
-          </div>
-        );
-      })}
-    </div>
-  );
+  let headElements = columns.map((columnConfig, idx) => {
+    return (
+      <div
+        key={idx}
+        className={cx(styleCell, props.cellClassName, columnConfig.className)}
+        style={mergeStyles(columnConfig.style, { width: columnConfig.width || defaultCellWidth })}
+      >
+        {columnConfig.title || <EmptyCell showSymbol />}
+      </div>
+    );
+  });
 
-  let bodyElement: ReactNode = <NoDataTableBody emptyLocale={props.emptyLocale} />;
+  let bodyElements: ReactNode = <NoDataTableBody emptyLocale={props.emptyLocale} />;
 
   if (hasData) {
-    bodyElement = props.data.map((record, idx) => {
+    bodyElements = props.data.map((record, idx) => {
       let rowClassName: string;
       if (selectedKeys != null && selectedKeys.includes(record[rowKey])) {
         rowClassName = styleSelectedRow;
@@ -91,8 +99,8 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
       return (
         <div
           key={idx}
-          className={cx(row, styleRow, props.onRowClick != null && styleCursorPointer, rowClassName)}
-          style={rowPaddingStyle}
+          className={cx(styleRow, props.onRowClick != null && styleCursorPointer, rowClassName)}
+          style={mergeStyles({ width: allWidth, minWidth: "100%" }, rowPaddingStyle)}
           onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
         >
           {props.columns.map((columnConfig, colIdx) => {
@@ -105,7 +113,7 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
               <div
                 key={colIdx}
                 className={cx(styleCell, props.cellClassName, columnConfig.className)}
-                style={mergeStyles(columnConfig.style, getWidthStyle(columnConfig.width))}
+                style={mergeStyles(columnConfig.style, { width: columnConfig.width })}
               >
                 {value != null ? value : <EmptyCell showSymbol={showEmptySymbol} />}
               </div>
@@ -117,11 +125,13 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
   }
 
   return (
-    <div className={cx(flex, column, props.wholeBorders ? styleWholeBorders : null, props.className)}>
-      <div className={cx(flex, column)}>
-        <div className={styleContentArea}>
-          {headElement}
-          <div className={styleBody}>{bodyElement}</div>
+    <div className={cx(flex, column, props.className)} data-component="scroll-div-table">
+      <div className={cx(flex, column, styleArea)} data-area="table-area">
+        <div ref={headerRef} className={cx(styleRow, styleHeaderBar)} style={mergeStyles({ width: allWidth, minWidth: "100%" }, rowPaddingStyle)}>
+          {headElements}
+        </div>
+        <div ref={scrollRef} className={cx(expand, styleContentArea)} data-area="wide-area" onScroll={(event) => handleScroll()}>
+          {bodyElements}
         </div>
       </div>
       {props.pageOptions != null ? renderPagination() : null}
@@ -134,10 +144,11 @@ export default ScrollDivTable;
 const styleCell = css`
   padding: 10px 8px;
   line-height: 20px;
-  flex-basis: 100px;
-  flex-shrink: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  display: inline-block;
+  width: 120px;
 `;
 
 const styleHeaderBar = css`
@@ -145,26 +156,24 @@ const styleHeaderBar = css`
   background-color: #f2f2f2;
   border: none;
   border-bottom: 1px solid #e5e5e5;
-`;
+  z-index: 1000;
 
-const styleBody = css`
-  color: rgba(0, 0, 0, 0.65);
+  position: absolute;
+  left: 0px;
+  top: 0;
+  width: auto;
 `;
 
 const styleRow = css`
   &:hover {
     background-color: #e6f7ff;
   }
+  color: rgba(0, 0, 0, 0.65);
 
   padding-left: 80px;
   border-bottom: 1px solid #e5e5e5;
 
-  width: 100%;
-`;
-
-let styleWholeBorders = css`
-  border-left: 1px solid #e5e5e5;
-  border-right: 1px solid #e5e5e5;
+  width: auto;
 `;
 
 const styleCursorPointer = css`
@@ -179,7 +188,15 @@ let stylePageArea = css`
   padding: 16px 8px;
 `;
 
-/** requires Chrome 46 */
 let styleContentArea = css`
-  min-width: max-content;
+  position: relative;
+  width: auto;
+  white-space: nowrap;
+  padding-top: 48px;
+`;
+
+let styleArea = css`
+  border: 1px solid #e5e5e5;
+  position: relative;
+  overflow: hidden;
 `;

@@ -31,12 +31,15 @@ type ScrollDivTableProps<T = any> = FC<{
 }>;
 
 let ScrollDivTable: ScrollDivTableProps = (props) => {
+  const { selectedKeys, rowPadding = 80, showEmptySymbol, rowKey = "id" } = props;
+  let columns = props.columns.filter((col) => col != null && !col.hidden);
+
   let scrollRef = useRef<HTMLDivElement>();
   let headerRef = useRef<HTMLDivElement>();
 
   let defaultCellWidth = 120;
   let cellWidths: number[] = props.columns.map((columnConfig) => (columnConfig.width as number) || defaultCellWidth);
-  let allWidth = cellWidths.reduce((x, y) => x + y) + props.rowPadding * 2;
+  let allWidth = cellWidths.reduce((x, y) => x + y) + rowPadding * 2;
 
   /** Methods */
 
@@ -64,9 +67,6 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
       </div>
     );
   };
-
-  const { selectedKeys, rowPadding = 80, showEmptySymbol, rowKey = "id" } = props;
-  let columns = props.columns.filter((col) => col != null && !col.hidden);
 
   let hasData = props.data.length > 0;
 

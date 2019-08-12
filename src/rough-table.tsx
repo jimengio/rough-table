@@ -10,6 +10,7 @@ import { isFunction, some } from "@jimengio/shared-utils";
 import { Pagination } from "antd";
 import Space from "./space";
 import { PaginationProps } from "antd/lib/pagination";
+import NoDataTableBody from "./common";
 
 interface IColumnDefinition {
   title: string;
@@ -29,6 +30,7 @@ interface IProps {
   onRowClick?: (record: any) => void;
   setRowClassName?: (record: any) => string;
   pageOptions?: PaginationProps;
+  emptyLocale?: string;
 }
 
 interface IState {}
@@ -149,7 +151,7 @@ export default class RoughTable extends React.Component<IProps, IState> {
     return (
       <tr>
         <td colSpan={length}>
-          <div className={cx(center, padding16, styleEmpty)}>{"No data"}</div>
+          <NoDataTableBody emptyLocale={this.props.emptyLocale} />
         </td>
       </tr>
     );
@@ -192,11 +194,6 @@ const styleCursorPointer = css`
   cursor: pointer;
 `;
 
-const styleEmpty = css`
-  color: #e5e5e5;
-  border-bottom: 1px solid #e5e5e5;
-`;
-
 const styleEmptyCell = css`
   color: transparent;
   user-select: none;
@@ -210,8 +207,4 @@ const styleBodyContainer = css`
 
 const styleSelectedRow = css`
   background-color: #e6f7ff;
-`;
-
-let padding16 = css`
-  padding: 16px;
 `;

@@ -106,7 +106,7 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
           {props.columns.map((columnConfig, colIdx) => {
             let value = record[columnConfig.dataIndex];
             if (columnConfig.render != null) {
-              value = columnConfig.render(value, record);
+              value = columnConfig.render(value, record, idx);
             }
 
             return (

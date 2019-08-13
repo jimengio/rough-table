@@ -42,7 +42,7 @@ export interface IRoughTableColumn<IData> {
   className?: string;
   style?: CSSProperties;
   dataIndex: keyof T;
-  render?: (value: any, record: T) => ReactNode;
+  render?: (value: any, record: T, itemIndex?: number) => ReactNode;
 }
 
 interface IProps {

@@ -17,7 +17,12 @@ export interface IRoughTableColumn<T = ISimpleObject> {
   className?: string;
   style?: CSSProperties;
   dataIndex: keyof T;
-  render?: (value: any, record: T) => ReactNode;
+  /** cell renderer in body
+   * @param value
+   * @param record, data of item
+   * @param itemIndex, index of item in data list
+   */
+  render?: (value: any, record: T, itemIndex?: number) => ReactNode;
 }
 
 type RoughDivTableProps<T = any> = FC<{
@@ -107,7 +112,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
           {props.columns.map((columnConfig, colIdx) => {
             let value = record[columnConfig.dataIndex as string];
             if (columnConfig.render != null) {
-              value = columnConfig.render(value, record);
+              value = columnConfig.render(value, record, idx);
             }
             return (
               <div key={colIdx} className={cx(styleCell, props.cellClassName)} style={mergeStyles(columnConfig.style, getWidthStyle(columnConfig.width))}>

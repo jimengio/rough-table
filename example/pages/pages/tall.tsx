@@ -5,6 +5,7 @@ import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
 import { fullHeight } from "@jimengio/shared-utils";
 import ScrollDivTable from "../../../src/scroll-div-table";
+import { DocDemo } from "@jimengio/doc-frame";
 
 interface IData {
   code: string;
@@ -41,10 +42,11 @@ let columns: IRoughTableColumn<IData>[] = [
 let PageTall: FC<{}> = (props) => {
   return (
     <div>
-      <div>body 部分上下滚动</div>
-      <div className={styleContainer}>
-        <RoughDivTable className={cx(fullHeight)} data={data} columns={columns} rowPadding={60} pageOptions={{}} />
-      </div>
+      <DocDemo title="Table 中 body 部分上下滚动" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/tall.tsx">
+        <div className={styleContainer}>
+          <RoughDivTable className={cx(fullHeight)} data={data} columns={columns} rowPadding={60} pageOptions={{}} />
+        </div>
+      </DocDemo>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { css } from "emotion";
 
 import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
+import { DocDemo } from "@jimengio/doc-frame";
 
 interface IData {
   code: string;
@@ -46,7 +47,9 @@ let PageWholeBorders: FC<{}> = (props) => {
 
   return (
     <div className={styleContainer}>
-      <RoughDivTable data={data} columns={columns} rowPadding={60} wholeBorders />
+      <DocDemo title="Table with borders on all edges" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/whole-borders.tsx">
+        <RoughDivTable data={data} columns={columns} rowPadding={60} wholeBorders />
+      </DocDemo>
     </div>
   );
 };

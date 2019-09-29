@@ -8,7 +8,7 @@ import "antd/dist/antd.css";
 
 import Home from "./home";
 
-import { row, fullscreen } from "@jimengio/shared-utils";
+import { row, fullscreen, expand } from "@jimengio/shared-utils";
 import { genRouter } from "controller/generated-router";
 import PageWholeBorders from "./pages/whole-borders";
 import PagePaginated from "./pages/paginated";
@@ -80,6 +80,7 @@ let Container: FC<{ router: any }> = (props) => {
   return (
     <div className={cx(fullscreen, row, styleContainer)}>
       <DocSidebar
+        title="Rough Table"
         items={entries}
         currentPath={props.router.name}
         onSwitch={(item) => {
@@ -91,7 +92,7 @@ let Container: FC<{ router: any }> = (props) => {
           }
         }}
       />
-      <div className={styleBody}>{renderBody(props.router)}</div>
+      <div className={cx(expand, styleBody)}>{renderBody(props.router)}</div>
     </div>
   );
 };
@@ -103,6 +104,6 @@ const styleContainer = css`
 `;
 
 let styleBody = css`
-  padding: 16px;
+  padding: 40px;
   width: 800px;
 `;

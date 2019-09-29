@@ -1,6 +1,8 @@
 import React, { FC, useState } from "react";
 import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
+import { DocDemo } from "@jimengio/doc-frame";
+import { css } from "emotion";
 
 interface IData {
   code: string;
@@ -36,17 +38,23 @@ let PageSelected: FC<{}> = (props) => {
 
   return (
     <div className={styleContainer}>
-      <RoughDivTable
-        data={data}
-        rowPadding={60}
-        wholeBorders
-        rowKey="code"
-        selectedKeys={[selected]}
-        onRowClick={(record) => {
-          setSelected(record.code);
-        }}
-        columns={columns}
-      />
+      <DocDemo
+        className={styleDemo}
+        title={"Table with selectable rows"}
+        link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/selected.tsx"
+      >
+        <RoughDivTable
+          data={data}
+          rowPadding={60}
+          wholeBorders
+          rowKey="code"
+          selectedKeys={[selected]}
+          onRowClick={(record) => {
+            setSelected(record.code);
+          }}
+          columns={columns}
+        />
+      </DocDemo>
     </div>
   );
 };
@@ -54,3 +62,7 @@ let PageSelected: FC<{}> = (props) => {
 export default PageSelected;
 
 let styleContainer = null;
+
+let styleDemo = css`
+  max-width: 800px;
+`;

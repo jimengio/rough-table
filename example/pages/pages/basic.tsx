@@ -4,6 +4,7 @@ import { css } from "emotion";
 import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
 import RoughTable from "../../../src/rough-table";
+import { DocDemo } from "@jimengio/doc-frame";
 
 interface IData {
   code: string;
@@ -48,9 +49,13 @@ let columns: IRoughTableColumn<IData>[] = [
 let PageBasic: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
-      <RoughDivTable data={data} columns={columns} rowPadding={60} />
+      <DocDemo title="A very simple table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/basic.tsx">
+        <RoughDivTable data={data} columns={columns} rowPadding={60} />
+      </DocDemo>
 
-      <RoughTable dataSource={[]} defineColumns={() => []} emptyLocale={"没有数据"} />
+      <DocDemo title="Table with no data" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/basic.tsx">
+        <RoughTable dataSource={[]} defineColumns={() => []} emptyLocale={"没有数据"} />
+      </DocDemo>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { css, cx } from "emotion";
 import ScrollDivTable from "../../../src/scroll-div-table";
 import { IRoughTableColumn } from "../../../src/rough-div-table";
 import { fullHeight, flex, column } from "@jimengio/shared-utils";
+import { DocDemo } from "@jimengio/doc-frame";
 
 let countMany = Array.from({ length: 100 }, (_, n) => n);
 
@@ -52,20 +53,23 @@ let columns: IRoughTableColumn<IData>[] = countMany.map((n) => {
 let PageWide: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
-      <div className={cx(column, styleTallArea)}>
-        <ScrollDivTable
-          className={flex}
-          data={data}
-          columns={columns}
-          rowPadding={60}
-          pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }}
-        />
-      </div>
+      <DocDemo title="内容横向滚动" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/wide.tsx">
+        <div className={cx(column, styleTallArea)}>
+          <ScrollDivTable
+            className={flex}
+            data={data}
+            columns={columns}
+            rowPadding={60}
+            pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }}
+          />
+        </div>
+      </DocDemo>
 
-      <div>body 部分上下左右滚动(目前头部也发生滚动)</div>
-      <div className={styleRestricted}>
-        <ScrollDivTable className={cx(fullHeight)} data={data2} columns={columns} rowPadding={60} pageOptions={{}} />
-      </div>
+      <DocDemo title="body 部分上下左右滚动(目前头部也发生滚动)" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/wide.tsx">
+        <div className={styleRestricted}>
+          <ScrollDivTable className={cx(fullHeight)} data={data2} columns={columns} rowPadding={60} pageOptions={{}} />
+        </div>
+      </DocDemo>
     </div>
   );
 };

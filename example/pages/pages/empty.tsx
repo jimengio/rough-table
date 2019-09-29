@@ -3,6 +3,7 @@ import { css } from "emotion";
 
 import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
+import { DocDemo } from "@jimengio/doc-frame";
 
 let columns: IRoughTableColumn<any>[] = [
   { title: "物料编号", dataIndex: "code" },
@@ -14,7 +15,9 @@ let columns: IRoughTableColumn<any>[] = [
 let PageEmpty: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
-      <RoughDivTable data={[]} columns={columns} rowPadding={60} />
+      <DocDemo title="Empty table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/empty.tsx">
+        <RoughDivTable data={[]} columns={columns} rowPadding={60} />
+      </DocDemo>
     </div>
   );
 };

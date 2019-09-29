@@ -3,6 +3,7 @@ import { css } from "emotion";
 
 import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
+import { DocDemo } from "@jimengio/doc-frame";
 
 interface IData {
   code: string;
@@ -46,7 +47,9 @@ let PagePaginated: FC<{}> = (props) => {
 
   return (
     <div className={styleContainer}>
-      <RoughDivTable data={data} columns={columns} rowPadding={60} pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }} />
+      <DocDemo title="Paginated" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/paginated.tsx">
+        <RoughDivTable data={data} columns={columns} rowPadding={60} pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }} />
+      </DocDemo>
     </div>
   );
 };

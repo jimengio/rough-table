@@ -45,7 +45,7 @@ let PageSelected: FC<{}> = (props) => {
       >
         <RoughDivTable
           data={data}
-          rowPadding={60}
+          rowPadding={24}
           wholeBorders
           rowKey="code"
           selectedKeys={[selected]}

@@ -16,7 +16,7 @@ let PageEmpty: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
       <DocDemo title="Empty table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/empty.tsx">
-        <RoughDivTable data={[]} columns={columns} rowPadding={60} />
+        <RoughDivTable data={[]} columns={columns} rowPadding={24} />
       </DocDemo>
     </div>
   );

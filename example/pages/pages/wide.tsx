@@ -59,7 +59,7 @@ let PageWide: FC<{}> = (props) => {
             className={flex}
             data={data}
             columns={columns}
-            rowPadding={60}
+            rowPadding={24}
             pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }}
           />
         </div>
@@ -67,7 +67,7 @@ let PageWide: FC<{}> = (props) => {
 
       <DocDemo title="body 部分上下左右滚动(目前头部也发生滚动)" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/wide.tsx">
         <div className={styleRestricted}>
-          <ScrollDivTable className={cx(fullHeight)} data={data2} columns={columns} rowPadding={60} pageOptions={{}} />
+          <ScrollDivTable className={cx(fullHeight)} data={data2} columns={columns} rowPadding={24} pageOptions={{}} />
         </div>
       </DocDemo>
     </div>

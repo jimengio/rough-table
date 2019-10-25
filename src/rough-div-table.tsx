@@ -67,7 +67,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
     );
   };
 
-  const { selectedKeys, rowPadding = 80, showEmptySymbol, rowKey = "id" } = props;
+  const { selectedKeys, rowPadding = 24, showEmptySymbol, rowKey = "id" } = props;
   let columns = props.columns.filter((col) => col != null && !col.hidden);
 
   let hasData = props.data.length > 0;

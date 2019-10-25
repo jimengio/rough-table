@@ -44,7 +44,7 @@ let PageTall: FC<{}> = (props) => {
     <div>
       <DocDemo title="Table 中 body 部分上下滚动" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/tall.tsx">
         <div className={styleContainer}>
-          <RoughDivTable className={cx(fullHeight)} data={data} columns={columns} rowPadding={60} pageOptions={{}} />
+          <RoughDivTable className={cx(fullHeight)} data={data} columns={columns} rowPadding={24} pageOptions={{}} />
         </div>
       </DocDemo>
     </div>

@@ -50,7 +50,7 @@ let PageBasic: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
       <DocDemo title="A very simple table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/basic.tsx">
-        <RoughDivTable data={data} columns={columns} rowPadding={60} />
+        <RoughDivTable data={data} columns={columns} rowPadding={24} />
       </DocDemo>
 
       <DocDemo title="Table with no data" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/basic.tsx">

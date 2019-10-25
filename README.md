@@ -24,7 +24,7 @@ let columns: IRoughTableColumn<IData>[] = [
   { title: "操作", dataIndex: "model", width: 80, render: (item: any, record: IData) => <ActionLinks actions={actions} spaced /> },
 ];
 
-<RoughDivTable data={data} columns={columns} rowPadding={60} pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }} />;
+<RoughDivTable data={data} columns={columns} rowPadding={24} pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }} />;
 ```
 
 Details about props:

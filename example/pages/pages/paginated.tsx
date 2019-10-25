@@ -48,7 +48,7 @@ let PagePaginated: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
       <DocDemo title="Paginated" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/paginated.tsx">
-        <RoughDivTable data={data} columns={columns} rowPadding={60} pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }} />
+        <RoughDivTable data={data} columns={columns} rowPadding={24} pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }} />
       </DocDemo>
     </div>
   );

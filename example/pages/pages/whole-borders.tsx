@@ -48,7 +48,7 @@ let PageWholeBorders: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
       <DocDemo title="Table with borders on all edges" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/whole-borders.tsx">
-        <RoughDivTable data={data} columns={columns} rowPadding={60} wholeBorders />
+        <RoughDivTable data={data} columns={columns} rowPadding={24} wholeBorders />
       </DocDemo>
     </div>
   );

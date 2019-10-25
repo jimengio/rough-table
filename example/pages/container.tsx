@@ -1,5 +1,4 @@
 import React, { FC, useState } from "react";
-import { parseRoutePath, IRouteParseResult } from "@jimengio/ruled-router";
 import { css, cx } from "emotion";
 import { DocSidebar, ISidebarEntry } from "@jimengio/doc-frame";
 import { findRouteTarget } from "@jimengio/ruled-router/lib/dom";
@@ -9,7 +8,7 @@ import "antd/dist/antd.css";
 import Home from "./home";
 
 import { row, fullscreen, expand } from "@jimengio/shared-utils";
-import { genRouter } from "controller/generated-router";
+import { genRouter, GenRouterTypeMain } from "controller/generated-router";
 import PageWholeBorders from "./pages/whole-borders";
 import PagePaginated from "./pages/paginated";
 import PageEmpty from "./pages/empty";
@@ -18,22 +17,22 @@ import PageWide from "./pages/wide";
 import PageBasic from "./pages/basic";
 import PageTall from "./pages/tall";
 
-const renderBody = (routerTree: IRouteParseResult) => {
+const renderBody = (routerTree: GenRouterTypeMain) => {
   if (routerTree != null) {
     switch (routerTree.name) {
-      case genRouter.basic.name:
+      case "basic":
         return <PageBasic />;
-      case genRouter.paginated.name:
+      case "paginated":
         return <PagePaginated />;
-      case genRouter.empty.name:
+      case "empty":
         return <PageEmpty />;
-      case genRouter.wholeBorders.name:
+      case "whole-borders":
         return <PageWholeBorders />;
-      case genRouter.selected.name:
+      case "selected":
         return <PageSelected />;
-      case genRouter.wide.name:
+      case "wide":
         return <PageWide />;
-      case genRouter.tall.name:
+      case "tall":
         return <PageTall />;
 
       case genRouter.home.name:
@@ -74,7 +73,7 @@ let entries: ISidebarEntry[] = [
   },
 ];
 
-let Container: FC<{ router: any }> = (props) => {
+let Container: FC<{ router: GenRouterTypeMain }> = (props) => {
   let [selected, setSelected] = useState<string>(null);
 
   return (

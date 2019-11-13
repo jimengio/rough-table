@@ -118,6 +118,10 @@ let RoughTreeTable: RoughTreeTableProps = React.memo((props) => {
 
       let hasChildren = detectRecordChildren(record, props.data);
 
+      if (props.columns[0].render != null) {
+        value = props.columns[0].render(value, record, idx);
+      }
+
       return (
         <div>
           <div style={{ width: (treePath.length - 1) * 28 }} className={styleSpace} />

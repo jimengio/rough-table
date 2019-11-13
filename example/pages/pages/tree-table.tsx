@@ -7,6 +7,9 @@ let columns: IRoughTableColumn[] = [
   {
     dataIndex: "name",
     title: "Name",
+    render: (value) => {
+      return <span className={styleLink}>value</span>;
+    },
   },
   {
     dataIndex: "description",
@@ -57,3 +60,8 @@ let PageTreeTable: FC<{}> = React.memo((props) => {
 });
 
 export default PageTreeTable;
+
+let styleLink = css`
+  color: hsl(200, 80%, 70%);
+  cursor: pointer;
+`;

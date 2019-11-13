@@ -16,28 +16,26 @@ import PageSelected from "./pages/selected";
 import PageWide from "./pages/wide";
 import PageBasic from "./pages/basic";
 import PageTall from "./pages/tall";
+import PageTreeTable from "./pages/tree-table";
 
 const renderBody = (routerTree: GenRouterTypeMain) => {
-  if (routerTree != null) {
-    switch (routerTree.name) {
-      case "basic":
-        return <PageBasic />;
-      case "paginated":
-        return <PagePaginated />;
-      case "empty":
-        return <PageEmpty />;
-      case "whole-borders":
-        return <PageWholeBorders />;
-      case "selected":
-        return <PageSelected />;
-      case "wide":
-        return <PageWide />;
-      case "tall":
-        return <PageTall />;
-
-      case genRouter.home.name:
-        return <Home />;
-    }
+  switch (routerTree?.name) {
+    case "basic":
+      return <PageBasic />;
+    case "paginated":
+      return <PagePaginated />;
+    case "whole-borders":
+      return <PageWholeBorders />;
+    case "selected":
+      return <PageSelected />;
+    case "wide":
+      return <PageWide />;
+    case "tall":
+      return <PageTall />;
+    case "tree-table":
+      return <PageTreeTable />;
+    case genRouter.home.name:
+      return <Home />;
   }
   return <div>NOTHING</div>;
 };
@@ -50,10 +48,6 @@ let entries: ISidebarEntry[] = [
   {
     title: "Selected",
     path: genRouter.selected.name,
-  },
-  {
-    title: "Empty",
-    path: genRouter.empty.name,
   },
   {
     title: "Whole borders",
@@ -70,6 +64,10 @@ let entries: ISidebarEntry[] = [
   {
     title: "Tall",
     path: genRouter.tall.name,
+  },
+  {
+    title: "Tree Table",
+    path: genRouter.treeTable.name,
   },
 ];
 

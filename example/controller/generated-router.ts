@@ -12,7 +12,7 @@ function qsStringify(queries: { [k: string]: string }) {
 
 // generated
 
-// Generated with router-code-generator@0.2.4
+// Generated with router-code-generator@0.2.5
 
 export let genRouter = {
   basic: {
@@ -26,12 +26,6 @@ export let genRouter = {
     raw: "paginated",
     path: () => `/paginated`,
     go: () => switchPath(`/paginated`),
-  },
-  empty: {
-    name: "empty",
-    raw: "empty",
-    path: () => `/empty`,
-    go: () => switchPath(`/empty`),
   },
   selected: {
     name: "selected",
@@ -63,6 +57,12 @@ export let genRouter = {
     path: () => `/tall`,
     go: () => switchPath(`/tall`),
   },
+  treeTable: {
+    name: "tree-table",
+    raw: "tree-table",
+    path: () => `/tree-table`,
+    go: () => switchPath(`/tree-table`),
+  },
   $: {
     name: "home",
     raw: "",
@@ -74,12 +74,12 @@ export let genRouter = {
 export type GenRouterTypeMain =
   | GenRouterTypeTree["basic"]
   | GenRouterTypeTree["paginated"]
-  | GenRouterTypeTree["empty"]
   | GenRouterTypeTree["selected"]
   | GenRouterTypeTree["wholeBorders"]
   | GenRouterTypeTree["home"]
   | GenRouterTypeTree["wide"]
   | GenRouterTypeTree["tall"]
+  | GenRouterTypeTree["treeTable"]
   | GenRouterTypeTree["$"];
 
 export interface GenRouterTypeTree {
@@ -91,12 +91,6 @@ export interface GenRouterTypeTree {
   };
   paginated: {
     name: "paginated";
-    params: {};
-    query: {};
-    next: null;
-  };
-  empty: {
-    name: "empty";
     params: {};
     query: {};
     next: null;
@@ -127,6 +121,12 @@ export interface GenRouterTypeTree {
   };
   tall: {
     name: "tall";
+    params: {};
+    query: {};
+    next: null;
+  };
+  treeTable: {
+    name: "tree-table";
     params: {};
     query: {};
     next: null;

@@ -4,7 +4,48 @@ import { css } from "emotion";
 import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
 import RoughTable from "../../../src/rough-table";
-import { DocDemo } from "@jimengio/doc-frame";
+import { DocDemo, DocSnippet, DocBlock } from "@jimengio/doc-frame";
+
+let code = `
+let columns: IRoughTableColumn<IData>[] = [
+  { title: "物料编号", dataIndex: "code", render: (item: IData["code"], record: IData) => item },
+  { title: "名称", dataIndex: "name", render: (item: IData["name"], record: IData) => item },
+  { title: "型号", dataIndex: "model", render: (item: IData["model"], record: IData) => item },
+  { title: "操作", dataIndex: "model", width: 80, render: (item: any, record: IData) => <ActionLinks actions={actions} spaced /> },
+];
+
+<RoughDivTable data={data} columns={columns} rowPadding={24} />
+`;
+
+let resizeCode = `
+let resizedColumns: IRoughTableColumn<IData>[] = [
+  { title: "物料编号", dataIndex: "code", render: (item: IData["code"], record: IData) => item },
+  {
+    title: "名称",
+    style: {
+      flexBasis: "200px",
+    },
+    dataIndex: "name",
+    render: (item: IData["name"], record: IData) => item,
+  },
+  { title: "型号", dataIndex: "model", render: (item: IData["model"], record: IData) => item },
+  {
+    title: "操作",
+    style: {
+      flexBasis: "200px",
+    },
+    dataIndex: "model",
+    width: 80,
+    render: (item: any, record: IData) => <ActionLinks actions={actions} spaced />,
+  },
+];
+
+<RoughDivTable data={data} columns={resizedColumns} rowPadding={24} />
+`;
+
+let resizeContent = `
+DivTable 用了 Flexbox 布局和 flex-basis 属性, 如果需要自定义 column 的宽度, 就需要配置  flex-basis.
+`;
 
 interface IData {
   code: string;
@@ -46,11 +87,40 @@ let columns: IRoughTableColumn<IData>[] = [
   { title: "操作", dataIndex: "model", width: 80, render: (item: any, record: IData) => <ActionLinks actions={actions} spaced /> },
 ];
 
+let resizedColumns: IRoughTableColumn<IData>[] = [
+  { title: "物料编号", dataIndex: "code", render: (item: IData["code"], record: IData) => item },
+  {
+    title: "名称",
+    style: {
+      flexBasis: "200px",
+    },
+    dataIndex: "name",
+    render: (item: IData["name"], record: IData) => item,
+  },
+  { title: "型号", dataIndex: "model", render: (item: IData["model"], record: IData) => item },
+  {
+    title: "操作",
+    style: {
+      flexBasis: "200px",
+    },
+    dataIndex: "model",
+    width: 80,
+    render: (item: any, record: IData) => <ActionLinks actions={actions} spaced />,
+  },
+];
+
 let PageBasic: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
       <DocDemo title="A very simple table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/basic.tsx">
         <RoughDivTable data={data} columns={columns} rowPadding={24} />
+        <DocSnippet code={code} />
+      </DocDemo>
+
+      <DocDemo title="A very simple table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/basic.tsx">
+        <DocBlock content={resizeContent} />
+        <RoughDivTable data={data} columns={resizedColumns} rowPadding={24} />
+        <DocSnippet code={resizeCode} />
       </DocDemo>
 
       <DocDemo title="Table with no data" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/basic.tsx">

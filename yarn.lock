@@ -154,10 +154,10 @@
   resolved "https://registry.npmjs.org/@jimengio/router-code-generator/-/router-code-generator-0.2.5.tgz#0fa670d53f050c693f1e8925a98cf053dc453f60"
   integrity sha512-sRBtr0yEZuRgItVg9rJtkfySiXjTqJQ0JR7eCWl9rfD/M1tqeI1PF//F9Q5T1hOgRoyna0yAfo9cHoNycAJNjw==
 
-"@jimengio/ruled-router@^0.2.20":
-  version "0.2.20"
-  resolved "https://registry.npmjs.org/@jimengio/ruled-router/-/ruled-router-0.2.20.tgz#a9bf990793b0a6be93c78bab488688591774c121"
-  integrity sha512-dDMpePM6O+ojZMMXJ4rgoLVGl1ry1tMunWUn/C30i8DlARrqUW41w2vJ1ht52D0eYkkl0/AZIho8QG6NCSfM4Q==
+"@jimengio/ruled-router@^0.2.21":
+  version "0.2.21"
+  resolved "https://registry.npmjs.org/@jimengio/ruled-router/-/ruled-router-0.2.21.tgz#d5a057daec5481c291702d8fc0d483d86cfdd22a"
+  integrity sha512-8YXY+0umaNdN5MkcXxzyAMJfqLMA3FIXYt1bZiZ4D4p9Df6BOSO8PBYbbYivwCwZYO+I8lPOXnV5c2WA6z1QpA==
   dependencies:
     query-string "^6.9.0"
 
@@ -2502,7 +2502,7 @@ has-flag@^3.0.0:
   resolved "https://registry.npmjs.org/has-flag/-/has-flag-3.0.0.tgz#b5d454dc2199ae225699f3467e5a07f3b955bafd"
   integrity sha1-tdRU3CGZriJWmfNGfloH87lVuv0=
 
-has-symbols@^1.0.0:
+has-symbols@^1.0.0, has-symbols@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/has-symbols/-/has-symbols-1.0.1.tgz#9f5214758a44196c406d9bd76cebf81ec2dd31e8"
   integrity sha512-PLcsoqu++dmEIZB+6totNFKq/7Do+Z0u4oT0zKOJNl3lYK6vGwwu2hjHs+68OEZbTjiUE9bgOABXbP/GvrS0Kg==
@@ -3086,11 +3086,11 @@ is-stream@^1.0.1, is-stream@^1.1.0:
   integrity sha1-EtSj3U5o4Lec6428hBc66A2RykQ=
 
 is-symbol@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/is-symbol/-/is-symbol-1.0.2.tgz#a055f6ae57192caee329e7a860118b497a950f38"
-  integrity sha512-HS8bZ9ox60yCJLH9snBpIwv9pYUAkcuLhSA1oero1UB5y9aiQpRA8y2ex945AOtCZL1lJDeIk3G5LthswI46Lw==
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/is-symbol/-/is-symbol-1.0.3.tgz#38e1014b9e6329be0de9d24a414fd7441ec61937"
+  integrity sha512-OwijhaRSgqvhm/0ZdAcXNZt9lYdKFpcRDT5ULUuYXPoT794UNOdU+gpT6Rzo7b4V2HUl/op6GqY894AZwv9faQ==
   dependencies:
-    has-symbols "^1.0.0"
+    has-symbols "^1.0.1"
 
 is-windows@^1.0.1, is-windows@^1.0.2:
   version "1.0.2"

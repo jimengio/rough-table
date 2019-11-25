@@ -50,7 +50,7 @@ let columns: IRoughTableColumn<IData>[] = countMany.map((n) => {
   } as IRoughTableColumn;
 });
 
-let PageWide: FC<{}> = (props) => {
+let DemoWide: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
       <DocDemo title="内容横向滚动" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/wide.tsx">
@@ -74,7 +74,7 @@ let PageWide: FC<{}> = (props) => {
   );
 };
 
-export default PageWide;
+export default DemoWide;
 
 let styleContainer = null;
 

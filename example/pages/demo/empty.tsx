@@ -12,7 +12,7 @@ let columns: IRoughTableColumn<any>[] = [
   { title: "操作", dataIndex: "model", width: 80, render: () => <ActionLinks actions={[]} spaced /> },
 ];
 
-let PageEmpty: FC<{}> = (props) => {
+let DemoEmpty: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
       <DocDemo title="Empty table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/empty.tsx">
@@ -22,6 +22,6 @@ let PageEmpty: FC<{}> = (props) => {
   );
 };
 
-export default PageEmpty;
+export default DemoEmpty;
 
 let styleContainer = null;

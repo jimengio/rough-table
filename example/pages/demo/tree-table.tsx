@@ -49,7 +49,7 @@ let treeData: IItemWithChildren<IData>[] = [
   },
 ];
 
-let PageTreeTable: FC<{}> = React.memo((props) => {
+let DemoTreeTable: FC<{}> = React.memo((props) => {
   /** Methods */
   /** Effects */
   /** Renderers */
@@ -64,7 +64,7 @@ let PageTreeTable: FC<{}> = React.memo((props) => {
   );
 });
 
-export default PageTreeTable;
+export default DemoTreeTable;
 
 let styleLink = css`
   color: hsl(200, 80%, 70%);

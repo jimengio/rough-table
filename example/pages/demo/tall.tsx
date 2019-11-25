@@ -39,7 +39,7 @@ let columns: IRoughTableColumn<IData>[] = [
   { title: "操作", dataIndex: "model", width: 80, render: (item: any, record: IData) => <ActionLinks actions={actions} spaced /> },
 ];
 
-let PageTall: FC<{}> = (props) => {
+let DemoTall: FC<{}> = (props) => {
   return (
     <div>
       <DocDemo title="Table 中 body 部分上下滚动" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/tall.tsx">
@@ -51,7 +51,7 @@ let PageTall: FC<{}> = (props) => {
   );
 };
 
-export default PageTall;
+export default DemoTall;
 
 let styleContainer = css`
   height: 600px;

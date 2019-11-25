@@ -1,6 +1,6 @@
 {
   "name": "@jimengio/rough-table",
-  "version": "0.2.3",
+  "version": "0.2.4-a2",
   "description": "",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -26,7 +26,7 @@
     "@jimengio/flex-styles": "^0.1.6",
     "@jimengio/jimo-icons": "^0.3.0",
     "@jimengio/router-code-generator": "^0.2.5",
-    "@jimengio/ruled-router": "^0.2.20",
+    "@jimengio/ruled-router": "^0.2.21",
     "@jimengio/shared-utils": "^0.1.5",
     "@types/lodash": "^4.14.149",
     "@types/node": "^12.12.11",

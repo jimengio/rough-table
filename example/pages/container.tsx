@@ -9,31 +9,34 @@ import Home from "./home";
 
 import { row, fullscreen, expand } from "@jimengio/shared-utils";
 import { genRouter, GenRouterTypeMain } from "controller/generated-router";
-import PageWholeBorders from "./pages/whole-borders";
-import PagePaginated from "./pages/paginated";
-import PageEmpty from "./pages/empty";
-import PageSelected from "./pages/selected";
-import PageWide from "./pages/wide";
-import PageBasic from "./pages/basic";
-import PageTall from "./pages/tall";
-import PageTreeTable from "./pages/tree-table";
+import DemoWholeBorders from "./demo/whole-borders";
+import DemoPaginated from "./demo/paginated";
+import DemoEmpty from "./demo/empty";
+import DemoSelected from "./demo/selected";
+import DemoWide from "./demo/wide";
+import DemoBasic from "./demo/basic";
+import DemoTall from "./demo/tall";
+import DemoTreeTable from "./demo/tree-table";
+import DemoActionLinks from "./demo/action-links";
 
 const renderBody = (routerTree: GenRouterTypeMain) => {
   switch (routerTree?.name) {
     case "basic":
-      return <PageBasic />;
+      return <DemoBasic />;
     case "paginated":
-      return <PagePaginated />;
+      return <DemoPaginated />;
     case "whole-borders":
-      return <PageWholeBorders />;
+      return <DemoWholeBorders />;
     case "selected":
-      return <PageSelected />;
+      return <DemoSelected />;
     case "wide":
-      return <PageWide />;
+      return <DemoWide />;
     case "tall":
-      return <PageTall />;
+      return <DemoTall />;
     case "tree-table":
-      return <PageTreeTable />;
+      return <DemoTreeTable />;
+    case "action-links":
+      return <DemoActionLinks />;
     case genRouter.home.name:
       return <Home />;
   }
@@ -68,6 +71,10 @@ let entries: ISidebarEntry[] = [
   {
     title: "Tree Table",
     path: genRouter.treeTable.name,
+  },
+  {
+    title: "Action Links",
+    path: genRouter.actionLinks.name,
   },
 ];
 

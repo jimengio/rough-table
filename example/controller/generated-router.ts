@@ -63,6 +63,12 @@ export let genRouter = {
     path: () => `/tree-table`,
     go: () => switchPath(`/tree-table`),
   },
+  actionLinks: {
+    name: "action-links",
+    raw: "action-links",
+    path: () => `/action-links`,
+    go: () => switchPath(`/action-links`),
+  },
   $: {
     name: "home",
     raw: "",
@@ -80,6 +86,7 @@ export type GenRouterTypeMain =
   | GenRouterTypeTree["wide"]
   | GenRouterTypeTree["tall"]
   | GenRouterTypeTree["treeTable"]
+  | GenRouterTypeTree["actionLinks"]
   | GenRouterTypeTree["$"];
 
 export interface GenRouterTypeTree {
@@ -127,6 +134,12 @@ export interface GenRouterTypeTree {
   };
   treeTable: {
     name: "tree-table";
+    params: {};
+    query: {};
+    next: null;
+  };
+  actionLinks: {
+    name: "action-links";
     params: {};
     query: {};
     next: null;

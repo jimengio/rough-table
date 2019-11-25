@@ -26,7 +26,7 @@ let actions: IActionLinkItem[] = [
   null,
 ];
 
-let PageSelected: FC<{}> = (props) => {
+let DemoSelected: FC<{}> = (props) => {
   let [selected, setSelected] = useState<string>(null);
 
   let columns: IRoughTableColumn<IData>[] = [
@@ -59,7 +59,7 @@ let PageSelected: FC<{}> = (props) => {
   );
 };
 
-export default PageSelected;
+export default DemoSelected;
 
 let styleContainer = null;
 

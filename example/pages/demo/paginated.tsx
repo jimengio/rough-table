@@ -37,7 +37,7 @@ let actions: IActionLinkItem[] = [
   null,
 ];
 
-let PageWholeBorders: FC<{}> = (props) => {
+let DemoPaginated: FC<{}> = (props) => {
   let columns: IRoughTableColumn<IData>[] = [
     { title: "物料编号", dataIndex: "code", render: (item: IData["code"], record: IData) => item },
     { title: "名称", dataIndex: "name", render: (item: IData["name"], record: IData) => item },
@@ -47,13 +47,13 @@ let PageWholeBorders: FC<{}> = (props) => {
 
   return (
     <div className={styleContainer}>
-      <DocDemo title="Table with borders on all edges" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/whole-borders.tsx">
-        <RoughDivTable data={data} columns={columns} rowPadding={24} wholeBorders />
+      <DocDemo title="Paginated" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/paginated.tsx">
+        <RoughDivTable data={data} columns={columns} rowPadding={24} pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }} />
       </DocDemo>
     </div>
   );
 };
 
-export default PageWholeBorders;
+export default DemoPaginated;
 
 let styleContainer = null;

@@ -109,7 +109,7 @@ let resizedColumns: IRoughTableColumn<IData>[] = [
   },
 ];
 
-let PageBasic: FC<{}> = (props) => {
+let DemoBasic: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
       <DocDemo title="A very simple table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/basic.tsx">
@@ -130,6 +130,6 @@ let PageBasic: FC<{}> = (props) => {
   );
 };
 
-export default PageBasic;
+export default DemoBasic;
 
 let styleContainer = null;

@@ -10,5 +10,6 @@ export const routerRules: IRouteRule[] = [
   { path: "tall" },
   { path: "tree-table" },
   { path: "action-links" },
+  { path: "column-width" },
   { path: "", name: "home" },
 ];

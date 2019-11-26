@@ -18,6 +18,7 @@ import DemoBasic from "./demo/basic";
 import DemoTall from "./demo/tall";
 import DemoTreeTable from "./demo/tree-table";
 import DemoActionLinks from "./demo/action-links";
+import DemoColumnWidth from "./demo/column-width";
 
 const renderBody = (routerTree: GenRouterTypeMain) => {
   switch (routerTree?.name) {
@@ -37,7 +38,9 @@ const renderBody = (routerTree: GenRouterTypeMain) => {
       return <DemoTreeTable />;
     case "action-links":
       return <DemoActionLinks />;
-    case genRouter.home.name:
+    case "column-width":
+      return <DemoColumnWidth />;
+    case "home":
       return <Home />;
   }
   return <div>NOTHING</div>;
@@ -51,6 +54,10 @@ let entries: ISidebarEntry[] = [
   {
     title: "Selected",
     path: genRouter.selected.name,
+  },
+  {
+    title: "Column Width",
+    path: genRouter.columnWidth.name,
   },
   {
     title: "Whole borders",

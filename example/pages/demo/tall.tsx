@@ -42,7 +42,7 @@ let columns: IRoughTableColumn<IData>[] = [
 let DemoTall: FC<{}> = (props) => {
   return (
     <div>
-      <DocDemo title="Table 中 body 部分上下滚动" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/tall.tsx">
+      <DocDemo title="Table 中 body 部分上下滚动" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/tall.tsx">
         <div className={styleContainer}>
           <RoughDivTable className={cx(fullHeight)} data={data} columns={columns} rowPadding={24} pageOptions={{}} />
         </div>

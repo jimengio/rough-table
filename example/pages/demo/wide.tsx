@@ -53,7 +53,7 @@ let columns: IRoughTableColumn<IData>[] = countMany.map((n) => {
 let DemoWide: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
-      <DocDemo title="内容横向滚动" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/wide.tsx">
+      <DocDemo title="内容横向滚动" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/wide.tsx">
         <div className={cx(column, styleTallArea)}>
           <ScrollDivTable
             className={flex}
@@ -65,7 +65,7 @@ let DemoWide: FC<{}> = (props) => {
         </div>
       </DocDemo>
 
-      <DocDemo title="body 部分上下左右滚动(目前头部也发生滚动)" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/wide.tsx">
+      <DocDemo title="body 部分上下左右滚动(目前头部也发生滚动)" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/wide.tsx">
         <div className={styleRestricted}>
           <ScrollDivTable className={cx(fullHeight)} data={data2} columns={columns} rowPadding={24} pageOptions={{}} />
         </div>

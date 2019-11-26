@@ -41,7 +41,7 @@ let DemoSelected: FC<{}> = (props) => {
       <DocDemo
         className={styleDemo}
         title={"Table with selectable rows"}
-        link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/selected.tsx"
+        link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/selected.tsx"
       >
         <RoughDivTable
           data={data}

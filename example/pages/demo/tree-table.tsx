@@ -56,7 +56,7 @@ let DemoTreeTable: FC<{}> = React.memo((props) => {
   return (
     <div>
       <DocBlock content={content} />
-      <DocDemo title="Rough Tree Table" link={"https://github.com/jimengio/rough-table/blob/master/example/pages/pages/tree-table.tsx#L57"}>
+      <DocDemo title="Rough Tree Table" link={"https://github.com/jimengio/rough-table/blob/master/example/pages/demo/tree-table.tsx#L57"}>
         <RoughTreeTable data={treeData} columns={columns} />
         <DocSnippet code={code} />
       </DocDemo>

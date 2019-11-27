@@ -112,18 +112,18 @@ let resizedColumns: IRoughTableColumn<IData>[] = [
 let DemoBasic: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
-      <DocDemo title="A very simple table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/basic.tsx">
+      <DocDemo title="A very simple table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/basic.tsx">
         <RoughDivTable data={data} columns={columns} rowPadding={24} />
         <DocSnippet code={code} />
       </DocDemo>
 
-      <DocDemo title="A very simple table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/basic.tsx">
+      <DocDemo title="A very simple table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/basic.tsx">
         <DocBlock content={resizeContent} />
         <RoughDivTable data={data} columns={resizedColumns} rowPadding={24} />
         <DocSnippet code={resizeCode} />
       </DocDemo>
 
-      <DocDemo title="Table with no data" link="https://github.com/jimengio/rough-table/blob/master/example/pages/pages/basic.tsx">
+      <DocDemo title="Table with no data" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/basic.tsx">
         <RoughTable dataSource={[]} defineColumns={() => []} emptyLocale={"没有数据"} />
       </DocDemo>
     </div>

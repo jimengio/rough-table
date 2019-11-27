@@ -46,7 +46,7 @@ export let mergeStyles = (a: CSSProperties, b: CSSProperties): CSSProperties => 
 /** return width or flexGroup:1 */
 export let getWidthStyle = (width: string | number): CSSProperties => {
   if (width != null) {
-    return { width: width };
+    return { flexBasis: width };
   } else {
     return { flexGrow: 1 };
   }

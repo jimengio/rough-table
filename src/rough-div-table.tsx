@@ -115,7 +115,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
               value = columnConfig.render(value, record, idx);
             }
             return (
-              <div key={colIdx} className={cx(styleCell, props.cellClassName)} style={mergeStyles(columnConfig.style, getWidthStyle(columnConfig.width))}>
+              <div key={colIdx} className={cx(styleCell, props.cellClassName)} style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style)}>
                 {value == null || value === "" ? <EmptyCell showSymbol={showEmptySymbol} /> : value}
               </div>
             );

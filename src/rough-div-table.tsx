@@ -150,6 +150,10 @@ const styleHeaderBar = css`
   background-color: #f2f2f2;
   border: none;
   border-bottom: 1px solid #e5e5e5;
+
+  &:hover {
+    background-color: #f2f2f2;
+  }
 `;
 
 const styleBody = css`
@@ -158,14 +162,14 @@ const styleBody = css`
 `;
 
 const styleRow = css`
-  &:hover {
-    background-color: #e6f7ff;
-  }
-
   padding-left: 80px;
   border-bottom: 1px solid #e5e5e5;
 
   width: 100%;
+
+  &:hover {
+    background-color: #e6f7ff;
+  }
 `;
 
 let styleWholeBorders = css`

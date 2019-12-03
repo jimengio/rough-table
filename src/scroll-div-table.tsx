@@ -9,7 +9,7 @@ import { Pagination } from "antd";
 import { PaginationProps } from "antd/lib/pagination";
 import { IRoughTableColumn } from "./rough-div-table";
 import { ISimpleObject } from "./types";
-import NoDataTableBody, { mergeStyles, EmptyCell } from "./common";
+import NoDataTableBody, { mergeStyles, getWidthStyle, EmptyCell } from "./common";
 
 type ScrollDivTableProps<T = any> = FC<{
   className?: string;
@@ -28,6 +28,7 @@ type ScrollDivTableProps<T = any> = FC<{
   emptyLocale?: string;
   /** Display empty symbol rather than set it transparent */
   showEmptySymbol?: boolean;
+  wholeBorders?: boolean;
 }>;
 
 let ScrollDivTable: ScrollDivTableProps = (props) => {
@@ -104,7 +105,7 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
           onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
         >
           {props.columns.map((columnConfig, colIdx) => {
-            let value = record[columnConfig.dataIndex];
+            let value = record[columnConfig.dataIndex as string];
             if (columnConfig.render != null) {
               value = columnConfig.render(value, record, idx);
             }
@@ -113,9 +114,9 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
               <div
                 key={colIdx}
                 className={cx(styleCell, props.cellClassName, columnConfig.className)}
-                style={mergeStyles(columnConfig.style, { width: columnConfig.width })}
+                style={mergeStyles(columnConfig.style, getWidthStyle(columnConfig.width))}
               >
-                {value != null ? value : <EmptyCell showSymbol={showEmptySymbol} />}
+                {value == null || value === "" ? <EmptyCell showSymbol={showEmptySymbol} /> : value}
               </div>
             );
           })}
@@ -125,7 +126,7 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
   }
 
   return (
-    <div className={cx(flex, column, props.className)} data-component="scroll-div-table">
+    <div className={cx(flex, column, props.wholeBorders ? styleWholeBorders : null, props.className)} data-component="scroll-div-table">
       <div className={cx(expand, column)}>
         <div className={cx(flex, column, styleArea)} data-area="table-area">
           <div ref={headerRef} className={cx(styleHeaderBar)}>
@@ -164,15 +165,20 @@ const styleHeaderBar = css`
 `;
 
 const styleRow = css`
-  &:hover {
-    background-color: #e6f7ff;
-  }
   color: rgba(0, 0, 0, 0.65);
-
   padding-left: 80px;
   border-bottom: 1px solid #e5e5e5;
 
   width: auto;
+
+  &:hover {
+    background-color: #e6f7ff;
+  }
+`;
+
+let styleWholeBorders = css`
+  border-left: 1px solid #e5e5e5;
+  border-right: 1px solid #e5e5e5;
 `;
 
 const styleCursorPointer = css`

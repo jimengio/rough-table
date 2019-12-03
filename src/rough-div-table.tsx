@@ -32,6 +32,7 @@ type RoughDivTableProps<T = any> = FC<{
   columns: IRoughTableColumn<T>[];
   rowPadding?: number;
   cellClassName?: string;
+  bodyClassName?: string;
 
   rowKey?: keyof T;
   selectedKeys?: string[];
@@ -132,7 +133,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   return (
     <div className={cx(flex, column, props.wholeBorders ? styleWholeBorders : null, props.className)}>
       {headElements}
-      <div className={cx(styleBody)}>{bodyElements}</div>
+      <div className={cx(styleBody, props.bodyClassName)}>{bodyElements}</div>
       {props.pageOptions != null ? renderPagination() : null}
     </div>
   );
@@ -162,7 +163,7 @@ const styleHeaderBar = css`
 
 const styleBody = css`
   color: rgba(0, 0, 0, 0.65);
-  flex-grow: 1;
+  flex: 1;
   overflow-y: auto;
 `;
 

@@ -77,7 +77,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
     rowPaddingStyle = { paddingLeft: rowPadding, paddingRight: rowPadding };
   }
 
-  let headElement = (
+  let headElements = (
     <div className={cx(row, styleRow, styleHeaderBar)} style={rowPaddingStyle}>
       {columns.map((columnConfig, idx) => {
         return (
@@ -93,10 +93,10 @@ let RoughDivTable: RoughDivTableProps = (props) => {
     </div>
   );
 
-  let bodyElement: ReactNode = <NoDataTableBody emptyLocale={props.emptyLocale} />;
+  let bodyElements: ReactNode = <NoDataTableBody emptyLocale={props.emptyLocale} />;
 
   if (hasData) {
-    bodyElement = props.data.map((record, idx) => {
+    bodyElements = props.data.map((record, idx) => {
       let rowClassName: string;
       if (selectedKeys != null && selectedKeys.includes(record[rowKey])) {
         rowClassName = styleSelectedRow;
@@ -115,7 +115,11 @@ let RoughDivTable: RoughDivTableProps = (props) => {
               value = columnConfig.render(value, record, idx);
             }
             return (
-              <div key={colIdx} className={cx(styleCell, props.cellClassName)} style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style)}>
+              <div
+                key={colIdx}
+                className={cx(styleCell, props.cellClassName, columnConfig.className)}
+                style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style)}
+              >
                 {value == null || value === "" ? <EmptyCell showSymbol={showEmptySymbol} /> : value}
               </div>
             );
@@ -127,8 +131,8 @@ let RoughDivTable: RoughDivTableProps = (props) => {
 
   return (
     <div className={cx(flex, column, props.wholeBorders ? styleWholeBorders : null, props.className)}>
-      {headElement}
-      <div className={cx(styleBody)}>{bodyElement}</div>
+      {headElements}
+      <div className={cx(styleBody)}>{bodyElements}</div>
       {props.pageOptions != null ? renderPagination() : null}
     </div>
   );
@@ -159,6 +163,7 @@ const styleHeaderBar = css`
 const styleBody = css`
   color: rgba(0, 0, 0, 0.65);
   flex-grow: 1;
+  overflow-y: auto;
 `;
 
 const styleRow = css`

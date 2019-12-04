@@ -143,11 +143,7 @@ let RoughTreeTable: RoughTreeTableProps = React.memo((props) => {
   };
   let expandedColumns = [headColumn].concat(props.columns.slice(1));
 
-  return (
-    <div>
-      <RoughDivTable {...props} data={expandedData} columns={expandedColumns} />
-    </div>
-  );
+  return <RoughDivTable {...props} data={expandedData} columns={expandedColumns} />;
 });
 
 export default RoughTreeTable;

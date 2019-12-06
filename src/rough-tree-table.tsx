@@ -1,6 +1,6 @@
 import React, { FC, useState, ReactNode } from "react";
 import { css } from "emotion";
-import { flatMap } from "lodash";
+import { flatMap } from "lodash-es";
 import { useImmer } from "use-immer";
 
 import RoughDivTable, { IRoughTableColumn } from "./rough-div-table";

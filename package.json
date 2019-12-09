@@ -1,6 +1,6 @@
 {
   "name": "@jimengio/rough-table",
-  "version": "0.2.8",
+  "version": "0.2.9-a1",
   "description": "",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -28,7 +28,7 @@
     "@jimengio/router-code-generator": "^0.2.5",
     "@jimengio/ruled-router": "^0.2.21",
     "@jimengio/shared-utils": "^0.1.5",
-    "@types/lodash": "^4.14.149",
+    "@types/lodash-es": "^4.17.3",
     "@types/node": "^12.12.14",
     "@types/prettier": "^1.19.0",
     "@types/react": "^16.9.13",
@@ -46,7 +46,6 @@
     "html-webpack-tags-plugin": "^2.0.17",
     "http-server": "^0.11.0",
     "immer": "^5.0.0",
-    "lodash": "^4.17.15",
     "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -74,6 +73,7 @@
     "react": "*"
   },
   "dependencies": {
+    "lodash-es": "^4.17.15",
     "use-immer": "^0.3.5"
   }
 }

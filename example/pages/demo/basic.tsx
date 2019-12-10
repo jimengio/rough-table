@@ -49,6 +49,10 @@ let resizeContent = `
 DivTable 用了 Flexbox 布局和 flex-basis 属性, 如果需要自定义 column 的宽度, 就需要配置  flex-basis.
 `;
 
+let contentLoading = `
+\`isLoading\` 属性可以用来控制显示加载状态.
+`;
+
 interface IData {
   code: string;
   name: any;
@@ -140,6 +144,8 @@ let DemoBasic: FC<{}> = (props) => {
             }}
           ></JimoButton>
         </div>
+        <Space height={8} />
+        <DocBlock content={contentLoading} />
         <Space height={8} />
         <RoughDivTable data={data} columns={columns} isLoading={isLoading} />
       </DocDemo>

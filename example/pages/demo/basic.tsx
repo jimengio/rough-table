@@ -1,10 +1,12 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { css } from "emotion";
 
 import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
 import RoughTable from "../../../src/rough-table";
 import { DocDemo, DocSnippet, DocBlock } from "@jimengio/doc-frame";
+import { JimoButton } from "@jimengio/jimo-basics";
+import { Space } from "@jimengio/flex-styles";
 
 let code = `
 let columns: IRoughTableColumn<IData>[] = [
@@ -110,6 +112,8 @@ let resizedColumns: IRoughTableColumn<IData>[] = [
 ];
 
 let DemoBasic: FC<{}> = (props) => {
+  let [isLoading, setLoading] = useState(false);
+
   return (
     <div className={styleContainer}>
       <DocDemo title="A very simple table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/basic.tsx">
@@ -125,6 +129,19 @@ let DemoBasic: FC<{}> = (props) => {
 
       <DocDemo title="Table with no data" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/basic.tsx">
         <RoughTable dataSource={[]} defineColumns={() => []} emptyLocale={"没有数据"} />
+      </DocDemo>
+
+      <DocDemo title="Loading state">
+        <div>
+          <JimoButton
+            text="Toggle"
+            onClick={() => {
+              setLoading(!isLoading);
+            }}
+          ></JimoButton>
+        </div>
+        <Space height={8} />
+        <RoughDivTable data={data} columns={columns} isLoading={isLoading} />
       </DocDemo>
     </div>
   );

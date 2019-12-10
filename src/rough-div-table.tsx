@@ -9,6 +9,8 @@ import { Pagination } from "antd";
 import { PaginationProps } from "antd/lib/pagination";
 import { ISimpleObject } from "./types";
 import NoDataTableBody, { mergeStyles, getWidthStyle, EmptyCell } from "./common";
+import { LoadingIndicator } from "@jimengio/jimo-basics";
+import { CSSTransition } from "react-transition-group";
 
 export interface IRoughTableColumn<T = ISimpleObject> {
   title: ReactNode;
@@ -45,6 +47,8 @@ type RoughDivTableProps<T = any> = FC<{
   /** Display empty symbol rather than set it transparent */
   showEmptySymbol?: boolean;
   wholeBorders?: boolean;
+
+  isLoading?: boolean;
 }>;
 
 let RoughDivTable: RoughDivTableProps = (props) => {
@@ -131,10 +135,15 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   }
 
   return (
-    <div className={cx(flex, column, props.wholeBorders ? styleWholeBorders : null, props.className)}>
+    <div className={cx(flex, column, styleTable, props.wholeBorders ? styleWholeBorders : null, props.className)}>
       {headElements}
       <div className={cx(styleBody, props.bodyClassName)}>{bodyElements}</div>
       {props.pageOptions != null ? renderPagination() : null}
+      <CSSTransition in={props.isLoading} timeout={200} classNames="fade-in-out" unmountOnExit>
+        <div className={cx(center, styleCover)}>
+          <LoadingIndicator />
+        </div>
+      </CSSTransition>
     </div>
   );
 };
@@ -198,4 +207,32 @@ let stylePageArea = css`
 /** requires Chrome 46 */
 let styleContentArea = css`
   min-width: max-content;
+`;
+
+let styleTable = css`
+  position: relative;
+
+  .fade-in-out-enter {
+    opacity: 0;
+  }
+  .fade-in-out-enter-active {
+    opacity: 1;
+    transition: opacity 200ms;
+  }
+  .fade-in-out-exit {
+    opacity: 1;
+  }
+  .fade-in-out-exit-active {
+    opacity: 0;
+    transition: opacity 200ms;
+  }
+`;
+
+let styleCover = css`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: hsla(0, 0%, 100%, 0.65);
 `;

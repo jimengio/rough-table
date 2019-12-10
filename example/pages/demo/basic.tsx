@@ -117,6 +117,7 @@ let resizedColumns: IRoughTableColumn<IData>[] = [
 
 let DemoBasic: FC<{}> = (props) => {
   let [isLoading, setLoading] = useState(false);
+  let [isEmpty, setEmpty] = useState(false);
 
   return (
     <div className={styleContainer}>
@@ -143,11 +144,19 @@ let DemoBasic: FC<{}> = (props) => {
               setLoading(!isLoading);
             }}
           ></JimoButton>
+          <Space width={8} />
+
+          <JimoButton
+            text="Empty"
+            onClick={() => {
+              setEmpty(!isEmpty);
+            }}
+          ></JimoButton>
         </div>
         <Space height={8} />
         <DocBlock content={contentLoading} />
         <Space height={8} />
-        <RoughDivTable data={data} columns={columns} isLoading={isLoading} />
+        <RoughDivTable data={isEmpty ? [] : data} columns={columns} isLoading={isLoading} />
       </DocDemo>
     </div>
   );

@@ -98,7 +98,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
     </div>
   );
 
-  let bodyElements: ReactNode = <NoDataTableBody emptyLocale={props.emptyLocale} />;
+  let bodyElements: ReactNode = props.isLoading ? <div className={styleLoadingEmpty} /> : <NoDataTableBody emptyLocale={props.emptyLocale} />;
 
   if (hasData) {
     bodyElements = props.data.map((record, idx) => {
@@ -235,4 +235,8 @@ let styleCover = css`
   height: 100%;
   width: 100%;
   background-color: hsla(0, 0%, 100%, 0.65);
+`;
+
+let styleLoadingEmpty = css`
+  min-height: 80px;
 `;

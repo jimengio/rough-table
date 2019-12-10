@@ -114,7 +114,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
           style={rowPaddingStyle}
           onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
         >
-          {props.columns.map((columnConfig, colIdx) => {
+          {columns.map((columnConfig, colIdx) => {
             let value = record[columnConfig.dataIndex as string];
             if (columnConfig.render != null) {
               value = columnConfig.render(value, record, idx);

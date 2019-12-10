@@ -3,7 +3,7 @@ import { css } from "emotion";
 
 import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
-import { DocDemo } from "@jimengio/doc-frame";
+import { DocDemo, DocSnippet, DocBlock } from "@jimengio/doc-frame";
 
 interface IData {
   code: string;
@@ -49,6 +49,8 @@ let DemoPaginated: FC<{}> = (props) => {
     <div className={styleContainer}>
       <DocDemo title="Paginated" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/paginated.tsx">
         <RoughDivTable data={data} columns={columns} rowPadding={24} pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }} />
+        <DocBlock content={content} />
+        <DocSnippet code={code} />
       </DocDemo>
     </div>
   );
@@ -57,3 +59,14 @@ let DemoPaginated: FC<{}> = (props) => {
 export default DemoPaginated;
 
 let styleContainer = null;
+
+let code = `
+<RoughDivTable
+  data={data} columns={columns} rowPadding={24}
+  pageOptions={{ current: 1, total: 100, pageSize: 10, onChange: (x) => {} }}
+/>
+`;
+
+let content = `
+分页组件是基于 antd 的 Pagination 组件.
+`;

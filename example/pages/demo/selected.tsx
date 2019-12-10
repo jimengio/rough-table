@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
-import { DocDemo } from "@jimengio/doc-frame";
+import { DocDemo, DocSidebar, DocSnippet } from "@jimengio/doc-frame";
 import { css } from "emotion";
 
 interface IData {
@@ -54,6 +54,8 @@ let DemoSelected: FC<{}> = (props) => {
           }}
           columns={columns}
         />
+
+        <DocSnippet code={codeSelected} />
       </DocDemo>
     </div>
   );
@@ -65,4 +67,18 @@ let styleContainer = null;
 
 let styleDemo = css`
   max-width: 800px;
+`;
+
+let codeSelected = `
+<RoughDivTable
+  data={data}
+  rowPadding={24}
+  wholeBorders
+  rowKey="code"
+  selectedKeys={[selected]}
+  onRowClick={(record) => {
+    setSelected(record.code);
+  }}
+  columns={columns}
+/>
 `;

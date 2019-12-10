@@ -18,6 +18,36 @@ let columns: IRoughTableColumn<IData>[] = [
 ];
 `;
 
+let resizeCode = `
+let resizedColumns: IRoughTableColumn<IData>[] = [
+  { title: "物料编号", dataIndex: "code", render: (item: IData["code"], record: IData) => item },
+  {
+    title: "名称",
+    style: {
+      flexBasis: "200px",
+    },
+    dataIndex: "name",
+    render: (item: IData["name"], record: IData) => item,
+  },
+  { title: "型号", dataIndex: "model", render: (item: IData["model"], record: IData) => item },
+  {
+    title: "操作",
+    style: {
+      flexBasis: "200px",
+    },
+    dataIndex: "model",
+    width: 80,
+    render: (item: any, record: IData) => <ActionLinks actions={actions} spaced />,
+  },
+];
+
+<RoughDivTable data={data} columns={resizedColumns} rowPadding={24} />
+`;
+
+let resizeContent = `
+特殊情况需要手动控制样式, 可以通过 \`style\` 属性来覆盖组件内自动生成的 \`flexBasis\` 数值.
+`;
+
 interface IData {
   code: string;
   name: any;
@@ -51,6 +81,28 @@ let actions: IActionLinkItem[] = [
   null,
 ];
 
+let resizedColumns: IRoughTableColumn<IData>[] = [
+  { title: "物料编号", dataIndex: "code", render: (item: IData["code"], record: IData) => item },
+  {
+    title: "名称",
+    style: {
+      flexBasis: "200px",
+    },
+    dataIndex: "name",
+    render: (item: IData["name"], record: IData) => item,
+  },
+  { title: "型号", dataIndex: "model", render: (item: IData["model"], record: IData) => item },
+  {
+    title: "操作",
+    style: {
+      flexBasis: "200px",
+    },
+    dataIndex: "model",
+    width: 80,
+    render: (item: any, record: IData) => <ActionLinks actions={actions} spaced />,
+  },
+];
+
 let columns: IRoughTableColumn<IData>[] = [
   { title: "物料编号", width: 80, dataIndex: "code" },
   { title: "名称", dataIndex: "name" },
@@ -70,6 +122,12 @@ let DemoColumnWidth: FC<{}> = React.memo((props) => {
         <DocSnippet code={code} />
 
         <RoughDivTable data={data} columns={columns} />
+      </DocDemo>
+
+      <DocDemo title="A very simple table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/basic.tsx">
+        <DocBlock content={resizeContent} />
+        <RoughDivTable data={data} columns={resizedColumns} rowPadding={24} />
+        <DocSnippet code={resizeCode} />
       </DocDemo>
     </div>
   );

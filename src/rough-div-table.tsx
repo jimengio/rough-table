@@ -9,6 +9,8 @@ import { Pagination } from "antd";
 import { PaginationProps } from "antd/lib/pagination";
 import { ISimpleObject } from "./types";
 import NoDataTableBody, { mergeStyles, getWidthStyle, EmptyCell } from "./common";
+import { LoadingIndicator } from "@jimengio/jimo-basics";
+import { CSSTransition } from "react-transition-group";
 
 export interface IRoughTableColumn<T = ISimpleObject> {
   title: ReactNode;
@@ -45,6 +47,8 @@ type RoughDivTableProps<T = any> = FC<{
   /** Display empty symbol rather than set it transparent */
   showEmptySymbol?: boolean;
   wholeBorders?: boolean;
+
+  isLoading?: boolean;
 }>;
 
 let RoughDivTable: RoughDivTableProps = (props) => {
@@ -85,7 +89,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
           <div
             key={idx}
             className={cx(styleCell, props.cellClassName, columnConfig.className)}
-            style={mergeStyles(columnConfig.style, getWidthStyle(columnConfig.width))}
+            style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style)}
           >
             {columnConfig.title || <EmptyCell showSymbol />}
           </div>
@@ -94,7 +98,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
     </div>
   );
 
-  let bodyElements: ReactNode = <NoDataTableBody emptyLocale={props.emptyLocale} />;
+  let bodyElements: ReactNode = props.isLoading ? <div className={styleLoadingEmpty} /> : <NoDataTableBody emptyLocale={props.emptyLocale} />;
 
   if (hasData) {
     bodyElements = props.data.map((record, idx) => {
@@ -110,7 +114,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
           style={rowPaddingStyle}
           onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
         >
-          {props.columns.map((columnConfig, colIdx) => {
+          {columns.map((columnConfig, colIdx) => {
             let value = record[columnConfig.dataIndex as string];
             if (columnConfig.render != null) {
               value = columnConfig.render(value, record, idx);
@@ -131,10 +135,15 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   }
 
   return (
-    <div className={cx(flex, column, props.wholeBorders ? styleWholeBorders : null, props.className)}>
+    <div className={cx(flex, column, styleTable, props.wholeBorders ? styleWholeBorders : null, props.className)}>
       {headElements}
       <div className={cx(styleBody, props.bodyClassName)}>{bodyElements}</div>
       {props.pageOptions != null ? renderPagination() : null}
+      <CSSTransition in={props.isLoading} timeout={200} classNames="fade-in-out" unmountOnExit>
+        <div className={cx(center, styleCover)}>
+          <LoadingIndicator />
+        </div>
+      </CSSTransition>
     </div>
   );
 };
@@ -198,4 +207,36 @@ let stylePageArea = css`
 /** requires Chrome 46 */
 let styleContentArea = css`
   min-width: max-content;
+`;
+
+let styleTable = css`
+  position: relative;
+
+  .fade-in-out-enter {
+    opacity: 0;
+  }
+  .fade-in-out-enter-active {
+    opacity: 1;
+    transition: opacity 200ms;
+  }
+  .fade-in-out-exit {
+    opacity: 1;
+  }
+  .fade-in-out-exit-active {
+    opacity: 0;
+    transition: opacity 200ms;
+  }
+`;
+
+let styleCover = css`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: hsla(0, 0%, 100%, 0.65);
+`;
+
+let styleLoadingEmpty = css`
+  min-height: 80px;
 `;

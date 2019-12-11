@@ -75,6 +75,12 @@ export let genRouter = {
     path: () => `/column-width`,
     go: () => switchPath(`/column-width`),
   },
+  loading: {
+    name: "loading",
+    raw: "loading",
+    path: () => `/loading`,
+    go: () => switchPath(`/loading`),
+  },
   $: {
     name: "home",
     raw: "",
@@ -94,6 +100,7 @@ export type GenRouterTypeMain =
   | GenRouterTypeTree["treeTable"]
   | GenRouterTypeTree["actionLinks"]
   | GenRouterTypeTree["columnWidth"]
+  | GenRouterTypeTree["loading"]
   | GenRouterTypeTree["$"];
 
 export interface GenRouterTypeTree {
@@ -153,6 +160,12 @@ export interface GenRouterTypeTree {
   };
   columnWidth: {
     name: "column-width";
+    params: {};
+    query: {};
+    next: null;
+  };
+  loading: {
+    name: "loading";
     params: {};
     query: {};
     next: null;

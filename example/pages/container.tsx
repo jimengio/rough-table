@@ -1,11 +1,9 @@
 import React, { FC, useState } from "react";
 import { css, cx } from "emotion";
 import { DocSidebar, ISidebarEntry } from "@jimengio/doc-frame";
-import { findRouteTarget } from "@jimengio/ruled-router/lib/dom";
+import { findRouteTarget, HashRedirect } from "@jimengio/ruled-router/lib/dom";
 
 import "antd/dist/antd.css";
-
-import Home from "./home";
 
 import { row, fullscreen, expand } from "@jimengio/shared-utils";
 import { genRouter, GenRouterTypeMain } from "controller/generated-router";
@@ -19,6 +17,7 @@ import DemoTall from "./demo/tall";
 import DemoTreeTable from "./demo/tree-table";
 import DemoActionLinks from "./demo/action-links";
 import DemoColumnWidth from "./demo/column-width";
+import DemoLoading from "./demo/loading";
 
 const renderBody = (routerTree: GenRouterTypeMain) => {
   switch (routerTree?.name) {
@@ -40,8 +39,10 @@ const renderBody = (routerTree: GenRouterTypeMain) => {
       return <DemoActionLinks />;
     case "column-width":
       return <DemoColumnWidth />;
+    case "loading":
+      return <DemoLoading />;
     case "home":
-      return <Home />;
+      return <HashRedirect to={genRouter.basic.path()} noDelay />;
   }
   return <div>NOTHING</div>;
 };
@@ -52,20 +53,32 @@ let entries: ISidebarEntry[] = [
     path: genRouter.basic.name,
   },
   {
-    title: "Selected",
-    path: genRouter.selected.name,
-  },
-  {
     title: "Column Width",
     path: genRouter.columnWidth.name,
   },
   {
-    title: "Whole borders",
-    path: genRouter.wholeBorders.name,
+    title: "Loading",
+    path: genRouter.loading.name,
+  },
+  {
+    title: "Selected",
+    path: genRouter.selected.name,
   },
   {
     title: "Paginated",
     path: genRouter.paginated.name,
+  },
+  {
+    title: "Action Links",
+    path: genRouter.actionLinks.name,
+  },
+  {
+    title: "Tree Table",
+    path: genRouter.treeTable.name,
+  },
+  {
+    title: "Whole borders",
+    path: genRouter.wholeBorders.name,
   },
   {
     title: "Wide",
@@ -74,14 +87,6 @@ let entries: ISidebarEntry[] = [
   {
     title: "Tall",
     path: genRouter.tall.name,
-  },
-  {
-    title: "Tree Table",
-    path: genRouter.treeTable.name,
-  },
-  {
-    title: "Action Links",
-    path: genRouter.actionLinks.name,
   },
 ];
 

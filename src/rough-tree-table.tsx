@@ -46,6 +46,8 @@ type RoughTreeTableProps<T = any> = FC<{
   /** Display empty symbol rather than set it transparent */
   showEmptySymbol?: boolean;
   wholeBorders?: boolean;
+
+  isLoading?: boolean;
 }>;
 
 let expandChildren = (xs: IItemWithChildren<any>[], path: number[], foldingState: ISimpleObject): any[] => {

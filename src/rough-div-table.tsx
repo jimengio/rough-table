@@ -157,6 +157,8 @@ const styleCell = css`
   flex-shrink: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
 `;
 
 const styleHeaderBar = css`

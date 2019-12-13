@@ -28,7 +28,7 @@ interface IData {
 }
 
 let data: IData[] = [
-  { code: "001", name: "螺丝", model: "DDR6", source: "外购", type: "产品" },
+  { code: "001", name: "螺丝", model: "DDR6 DDR7 DDR8 DDR9 DDR10 DDR11 DDR12 DDR13 DDR14", source: "外购", type: "产品" },
   { code: "003", name: "扳手", model: "DDR6", source: "外购", type: "产品" },
   { code: "004", name: "堵头", model: "33-36", source: "外购", type: "产品" },
   { code: "044", name: "软管", model: "HO", source: "外购", type: "产品" },

@@ -9,7 +9,7 @@ let columns: IRoughTableColumn[] = [
     dataIndex: "name",
     title: "Name",
     render: (value) => {
-      return <span className={styleLink}>value</span>;
+      return <span className={styleLink}>{value}</span>;
     },
   },
   {
@@ -42,6 +42,9 @@ let treeData: IItemWithChildren<IData>[] = [
         children: [
           {
             item: { name: "C", description: "C is like c" },
+          },
+          {
+            item: { name: "G can be very long content with width exceeding the cell prepared for the value", description: "G is like g" },
           },
         ],
       },
@@ -79,7 +82,7 @@ let columns: IRoughTableColumn[] = [
     dataIndex: "name",
     title: "Name",
     render: (value) => {
-      return <span className={styleLink}>value</span>;
+      return <span className={styleLink}>{value}</span>;
     },
   },
   {

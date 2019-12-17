@@ -1,11 +1,11 @@
 import React, { FC, useState, ReactNode } from "react";
-import { css } from "emotion";
+import { css, cx } from "emotion";
 import { flatMap } from "lodash-es";
 import { useImmer } from "use-immer";
 
 import RoughDivTable, { IRoughTableColumn } from "./rough-div-table";
 import { PaginationProps } from "antd/lib/pagination";
-import { Space } from "@jimengio/flex-styles";
+import { Space, row, rowMiddle } from "@jimengio/flex-styles";
 import { ISimpleObject } from "./types";
 
 export interface IRoughTreeTableColumn<T> extends IRoughTableColumn<T> {
@@ -125,7 +125,7 @@ let RoughTreeTable: RoughTreeTableProps = React.memo((props) => {
       }
 
       return (
-        <div>
+        <div className={cx(rowMiddle, styleCell)}>
           <div style={{ width: (treePath.length - 1) * 28 }} className={styleSpace} />
           <span
             className={styleFold}
@@ -161,4 +161,8 @@ let styleFold = css`
   font-size: 12px;
   display: inline-block;
   width: 16px;
+`;
+
+let styleCell = css`
+  max-width: 100%;
 `;

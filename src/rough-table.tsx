@@ -7,7 +7,7 @@ import produce from "immer";
 import { css, cx } from "emotion";
 import { center, column, flex, rowParted } from "@jimengio/shared-utils";
 import { isFunction, some } from "@jimengio/shared-utils";
-import { Pagination } from "antd";
+import Pagination from "antd/lib/pagination";
 import Space from "./space";
 import { PaginationProps } from "antd/lib/pagination";
 import NoDataTableBody from "./common";

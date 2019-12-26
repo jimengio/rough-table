@@ -1,5 +1,6 @@
 import React, { FC, useState } from "react";
 import { css } from "emotion";
+import Switch from "antd/lib/switch";
 
 import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
@@ -7,6 +8,7 @@ import RoughTable from "../../../src/rough-table";
 import { DocDemo, DocSnippet, DocBlock } from "@jimengio/doc-frame";
 import { JimoButton } from "@jimengio/jimo-basics";
 import { Space } from "@jimengio/flex-styles";
+import produce from "immer";
 
 let code = `
 let columns: IRoughTableColumn<IData>[] = [
@@ -17,6 +19,15 @@ let columns: IRoughTableColumn<IData>[] = [
 ];
 
 <RoughDivTable data={data} columns={columns} rowPadding={24} />
+`;
+
+let codeHidden = `
+{
+  title: "物料编号",
+  hidden: isHidden, // 显示/隐藏
+  dataIndex: "code",
+  render: (item: IData["code"], record: IData) => item
+},
 `;
 
 interface IData {
@@ -60,11 +71,27 @@ let columns: IRoughTableColumn<IData>[] = [
 ];
 
 let DemoBasic: FC<{}> = (props) => {
+  let [hideColumn, setHideColumn] = useState(false);
+  let mightHiddenColumns = produce(columns, (draft) => {
+    draft[0].hidden = hideColumn;
+  });
+
   return (
     <div className={styleContainer}>
       <DocDemo title="A very simple table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/basic.tsx">
         <RoughDivTable data={data} columns={columns} rowPadding={24} />
         <DocSnippet code={code} />
+      </DocDemo>
+
+      <DocDemo title="Hide column">
+        <div>
+          隐藏第一列
+          <Space width={8} />
+          <Switch checked={hideColumn} onChange={(checked) => setHideColumn(checked)} />
+        </div>
+        <Space height={16} />
+        <RoughDivTable data={data} columns={mightHiddenColumns} rowPadding={24} />
+        <DocSnippet code={codeHidden} />
       </DocDemo>
 
       <DocDemo title="Table with no data" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/basic.tsx">

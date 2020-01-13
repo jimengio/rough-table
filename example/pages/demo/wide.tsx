@@ -2,9 +2,9 @@ import React, { FC } from "react";
 import { css, cx } from "emotion";
 
 import ScrollDivTable from "../../../src/scroll-div-table";
-import { IRoughTableColumn } from "../../../src/rough-div-table";
+import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
 import { fullHeight, flex, column } from "@jimengio/shared-utils";
-import { DocDemo } from "@jimengio/doc-frame";
+import { DocDemo, DocBlock } from "@jimengio/doc-frame";
 
 let countMany = Array.from({ length: 100 }, (_, n) => n);
 
@@ -54,6 +54,7 @@ let DemoWide: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
       <DocDemo title="内容横向滚动" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/wide.tsx">
+        <DocBlock content={content} />
         <div className={cx(column, styleTallArea)}>
           <ScrollDivTable
             className={flex}
@@ -66,8 +67,16 @@ let DemoWide: FC<{}> = (props) => {
       </DocDemo>
 
       <DocDemo title="body 部分上下左右滚动(目前头部也发生滚动)" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/wide.tsx">
+        <DocBlock content={content} />
         <div className={styleRestricted}>
           <ScrollDivTable className={cx(fullHeight)} data={data2} columns={columns} rowPadding={24} pageOptions={{}} />
+        </div>
+      </DocDemo>
+
+      <DocDemo title="DivTable">
+        <DocBlock content={contentDivTable} />
+        <div className={styleRestricted}>
+          <RoughDivTable className={cx(fullHeight)} data={data2} columns={columns} rowPadding={24} pageOptions={null} />
         </div>
       </DocDemo>
     </div>
@@ -84,4 +93,12 @@ let styleRestricted = css`
 
 let styleTallArea = css`
   height: 600px;
+`;
+
+let content = `
+ScrollDivTable
+`;
+
+let contentDivTable = `
+DivTable 在宽度过大的时候也要支持横向滚动.
 `;

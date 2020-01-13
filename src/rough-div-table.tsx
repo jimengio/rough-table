@@ -2,7 +2,7 @@
  * to render data with plenty of columns, use ScrollTable
  */
 
-import React, { FC, ReactNode, CSSProperties } from "react";
+import React, { FC, ReactNode, CSSProperties, useRef } from "react";
 import { css, cx } from "emotion";
 import { center, column, flex, rowParted, row, expand } from "@jimengio/shared-utils";
 import Pagination from "antd/lib/pagination";
@@ -52,7 +52,16 @@ type RoughDivTableProps<T = any> = FC<{
 }>;
 
 let RoughDivTable: RoughDivTableProps = (props) => {
+  let scrollRef = useRef<HTMLDivElement>();
+  let headerRef = useRef<HTMLDivElement>();
+
   /** Methods */
+
+  let handleScroll = () => {
+    let leftOffset = scrollRef.current.scrollLeft;
+    headerRef.current.scrollLeft = leftOffset;
+  };
+
   /** Effects */
   /** Renderers */
 
@@ -83,7 +92,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   }
 
   let headElements = (
-    <div className={cx(row, styleRow, styleHeaderBar)} style={rowPaddingStyle}>
+    <div className={cx(row, styleRow, styleHeaderBar)} style={rowPaddingStyle} ref={headerRef}>
       {columns.map((columnConfig, idx) => {
         return (
           <div
@@ -137,7 +146,9 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   return (
     <div className={cx(flex, column, styleTable, props.wholeBorders ? styleWholeBorders : null, props.className)}>
       {headElements}
-      <div className={cx(styleBody, props.bodyClassName)}>{bodyElements}</div>
+      <div ref={scrollRef} className={cx(styleBody, props.bodyClassName)} onScroll={(event) => handleScroll()}>
+        {bodyElements}
+      </div>
       {props.pageOptions != null ? renderPagination() : null}
       <CSSTransition in={props.isLoading} timeout={200} classNames="fade-in-out" unmountOnExit>
         <div className={cx(center, styleCover)}>
@@ -166,6 +177,7 @@ const styleHeaderBar = css`
   background-color: #f2f2f2;
   border: none;
   border-bottom: 1px solid #e5e5e5;
+  overflow: hidden;
 
   &:hover {
     background-color: #f2f2f2;

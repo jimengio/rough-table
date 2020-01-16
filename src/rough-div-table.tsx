@@ -70,7 +70,10 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   };
 
   let checkRowWidth = () => {
-    let someMinWidth = headerRef.current.scrollWidth;
+    let someMinWidth: number;
+    if (headerRef.current.scrollWidth > headerRef.current.clientWidth) {
+      someMinWidth = headerRef.current.scrollWidth;
+    }
     setRowMinWidth(someMinWidth);
   };
 

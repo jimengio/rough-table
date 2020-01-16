@@ -67,6 +67,8 @@ let columns: IRoughTableColumn<IData>[] = [
   { title: "物料编号", dataIndex: "code", render: (item: IData["code"], record: IData) => item },
   { title: "名称", dataIndex: "name", render: (item: IData["name"], record: IData) => item },
   { title: "型号", dataIndex: "model", render: (item: IData["model"], record: IData) => item },
+  { title: "型号", dataIndex: "model", render: (item: IData["model"], record: IData) => item },
+  { title: "型号", dataIndex: "model", render: (item: IData["model"], record: IData) => item },
   { title: "操作", dataIndex: "model", width: 80, render: (item: any, record: IData) => <ActionLinks actions={actions} spaced /> },
 ];
 
@@ -79,7 +81,7 @@ let DemoBasic: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
       <DocDemo title="A very simple table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/basic.tsx">
-        <RoughDivTable data={data} columns={columns} rowPadding={24} />
+        <RoughDivTable data={data} columns={columns} rowPadding={24} watchRowResizing />
         <DocSnippet code={code} />
       </DocDemo>
 

@@ -4,31 +4,7 @@ import Switch from "antd/lib/switch";
 
 import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
-import RoughTable from "../../../src/rough-table";
 import { DocDemo, DocSnippet, DocBlock } from "@jimengio/doc-frame";
-import { JimoButton } from "@jimengio/jimo-basics";
-import { Space } from "@jimengio/flex-styles";
-import produce from "immer";
-
-let code = `
-let columns: IRoughTableColumn<IData>[] = [
-  { title: "物料编号", dataIndex: "code", render: (item: IData["code"], record: IData) => item },
-  { title: "名称", dataIndex: "name", render: (item: IData["name"], record: IData) => item },
-  { title: "型号", dataIndex: "model", render: (item: IData["model"], record: IData) => item },
-  { title: "操作", dataIndex: "model", width: 80, render: (item: any, record: IData) => <ActionLinks actions={actions} spaced /> },
-];
-
-<RoughDivTable data={data} columns={columns} rowPadding={24} />
-`;
-
-let codeHidden = `
-{
-  title: "物料编号",
-  hidden: isHidden, // 显示/隐藏
-  dataIndex: "code",
-  render: (item: IData["code"], record: IData) => item
-},
-`;
 
 interface IData {
   code: string;
@@ -66,41 +42,39 @@ let actions: IActionLinkItem[] = [
 let columns: IRoughTableColumn<IData>[] = [
   { title: "物料编号", dataIndex: "code", render: (item: IData["code"], record: IData) => item },
   { title: "名称", dataIndex: "name", render: (item: IData["name"], record: IData) => item },
+  { title: "名称", dataIndex: "name", render: (item: IData["name"], record: IData) => item },
+  { title: "名称", dataIndex: "name", render: (item: IData["name"], record: IData) => item },
+  { title: "名称", dataIndex: "name", render: (item: IData["name"], record: IData) => item },
+  { title: "名称", dataIndex: "name", render: (item: IData["name"], record: IData) => item },
   { title: "型号", dataIndex: "model", render: (item: IData["model"], record: IData) => item },
   { title: "操作", dataIndex: "model", width: 80, render: (item: any, record: IData) => <ActionLinks actions={actions} spaced /> },
 ];
 
-let DemoBasic: FC<{}> = (props) => {
-  let [hideColumn, setHideColumn] = useState(false);
-  let mightHiddenColumns = produce(columns, (draft) => {
-    draft[0].hidden = hideColumn;
-  });
-
+let DemoRowResizing: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
       <DocDemo title="A very simple table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/basic.tsx">
-        <RoughDivTable data={data} columns={columns} rowPadding={24} />
+        <DocBlock content={content} />
         <DocSnippet code={code} />
       </DocDemo>
-
-      <DocDemo title="Hide column">
-        <div>
-          隐藏第一列
-          <Space width={8} />
-          <Switch checked={hideColumn} onChange={(checked) => setHideColumn(checked)} />
-        </div>
-        <Space height={16} />
-        <RoughDivTable data={data} columns={mightHiddenColumns} rowPadding={24} />
-        <DocSnippet code={codeHidden} />
-      </DocDemo>
-
-      <DocDemo title="Table with no data" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/basic.tsx">
-        <RoughTable dataSource={[]} defineColumns={() => []} emptyLocale={"没有数据"} />
-      </DocDemo>
+      <RoughDivTable data={data} columns={columns} rowPadding={24} watchRowResizing />
     </div>
   );
 };
 
-export default DemoBasic;
+export default DemoRowResizing;
 
 let styleContainer = null;
+
+let code = `
+<RoughDivTable data={data} columns={columns} rowPadding={24}
+               watchRowResizing />
+`;
+
+let content = `
+DivTable 采用 Flexbox 布局, 但是存在一个 [row container 无法正常撑开的问题](https://stackoverflow.com/q/20984488/883571). 当前的临时方案是通过 \`watchRowResizing\` 属性进行控制. 启用之后会对 resize 事件进行监听, 检测布局强行进行修正.
+
+看原理, 这个方案是比较可能存在性能问题的. 除非宽度明显不够, 不建议用. 并且, 表格不建议设计成容易出现横向滚动条的样子.
+
+(缩放窗口宽度来查看效果.)
+`;

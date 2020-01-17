@@ -51,6 +51,12 @@ export let genRouter = {
     path: () => `/wide`,
     go: () => switchPath(`/wide`),
   },
+  rowResizing: {
+    name: "row-resizing",
+    raw: "row-resizing",
+    path: () => `/row-resizing`,
+    go: () => switchPath(`/row-resizing`),
+  },
   tall: {
     name: "tall",
     raw: "tall",
@@ -96,6 +102,7 @@ export type GenRouterTypeMain =
   | GenRouterTypeTree["wholeBorders"]
   | GenRouterTypeTree["home"]
   | GenRouterTypeTree["wide"]
+  | GenRouterTypeTree["rowResizing"]
   | GenRouterTypeTree["tall"]
   | GenRouterTypeTree["treeTable"]
   | GenRouterTypeTree["actionLinks"]
@@ -136,6 +143,12 @@ export interface GenRouterTypeTree {
   };
   wide: {
     name: "wide";
+    params: {};
+    query: {};
+    next: null;
+  };
+  rowResizing: {
+    name: "row-resizing";
     params: {};
     query: {};
     next: null;

@@ -2,7 +2,7 @@
  * to render data with plenty of columns, use ScrollTable
  */
 
-import React, { FC, ReactNode, CSSProperties, useRef } from "react";
+import React, { FC, ReactNode, CSSProperties, useRef, useState, useEffect } from "react";
 import { css, cx } from "emotion";
 import { center, column, flex, rowParted, row, expand } from "@jimengio/shared-utils";
 import Pagination from "antd/lib/pagination";
@@ -49,11 +49,18 @@ type RoughDivTableProps<T = any> = FC<{
   wholeBorders?: boolean;
 
   isLoading?: boolean;
+
+  /** detect and watch row width, try to make sure container div covers the whole row.
+   * watching window resize might casuse performance issues. be careful in using.
+   */
+  watchRowResizing?: boolean;
 }>;
 
 let RoughDivTable: RoughDivTableProps = (props) => {
   let scrollRef = useRef<HTMLDivElement>();
   let headerRef = useRef<HTMLDivElement>();
+
+  let [rowMinWidth, setRowMinWidth] = useState(0);
 
   /** Methods */
 
@@ -62,7 +69,34 @@ let RoughDivTable: RoughDivTableProps = (props) => {
     headerRef.current.scrollLeft = leftOffset;
   };
 
+  let checkRowWidth = () => {
+    let someMinWidth: number;
+    if (headerRef.current.scrollWidth > headerRef.current.clientWidth) {
+      someMinWidth = headerRef.current.scrollWidth;
+    }
+    setRowMinWidth(someMinWidth);
+  };
+
   /** Effects */
+
+  useEffect(() => {
+    if (props.watchRowResizing) {
+      checkRowWidth();
+    }
+  });
+
+  useEffect(() => {
+    if (props.watchRowResizing) {
+      let onResize = () => {
+        checkRowWidth();
+      };
+      window.addEventListener("resize", onResize);
+      return () => {
+        window.removeEventListener("resize", onResize);
+      };
+    }
+  }, []);
+
   /** Renderers */
 
   let renderPagination = () => {
@@ -86,7 +120,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
 
   let hasData = props.data.length > 0;
 
-  let rowPaddingStyle = {};
+  let rowPaddingStyle: CSSProperties = {};
   if (rowPadding != null) {
     rowPaddingStyle = { paddingLeft: rowPadding, paddingRight: rowPadding };
   }
@@ -120,7 +154,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
         <div
           key={idx}
           className={cx(row, styleRow, props.onRowClick != null && styleCursorPointer, rowClassName)}
-          style={rowPaddingStyle}
+          style={Object.assign({ minWidth: rowMinWidth }, rowPaddingStyle)}
           onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
         >
           {columns.map((columnConfig, colIdx) => {
@@ -193,7 +227,6 @@ const styleBody = css`
 const styleRow = css`
   padding-left: 80px;
   border-bottom: 1px solid #e5e5e5;
-
   width: 100%;
 
   &:hover {

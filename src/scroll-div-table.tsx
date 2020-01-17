@@ -1,5 +1,6 @@
 /** Table which supports horizontal scrolling.
  * code splitted from DivTable
+ * cellWidth are limited to numbers for calculating sizes
  */
 
 import React, { ReactNode, FC, CSSProperties, useRef } from "react";

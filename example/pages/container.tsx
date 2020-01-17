@@ -18,6 +18,7 @@ import DemoTreeTable from "./demo/tree-table";
 import DemoActionLinks from "./demo/action-links";
 import DemoColumnWidth from "./demo/column-width";
 import DemoLoading from "./demo/loading";
+import DemoRowResizing from "./demo/row-resizing";
 
 const renderBody = (routerTree: GenRouterTypeMain) => {
   switch (routerTree?.name) {
@@ -31,6 +32,8 @@ const renderBody = (routerTree: GenRouterTypeMain) => {
       return <DemoSelected />;
     case "wide":
       return <DemoWide />;
+    case "row-resizing":
+      return <DemoRowResizing />;
     case "tall":
       return <DemoTall />;
     case "tree-table":
@@ -83,6 +86,10 @@ let entries: ISidebarEntry[] = [
   {
     title: "Wide",
     path: genRouter.wide.name,
+  },
+  {
+    title: "Row resizing",
+    path: genRouter.rowResizing.name,
   },
   {
     title: "Tall",

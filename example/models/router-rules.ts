@@ -7,6 +7,7 @@ export const routerRules: IRouteRule[] = [
   { path: "whole-borders" },
   { path: "home" },
   { path: "wide" },
+  { path: "row-resizing" },
   { path: "tall" },
   { path: "tree-table" },
   { path: "action-links" },

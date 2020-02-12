@@ -53,47 +53,58 @@ const renderBody = (routerTree: GenRouterTypeMain) => {
 let entries: ISidebarEntry[] = [
   {
     title: "Basic",
+    cnTitle: "基础功能",
     path: genRouter.basic.name,
   },
   {
     title: "Column Width",
+    cnTitle: "定制列宽度",
     path: genRouter.columnWidth.name,
   },
   {
     title: "Loading",
+    cnTitle: "加载动画",
     path: genRouter.loading.name,
   },
   {
-    title: "Selected",
+    title: "Selected row",
+    cnTitle: "选中行",
     path: genRouter.selected.name,
   },
   {
+    title: "Row resizing",
+    cnTitle: "行宽跟随宽度调整",
+    path: genRouter.rowResizing.name,
+  },
+  {
     title: "Paginated",
+    cnTitle: "分页",
     path: genRouter.paginated.name,
   },
   {
     title: "Action Links",
+    cnTitle: "链接演示",
     path: genRouter.actionLinks.name,
   },
   {
     title: "Tree Table",
+    cnTitle: "树形表格",
     path: genRouter.treeTable.name,
   },
   {
     title: "Whole borders",
+    cnTitle: "全包围的边框",
     path: genRouter.wholeBorders.name,
   },
   {
-    title: "Wide",
-    path: genRouter.wide.name,
-  },
-  {
-    title: "Row resizing",
-    path: genRouter.rowResizing.name,
-  },
-  {
     title: "Tall",
+    cnTitle: "纵向滚动",
     path: genRouter.tall.name,
+  },
+  {
+    title: "Wide",
+    cnTitle: "超宽的横向滚动",
+    path: genRouter.wide.name,
   },
 ];
 

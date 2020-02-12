@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
-import { DocDemo, DocSidebar, DocSnippet } from "@jimengio/doc-frame";
+import { DocDemo, DocSidebar, DocSnippet, DocBlock } from "@jimengio/doc-frame";
 import { css } from "emotion";
 
 interface IData {
@@ -30,8 +30,8 @@ let DemoSelected: FC<{}> = (props) => {
   let [selected, setSelected] = useState<string>(null);
 
   let columns: IRoughTableColumn<IData>[] = [
-    { title: "物料编号", dataIndex: "code", render: (item: IData["code"], record: IData) => item },
-    { title: "名称", dataIndex: "name", render: (item: IData["name"], record: IData) => item },
+    { title: "物料编号", dataIndex: "code" },
+    { title: "名称", dataIndex: "name" },
     { title: "型号", dataIndex: "model", render: (item: IData["model"], record: IData) => item },
     { title: "操作", dataIndex: "model", width: 80, render: (item: any, record: IData) => <ActionLinks actions={actions} spaced /> },
   ];
@@ -43,6 +43,9 @@ let DemoSelected: FC<{}> = (props) => {
         title={"Table with selectable rows"}
         link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/selected.tsx"
       >
+        <DocBlock content={contentSelected} />
+        <DocSnippet code={codeSelected} />
+
         <RoughDivTable
           data={data}
           rowPadding={24}
@@ -54,8 +57,6 @@ let DemoSelected: FC<{}> = (props) => {
           }}
           columns={columns}
         />
-
-        <DocSnippet code={codeSelected} />
       </DocDemo>
     </div>
   );
@@ -82,3 +83,5 @@ let codeSelected = `
   columns={columns}
 />
 `;
+
+let contentSelected = "`selectedKeys` 可以用来标记选中行. ";

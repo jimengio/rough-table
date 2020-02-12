@@ -5,7 +5,7 @@ import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
 import { fullHeight } from "@jimengio/shared-utils";
 import ScrollDivTable from "../../../src/scroll-div-table";
-import { DocDemo } from "@jimengio/doc-frame";
+import { DocDemo, DocSnippet, DocBlock } from "@jimengio/doc-frame";
 
 interface IData {
   code: string;
@@ -43,6 +43,7 @@ let DemoTall: FC<{}> = (props) => {
   return (
     <div>
       <DocDemo title="Table 中 body 部分上下滚动" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/tall.tsx">
+        <DocBlock content={content} />
         <div className={styleContainer}>
           <RoughDivTable className={cx(fullHeight)} data={data} columns={columns} rowPadding={24} pageOptions={{}} />
         </div>
@@ -56,3 +57,5 @@ export default DemoTall;
 let styleContainer = css`
   height: 600px;
 `;
+
+let content = `RoughDivTable 支持 body 区域上下滚动. 横向滚动参考 Row Resizing 章节当中用的配置.`;

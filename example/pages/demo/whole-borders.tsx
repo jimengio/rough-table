@@ -1,9 +1,11 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { css } from "emotion";
 
 import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
-import { DocDemo } from "@jimengio/doc-frame";
+import { DocDemo, DocBlock, DocSnippet } from "@jimengio/doc-frame";
+import { JimoButton } from "@jimengio/jimo-basics";
+import { Space } from "@jimengio/flex-styles";
 
 interface IData {
   code: string;
@@ -38,9 +40,11 @@ let actions: IActionLinkItem[] = [
 ];
 
 let DemoWholeBorders: FC<{}> = (props) => {
+  let [whole, setWhole] = useState(true);
+
   let columns: IRoughTableColumn<IData>[] = [
-    { title: "物料编号", dataIndex: "code", render: (item: IData["code"], record: IData) => item },
-    { title: "名称", dataIndex: "name", render: (item: IData["name"], record: IData) => item },
+    { title: "物料编号", dataIndex: "code" },
+    { title: "名称", dataIndex: "name" },
     { title: "型号", dataIndex: "model", render: (item: IData["model"], record: IData) => item },
     { title: "操作", dataIndex: "model", width: 80, render: (item: any, record: IData) => <ActionLinks actions={actions} spaced /> },
   ];
@@ -48,7 +52,13 @@ let DemoWholeBorders: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
       <DocDemo title="Table with borders on all edges" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/whole-borders.tsx">
-        <RoughDivTable data={data} columns={columns} rowPadding={24} wholeBorders />
+        <DocBlock content={content} />
+        <div>
+          <JimoButton text={"Whole / Partial"} onClick={() => setWhole(!whole)} />
+        </div>
+        <DocSnippet code={code} />
+        <Space height={16} />
+        <RoughDivTable data={data} columns={columns} rowPadding={24} wholeBorders={whole} />
       </DocDemo>
     </div>
   );
@@ -57,3 +67,8 @@ let DemoWholeBorders: FC<{}> = (props) => {
 export default DemoWholeBorders;
 
 let styleContainer = null;
+
+let content = `默认只有上下有边框, 通过参数开启全局边框.`;
+
+let code = `<RoughDivTable data={data} columns={columns} rowPadding={24}
+                           wholeBorders={true} />`;

@@ -12,8 +12,8 @@ import produce from "immer";
 
 let code = `
 let columns: IRoughTableColumn<IData>[] = [
-  { title: "物料编号", dataIndex: "code", render: (item: IData["code"], record: IData) => item },
-  { title: "名称", dataIndex: "name", render: (item: IData["name"], record: IData) => item },
+  { title: "物料编号", dataIndex: "code" },
+  { title: "名称", dataIndex: "name" },
   { title: "型号", dataIndex: "model", render: (item: IData["model"], record: IData) => item },
   { title: "操作", dataIndex: "model", width: 80, render: (item: any, record: IData) => <ActionLinks actions={actions} spaced /> },
 ];
@@ -64,8 +64,8 @@ let actions: IActionLinkItem[] = [
 ];
 
 let columns: IRoughTableColumn<IData>[] = [
-  { title: "物料编号", dataIndex: "code", render: (item: IData["code"], record: IData) => item },
-  { title: "名称", dataIndex: "name", render: (item: IData["name"], record: IData) => item },
+  { title: "物料编号", dataIndex: "code" },
+  { title: "名称", dataIndex: "name" },
   { title: "型号", dataIndex: "model", render: (item: IData["model"], record: IData) => item },
   { title: "操作", dataIndex: "model", width: 80, render: (item: any, record: IData) => <ActionLinks actions={actions} spaced /> },
 ];
@@ -79,8 +79,9 @@ let DemoBasic: FC<{}> = (props) => {
   return (
     <div className={styleContainer}>
       <DocDemo title="A very simple table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/basic.tsx">
-        <RoughDivTable data={data} columns={columns} rowPadding={24} />
+        <DocBlock content={contentBasic} />
         <DocSnippet code={code} />
+        <RoughDivTable data={data} columns={columns} rowPadding={24} />
       </DocDemo>
 
       <DocDemo title="Hide column">
@@ -89,12 +90,13 @@ let DemoBasic: FC<{}> = (props) => {
           <Space width={8} />
           <Switch checked={hideColumn} onChange={(checked) => setHideColumn(checked)} />
         </div>
+        <DocSnippet code={codeHidden} />
         <Space height={16} />
         <RoughDivTable data={data} columns={mightHiddenColumns} rowPadding={24} />
-        <DocSnippet code={codeHidden} />
       </DocDemo>
 
       <DocDemo title="Table with no data" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/basic.tsx">
+        <DocBlock content={emptyContent} />
         <RoughTable dataSource={[]} defineColumns={() => []} emptyLocale={"没有数据"} />
       </DocDemo>
     </div>
@@ -104,3 +106,7 @@ let DemoBasic: FC<{}> = (props) => {
 export default DemoBasic;
 
 let styleContainer = null;
+
+let emptyContent = `无数据时显示.`;
+
+let contentBasic = `显示一个简单的表格`;

@@ -45,8 +45,8 @@ let actions: IActionLinkItem[] = [
 ];
 
 let columns: IRoughTableColumn<IData>[] = [
-  { title: "物料编号", dataIndex: "code", render: (item: IData["code"], record: IData) => item },
-  { title: "名称", dataIndex: "name", render: (item: IData["name"], record: IData) => item },
+  { title: "物料编号", dataIndex: "code" },
+  { title: "名称", dataIndex: "name" },
   { title: "型号", dataIndex: "model", render: (item: IData["model"], record: IData) => item },
   { title: "操作", dataIndex: "model", width: 80, render: (item: any, record: IData) => <ActionLinks actions={actions} spaced /> },
 ];
@@ -59,24 +59,25 @@ let DemoLoading: FC<{}> = (props) => {
     <div className={styleContainer}>
       <DocDemo title="Loading state">
         <div>
+          <DocBlock content={contentLoading} />
+
           <JimoButton
-            text="Toggle"
+            text="Loading / Loaded"
             onClick={() => {
               setLoading(!isLoading);
             }}
           ></JimoButton>
+
           <Space width={8} />
 
           <JimoButton
-            text="Empty"
+            text="Empty / Has data"
             onClick={() => {
               setEmpty(!isEmpty);
             }}
           ></JimoButton>
         </div>
-        <Space height={8} />
-        <DocBlock content={contentLoading} />
-        <Space height={8} />
+        <Space height={16} />
         <RoughDivTable data={isEmpty ? [] : data} columns={columns} isLoading={isLoading} />
       </DocDemo>
     </div>

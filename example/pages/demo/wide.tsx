@@ -96,7 +96,7 @@ let styleTallArea = css`
 `;
 
 let content = `
-ScrollDivTable
+对于数据量较大的表格用 \`<ScrollDivTable />\` 来特殊处理横向纵向的滚动.(目前没有进行虚拟化, 也推荐使用支持虚拟化的 Table 组件.)
 `;
 
 let contentDivTable = `

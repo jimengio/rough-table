@@ -19,6 +19,7 @@ import DemoActionLinks from "./demo/action-links";
 import DemoColumnWidth from "./demo/column-width";
 import DemoLoading from "./demo/loading";
 import DemoRowResizing from "./demo/row-resizing";
+import DemoConfigure from "./demo/configure";
 
 const renderBody = (routerTree: GenRouterTypeMain) => {
   switch (routerTree?.name) {
@@ -44,6 +45,8 @@ const renderBody = (routerTree: GenRouterTypeMain) => {
       return <DemoColumnWidth />;
     case "loading":
       return <DemoLoading />;
+    case "configure":
+      return <DemoConfigure />;
     case "home":
       return <HashRedirect to={genRouter.basic.path()} noDelay />;
   }
@@ -95,6 +98,11 @@ let entries: ISidebarEntry[] = [
     title: "Whole borders",
     cnTitle: "全包围的边框",
     path: genRouter.wholeBorders.name,
+  },
+  {
+    title: "Configure",
+    cnTitle: "配置默认属性",
+    path: genRouter.configure.name,
   },
   {
     title: "Tall",

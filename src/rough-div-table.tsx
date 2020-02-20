@@ -27,6 +27,18 @@ export interface IRoughTableColumn<T = ISimpleObject> {
   render?: (value: any, record: T, itemIndex?: number) => ReactNode;
 }
 
+let configuredProps = {
+  rowPadding: 24,
+  emptyLocale: undefined,
+  showEmptySymbol: false,
+  wholeBorders: false,
+};
+
+/** 页面级别添加 DivTable 组件的默认值 */
+export let configureDivTableProps = (props: Partial<typeof configuredProps>) => {
+  Object.assign(configuredProps, props);
+};
+
 type RoughDivTableProps<T = any> = FC<{
   className?: string;
   data: T[];
@@ -115,7 +127,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
     );
   };
 
-  const { selectedKeys, rowPadding = 24, showEmptySymbol, rowKey = "id" } = props;
+  const { selectedKeys, rowPadding = configuredProps.rowPadding, rowKey = "id" } = props;
   let columns = props.columns.filter((col) => col != null && !col.hidden);
 
   let hasData = props.data.length > 0;
@@ -124,6 +136,9 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   if (rowPadding != null) {
     rowPaddingStyle = { paddingLeft: rowPadding, paddingRight: rowPadding };
   }
+
+  let showEmptySymbol = props.showEmptySymbol != null ? props.showEmptySymbol : configuredProps.showEmptySymbol;
+  let wholeBorders = props.wholeBorders != null ? props.wholeBorders : configuredProps.wholeBorders;
 
   let headElements = (
     <div className={cx(row, styleRow, styleHeaderBar)} style={rowPaddingStyle} ref={headerRef}>
@@ -141,7 +156,11 @@ let RoughDivTable: RoughDivTableProps = (props) => {
     </div>
   );
 
-  let bodyElements: ReactNode = props.isLoading ? <div className={styleLoadingEmpty} /> : <NoDataTableBody emptyLocale={props.emptyLocale} />;
+  let bodyElements: ReactNode = props.isLoading ? (
+    <div className={styleLoadingEmpty} />
+  ) : (
+    <NoDataTableBody emptyLocale={props.emptyLocale || configuredProps.emptyLocale} />
+  );
 
   if (hasData) {
     bodyElements = props.data.map((record, idx) => {
@@ -178,7 +197,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   }
 
   return (
-    <div className={cx(flex, column, styleTable, props.wholeBorders ? styleWholeBorders : null, props.className)}>
+    <div className={cx(flex, column, styleTable, wholeBorders ? styleWholeBorders : null, props.className)}>
       {headElements}
       <div ref={scrollRef} className={cx(styleBody, props.bodyClassName)} onScroll={(event) => handleScroll()}>
         {bodyElements}

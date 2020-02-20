@@ -13,5 +13,6 @@ export const routerRules: IRouteRule[] = [
   { path: "action-links" },
   { path: "column-width" },
   { path: "loading" },
+  { path: "configure" },
   { path: "", name: "home" },
 ];

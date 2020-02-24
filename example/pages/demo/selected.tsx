@@ -48,7 +48,6 @@ let DemoSelected: FC<{}> = (props) => {
 
         <RoughDivTable
           data={data}
-          rowPadding={24}
           wholeBorders
           rowKey="code"
           selectedKeys={[selected]}
@@ -73,7 +72,6 @@ let styleDemo = css`
 let codeSelected = `
 <RoughDivTable
   data={data}
-  rowPadding={24}
   wholeBorders
   rowKey="code"
   selectedKeys={[selected]}

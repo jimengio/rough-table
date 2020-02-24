@@ -18,7 +18,7 @@ let columns: IRoughTableColumn<IData>[] = [
   { title: "操作", dataIndex: "model", width: 80, render: (item: any, record: IData) => <ActionLinks actions={actions} spaced /> },
 ];
 
-<RoughDivTable data={data} columns={columns} rowPadding={24} />
+<RoughDivTable data={data} columns={columns} />
 `;
 
 let codeHidden = `
@@ -81,7 +81,7 @@ let DemoBasic: FC<{}> = (props) => {
       <DocDemo title="A very simple table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/basic.tsx">
         <DocBlock content={contentBasic} />
         <DocSnippet code={code} />
-        <RoughDivTable data={data} columns={columns} rowPadding={24} />
+        <RoughDivTable data={data} columns={columns} />
       </DocDemo>
 
       <DocDemo title="Hide column">
@@ -92,7 +92,7 @@ let DemoBasic: FC<{}> = (props) => {
         </div>
         <DocSnippet code={codeHidden} />
         <Space height={16} />
-        <RoughDivTable data={data} columns={mightHiddenColumns} rowPadding={24} />
+        <RoughDivTable data={data} columns={mightHiddenColumns} />
       </DocDemo>
 
       <DocDemo title="Table with no data" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/basic.tsx">

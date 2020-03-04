@@ -227,10 +227,9 @@ const styleCell = css`
 
 const styleHeaderBar = css`
   font-weight: bold;
-  background-color: #f2f2f2;
-  border: none;
-  border-bottom: 1px solid #e5e5e5;
   overflow: hidden;
+  border: 1px solid #e8e8e8;
+  background-color: #f7f7f7;
 
   &:hover {
     background-color: #f2f2f2;
@@ -241,6 +240,8 @@ const styleBody = css`
   color: rgba(0, 0, 0, 0.65);
   flex: 1;
   overflow-y: auto;
+  border-left: 1px solid #e8e8e8;
+  border-right: 1px solid #e8e8e8;
 `;
 
 const styleRow = css`

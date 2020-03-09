@@ -4,6 +4,7 @@ import { DocDemo, DocSnippet, DocBlock } from "@jimengio/doc-frame";
 import { JimoButton } from "@jimengio/jimo-basics";
 import { configureDivTableProps } from "../../../src/rough-div-table";
 import { Spin } from "antd";
+import { configureActionLinksProps } from "../../../src/action-links";
 
 let DemoConfigure: FC<{}> = React.memo((props) => {
   /** Plugins */
@@ -30,6 +31,21 @@ let DemoConfigure: FC<{}> = React.memo((props) => {
           }}
         />
       </DocDemo>
+
+      <DocDemo title="Configure ActionLinks">
+        <DocBlock content={linksContent} />
+        <DocSnippet code={linksCode} />
+        <JimoButton
+          text={"链接样式"}
+          onClick={() => {
+            configureActionLinksProps({
+              spaced: true,
+            });
+
+            alert("属性已设置, 变化不明显, 请切换其他页面 ActionLinks.");
+          }}
+        />
+      </DocDemo>
     </div>
   );
 });
@@ -49,4 +65,14 @@ configureDivTableProps({
 
 let content = `
 如果需要设置页面级别的默认属性, 用下面这个 API.
+`;
+
+let linksContent = `
+设置链接之间的分隔符, 是否使用空格.
+`;
+
+let linksCode = `
+configureActionLinksProps({
+  spaced: true
+});
 `;

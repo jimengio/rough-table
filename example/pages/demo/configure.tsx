@@ -3,7 +3,7 @@ import { css } from "emotion";
 import { DocDemo, DocSnippet, DocBlock } from "@jimengio/doc-frame";
 import { JimoButton } from "@jimengio/jimo-basics";
 import { configureDivTableProps } from "../../../src/rough-div-table";
-import { Spin } from "antd";
+import Spin from "antd/lib/spin";
 import { configureActionLinksProps } from "../../../src/action-links";
 
 let DemoConfigure: FC<{}> = React.memo((props) => {

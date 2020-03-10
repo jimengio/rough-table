@@ -22,7 +22,7 @@ let ActionLinks: SFC<{
   });
 
   // null for rendering spaces...
-  let items: (IActionLinkItem)[] = interpose(actions, null);
+  let items: IActionLinkItem[] = interpose(actions, null);
 
   return (
     <div className={cx(styleContainer, props.className)}>
@@ -57,8 +57,11 @@ const styleSeperator = css`
 
 let styleLink = css`
   font-size: 14px;
-  color: rgba(35, 143, 243, 1);
+  color: #3674ff;
   cursor: pointer;
+  &:hover {
+    color: #729dff;
+  }
 `;
 
 let styleContainer = css`

@@ -32,6 +32,7 @@ let configuredProps = {
   emptyLocale: undefined,
   showEmptySymbol: false,
   wholeBorders: false,
+  loadingElement: undefined,
 };
 
 /** 页面级别添加 DivTable 组件的默认值 */
@@ -61,6 +62,7 @@ type RoughDivTableProps<T = any> = FC<{
   wholeBorders?: boolean;
 
   isLoading?: boolean;
+  loadingElement?: React.ReactNode;
 
   /** detect and watch row width, try to make sure container div covers the whole row.
    * watching window resize might casuse performance issues. be careful in using.
@@ -203,11 +205,25 @@ let RoughDivTable: RoughDivTableProps = (props) => {
         {bodyElements}
       </div>
       {props.pageOptions != null ? renderPagination() : null}
-      <CSSTransition in={props.isLoading} timeout={200} classNames="fade-in-out" unmountOnExit>
-        <div className={cx(center, styleCover)}>
-          <LoadingIndicator />
-        </div>
-      </CSSTransition>
+      {props.isLoading ? (
+        <>
+          {configuredProps.loadingElement ? (
+            <div className={cx(center, styleCover)}>{configuredProps.loadingElement}</div>
+          ) : (
+            <>
+              {props.loadingElement ? (
+                <div className={cx(center, styleCover)}>{props.loadingElement}</div>
+              ) : (
+                <CSSTransition in={props.isLoading} timeout={200} classNames="fade-in-out" unmountOnExit>
+                  <div className={cx(center, styleCover)}>
+                    <LoadingIndicator />
+                  </div>
+                </CSSTransition>
+              )}
+            </>
+          )}
+        </>
+      ) : null}
     </div>
   );
 };

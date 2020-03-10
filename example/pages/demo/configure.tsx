@@ -3,6 +3,7 @@ import { css } from "emotion";
 import { DocDemo, DocSnippet, DocBlock } from "@jimengio/doc-frame";
 import { JimoButton } from "@jimengio/jimo-basics";
 import { configureDivTableProps } from "../../../src/rough-div-table";
+import { Spin } from "antd";
 
 let DemoConfigure: FC<{}> = React.memo((props) => {
   /** Plugins */
@@ -22,6 +23,7 @@ let DemoConfigure: FC<{}> = React.memo((props) => {
               wholeBorders: true,
               showEmptySymbol: true,
               emptyLocale: "Just empty",
+              loadingElement: <Spin spinning />,
             });
 
             alert("属性已设置, 变化不明显, 请切换其他页面 DivTable.");
@@ -40,6 +42,8 @@ configureDivTableProps({
   wholeBorders: true,
   showEmptySymbol: true,
   emptyLocale: "Just empty",
+  /** 配置loading组件，如使用antd的Spin */
+  loadingElement: <Spin spinning />,
 });
 `;
 

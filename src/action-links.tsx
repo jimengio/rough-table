@@ -3,6 +3,16 @@ import { css, cx } from "emotion";
 import { rowCenter, interpose } from "@jimengio/shared-utils";
 import Space from "./space";
 
+let configuredProps = {
+  /** 使用空白作为分隔符 */
+  spaced: false,
+};
+
+/** 配置页面级别的 ActionLinks 默认属性 */
+export let configureActionLinksProps = (options: Partial<typeof configuredProps>) => {
+  Object.assign(configuredProps, options);
+};
+
 export interface IActionLinkItem {
   text: string;
   /** hidden or null item to skip rendering the link */
@@ -24,11 +34,13 @@ let ActionLinks: SFC<{
   // null for rendering spaces...
   let items: IActionLinkItem[] = interpose(actions, null);
 
+  let spaced = props.spaced != null ? props.spaced : configuredProps.spaced;
+
   return (
     <div className={cx(styleContainer, props.className)}>
       {items.map((item, idx) => {
         if (item == null) {
-          if (props.spaced) {
+          if (spaced) {
             return <Space key={idx} width={8} />;
           } else {
             return <span key={idx} className={styleSeperator} />;

@@ -80,7 +80,7 @@ let columns: IRoughTableColumn<IData>[] = [
 
 let clampTdDemoColumns: IRoughTableColumn<IData>[] = [
   { title: "名称", dataIndex: "name" },
-  { title: "型号", dataIndex: "model", clampTd: true, render: (item: IData["model"], record: IData) => item },
+  { title: "型号", dataIndex: "model", clampText: true, render: (item: IData["model"], record: IData) => item },
 ];
 
 let DemoBasic: FC<{}> = (props) => {

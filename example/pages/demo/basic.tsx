@@ -30,6 +30,14 @@ let codeHidden = `
 },
 `;
 
+let codeClampTd = `
+{
+  title: "型号",
+  clampTd: true,
+  dataIndex: "model",
+}
+`;
+
 interface IData {
   code: string;
   name: any;
@@ -70,6 +78,11 @@ let columns: IRoughTableColumn<IData>[] = [
   { title: "操作", dataIndex: "model", width: 80, render: (item: any, record: IData) => <ActionLinks actions={actions} spaced /> },
 ];
 
+let clampTdDemoColumns: IRoughTableColumn<IData>[] = [
+  { title: "名称", dataIndex: "name" },
+  { title: "型号", dataIndex: "model", clampTd: true, render: (item: IData["model"], record: IData) => item },
+];
+
 let DemoBasic: FC<{}> = (props) => {
   let [hideColumn, setHideColumn] = useState(false);
   let mightHiddenColumns = produce(columns, (draft) => {
@@ -93,6 +106,13 @@ let DemoBasic: FC<{}> = (props) => {
         <DocSnippet code={codeHidden} />
         <Space height={16} />
         <RoughDivTable data={data} columns={mightHiddenColumns} />
+      </DocDemo>
+
+      <DocDemo title="td overflow handling">
+        <div>单元格文字溢出隐藏，鼠标移入展示。</div>
+        <DocSnippet code={codeClampTd} />
+        <Space height={16} />
+        <RoughDivTable data={data} columns={clampTdDemoColumns} />
       </DocDemo>
 
       <DocDemo title="Table with no data" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/basic.tsx">

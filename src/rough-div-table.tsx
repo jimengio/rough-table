@@ -11,10 +11,12 @@ import { ISimpleObject } from "./types";
 import NoDataTableBody, { mergeStyles, getWidthStyle, EmptyCell } from "./common";
 import { LoadingIndicator } from "@jimengio/jimo-basics";
 import { CSSTransition } from "react-transition-group";
+import { ClampText } from "@jimengio/jimo-basics";
 
 export interface IRoughTableColumn<T = ISimpleObject> {
   title: ReactNode;
   hidden?: boolean;
+  clampTd?: boolean;
   width?: number | string;
   className?: string;
   style?: CSSProperties;
@@ -189,7 +191,11 @@ let RoughDivTable: RoughDivTableProps = (props) => {
                 className={cx(styleCell, props.cellClassName, columnConfig.className)}
                 style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style)}
               >
-                {value == null || value === "" ? <EmptyCell showSymbol={showEmptySymbol} /> : value}
+                {value == null || value === "" ? (
+                  <EmptyCell showSymbol={showEmptySymbol} />
+                ) : (
+                  <>{columnConfig.clampTd ? <ClampText text={value} addTooltip /> : value}</>
+                )}
               </div>
             );
           })}

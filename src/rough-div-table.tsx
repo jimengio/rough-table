@@ -9,12 +9,18 @@ import Pagination from "antd/lib/pagination";
 import { PaginationProps } from "antd/lib/pagination";
 import { ISimpleObject } from "./types";
 import NoDataTableBody, { mergeStyles, getWidthStyle, EmptyCell } from "./common";
-import { LoadingIndicator } from "@jimengio/jimo-basics";
+import { LoadingIndicator, ClampText, IClampTextProps } from "@jimengio/jimo-basics";
 import { CSSTransition } from "react-transition-group";
+
+interface IColumnClampTextProps extends Partial<IClampTextProps> {
+  text?: React.ReactNode;
+}
 
 export interface IRoughTableColumn<T = ISimpleObject> {
   title: ReactNode;
   hidden?: boolean;
+  clampText?: boolean;
+  clampTextProps?: IColumnClampTextProps;
   width?: number | string;
   className?: string;
   style?: CSSProperties;
@@ -189,7 +195,11 @@ let RoughDivTable: RoughDivTableProps = (props) => {
                 className={cx(styleCell, props.cellClassName, columnConfig.className)}
                 style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style)}
               >
-                {value == null || value === "" ? <EmptyCell showSymbol={showEmptySymbol} /> : value}
+                {value == null || value === "" ? (
+                  <EmptyCell showSymbol={showEmptySymbol} />
+                ) : (
+                  <>{columnConfig.clampText ? <ClampText addTooltip={true} {...columnConfig.clampTextProps} text={value} /> : value}</>
+                )}
               </div>
             );
           })}

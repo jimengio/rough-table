@@ -146,10 +146,10 @@
   resolved "https://registry.yarnpkg.com/@jimengio/flex-styles/-/flex-styles-0.1.6.tgz#d37e37aa4a85c72feff386c27b920a5f8c5f6335"
   integrity sha512-K5Ij+DrkQFgMc4MMWJOCsI8S26xUy6a1fe0JWEtQjwhrEGXwGv/w4coD19+uMcqtLO1HHasfN2NuoJNSh9g5ag==
 
-"@jimengio/jimo-basics@^0.0.13-a1":
-  version "0.0.13-a1"
-  resolved "https://registry.yarnpkg.com/@jimengio/jimo-basics/-/jimo-basics-0.0.13-a1.tgz#18f97654755892dacd4f3d7e3f52bbaca138c092"
-  integrity sha512-0FvavtrCBFsMnvWc2TshsDLOpny8OOhqsmTbPeA8Ww8KsCk6OQmW633nAyeJGgT2mEQhWecyIxKSu0W+Lr4EvQ==
+"@jimengio/jimo-basics@^0.0.14-a2":
+  version "0.0.14-a2"
+  resolved "https://registry.npm.taobao.org/@jimengio/jimo-basics/download/@jimengio/jimo-basics-0.0.14-a2.tgz#1a5ae368d2a0bc93d963b10c1b83e57634bd8e68"
+  integrity sha1-GlrjaNKgvJPZY7EMG4PldjS9jmg=
   dependencies:
     emotion "^10.0.27"
     react-transition-group "^4.3.0"

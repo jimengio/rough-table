@@ -253,10 +253,11 @@ const styleCell = css`
 
 const styleHeaderBar = css`
   font-weight: bold;
-  background-color: #f2f2f2;
+  background-color: hsla(0, 0%, 97%, 1);
   border: none;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid hsla(216, 14%, 93%, 1);
   overflow: hidden;
+  color: hsla(0, 0%, 20%, 1);
 
   &:hover {
     background-color: #f2f2f2;
@@ -271,11 +272,13 @@ const styleBody = css`
 
 const styleRow = css`
   padding-left: 80px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid hsla(0, 0%, 91%, 1);
   width: 100%;
+  color: hsla(0, 0%, 20%, 1);
+  transition: 240ms;
 
   &:hover {
-    background-color: #e6f7ff;
+    background-color: hsla(220, 53%, 97%, 1);
   }
 `;
 
@@ -289,7 +292,7 @@ const styleCursorPointer = css`
 `;
 
 const styleSelectedRow = css`
-  background-color: #e6f7ff;
+  background-color: hsla(220, 53%, 97%, 1);
 `;
 
 let stylePageArea = css`

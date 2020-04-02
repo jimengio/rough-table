@@ -123,7 +123,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   useLayoutEffect(() => {
     let scrollbarWidth = scrollRef.current.offsetWidth - scrollRef.current.clientWidth;
     // change size as fast as possible, in case of shaking
-    headerRef.current.style.paddingRight = `${(props.rowPadding || 0) + scrollbarWidth}px`;
+    headerRef.current.style.paddingRight = `${(props.rowPadding || configuredProps.rowPadding) + scrollbarWidth}px`;
     if (scrollbarWidth !== scrollSize) {
       setScrollSize(scrollbarWidth);
     }

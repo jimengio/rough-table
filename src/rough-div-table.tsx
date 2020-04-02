@@ -79,6 +79,7 @@ type RoughDivTableProps<T = any> = FC<{
 let RoughDivTable: RoughDivTableProps = (props) => {
   let scrollRef = useRef<HTMLDivElement>();
   let headerRef = useRef<HTMLDivElement>();
+  let refHeadScroll = useRef<HTMLDivElement>();
 
   let [rowMinWidth, setRowMinWidth] = useState(0);
 
@@ -116,6 +117,12 @@ let RoughDivTable: RoughDivTableProps = (props) => {
       };
     }
   }, []);
+
+  useEffect(() => {
+    let scrollbarWidth = scrollRef.current.offsetWidth - scrollRef.current.clientWidth;
+    // align widths of header columns and body columns by fixed scrollbar area
+    refHeadScroll.current.style.width = `${scrollbarWidth}px`;
+  });
 
   /** Renderers */
 
@@ -161,6 +168,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
           </div>
         );
       })}
+      <div className={styleFakeScroll} ref={refHeadScroll}></div>
     </div>
   );
 
@@ -334,4 +342,8 @@ let styleCover = css`
 
 let styleLoadingEmpty = css`
   min-height: 80px;
+`;
+
+let styleFakeScroll = css`
+  width: 0px;
 `;

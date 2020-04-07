@@ -2,7 +2,7 @@
  * to render data with plenty of columns, use ScrollTable
  */
 
-import React, { FC, ReactNode, CSSProperties, useRef, useState, useEffect } from "react";
+import React, { FC, ReactNode, CSSProperties, useRef, useState, useEffect, useLayoutEffect } from "react";
 import { css, cx } from "emotion";
 import { center, column, flex, rowParted, row, expand } from "@jimengio/shared-utils";
 import Pagination from "antd/lib/pagination";
@@ -82,6 +82,8 @@ let RoughDivTable: RoughDivTableProps = (props) => {
 
   let [rowMinWidth, setRowMinWidth] = useState(0);
 
+  let [scrollSize, setScrollSize] = useState(0);
+
   /** Methods */
 
   let handleScroll = () => {
@@ -117,6 +119,16 @@ let RoughDivTable: RoughDivTableProps = (props) => {
     }
   }, []);
 
+  // align widths of header columns and body columns by fixed scrollbar area
+  useLayoutEffect(() => {
+    let scrollbarWidth = scrollRef.current.offsetWidth - scrollRef.current.clientWidth;
+    // change size as fast as possible, in case of shaking
+    headerRef.current.style.paddingRight = `${(props.rowPadding || configuredProps.rowPadding) + scrollbarWidth}px`;
+    if (scrollbarWidth !== scrollSize) {
+      setScrollSize(scrollbarWidth);
+    }
+  });
+
   /** Renderers */
 
   let renderPagination = () => {
@@ -141,15 +153,17 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   let hasData = props.data.length > 0;
 
   let rowPaddingStyle: CSSProperties = {};
+  let headerRowPaddingStyle: CSSProperties = {};
   if (rowPadding != null) {
     rowPaddingStyle = { paddingLeft: rowPadding, paddingRight: rowPadding };
+    headerRowPaddingStyle = { paddingLeft: rowPadding, paddingRight: rowPadding + scrollSize };
   }
 
   let showEmptySymbol = props.showEmptySymbol != null ? props.showEmptySymbol : configuredProps.showEmptySymbol;
   let wholeBorders = props.wholeBorders != null ? props.wholeBorders : configuredProps.wholeBorders;
 
   let headElements = (
-    <div className={cx(row, styleRow, styleHeaderBar)} style={rowPaddingStyle} ref={headerRef}>
+    <div className={cx(row, styleRow, styleHeaderBar)} style={headerRowPaddingStyle} ref={headerRef}>
       {columns.map((columnConfig, idx) => {
         return (
           <div
@@ -275,7 +289,8 @@ const styleRow = css`
   border-bottom: 1px solid hsla(0, 0%, 91%, 1);
   width: 100%;
   color: hsla(0, 0%, 20%, 1);
-  transition: 240ms;
+  transition-property: background-color;
+  transition-duration: 240ms;
 
   &:hover {
     background-color: hsla(220, 53%, 97%, 1);
@@ -334,4 +349,8 @@ let styleCover = css`
 
 let styleLoadingEmpty = css`
   min-height: 80px;
+`;
+
+let styleFakeScroll = css`
+  width: 0px;
 `;

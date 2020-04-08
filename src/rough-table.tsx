@@ -5,8 +5,7 @@
 import React, { ReactNode } from "react";
 import produce from "immer";
 import { css, cx } from "emotion";
-import { center, column, flex, rowParted } from "@jimengio/shared-utils";
-import { isFunction, some } from "@jimengio/shared-utils";
+import { center, column, flex, rowParted } from "@jimengio/flex-styles";
 import Pagination from "antd/lib/pagination";
 import Space from "./space";
 import { PaginationProps } from "antd/lib/pagination";
@@ -44,7 +43,7 @@ export default class RoughTable extends React.Component<IProps, IState> {
     let hasData = this.props.dataSource.length > 0;
 
     let labels;
-    if (isFunction(this.props.defineColumns)) {
+    if (typeof this.props.defineColumns === "function") {
       labels = this.props.defineColumns({}).map((x) => x.title);
     } else {
       labels = this.props.labels;
@@ -70,7 +69,7 @@ export default class RoughTable extends React.Component<IProps, IState> {
           ? this.props.dataSource.map((record, idx) => {
               let cells;
 
-              if (isFunction(this.props.defineColumns)) {
+              if (typeof this.props.defineColumns === "function") {
                 cells = this.props.defineColumns(record).map((x) => x.render(idx));
               } else {
                 cells = this.props.renderColumns(record);
@@ -108,7 +107,7 @@ export default class RoughTable extends React.Component<IProps, IState> {
             {headElement}
             {bodyElement}
           </table>
-          {some(this.props.pageOptions) ? this.renderPagination() : null}
+          {this.props.pageOptions != null ? this.renderPagination() : null}
         </div>
       );
     }
@@ -119,7 +118,7 @@ export default class RoughTable extends React.Component<IProps, IState> {
         <div className={cx(flex, styleBodyContainer)}>
           <table className={styleFixedTable}>{bodyElement}</table>
         </div>
-        {some(this.props.pageOptions) ? this.renderPagination() : null}
+        {this.props.pageOptions != null ? this.renderPagination() : null}
       </div>
     );
   }
@@ -143,7 +142,7 @@ export default class RoughTable extends React.Component<IProps, IState> {
 
   renderNoData() {
     let length;
-    if (isFunction(this.props.defineColumns)) {
+    if (typeof this.props.defineColumns === "function") {
       length = this.props.defineColumns({}).length;
     } else {
       length = this.props.labels.length;

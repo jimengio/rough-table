@@ -172,13 +172,6 @@
     lodash-es "^4.17.15"
     query-string "^6.9.0"
 
-"@jimengio/shared-utils@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@jimengio/shared-utils/-/shared-utils-0.1.5.tgz#c6435e34674ef389abdb23a97f713ea14fc3b8e1"
-  integrity sha512-0KWBrKlDtt+/xfiGQ/PylyLBa1FvwUPhuPeVqYtcw290h5lH6N64pnF9e3tKYk0VVQHXeauBfiQJBE0miBltmQ==
-  dependencies:
-    fuzzysearch "^1.0.3"
-
 "@types/anymatch@*":
   version "1.3.1"
   resolved "https://registry.npmjs.org/@types/anymatch/-/anymatch-1.3.1.tgz#336badc1beecb9dacc38bea2cf32adf627a8421a"
@@ -2409,11 +2402,6 @@ function-bind@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
   integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
-
-fuzzysearch@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/fuzzysearch/-/fuzzysearch-1.0.3.tgz#dffc80f6d6b04223f2226aa79dd194231096d008"
-  integrity sha1-3/yA9tawQiPyImqnndGUIxCW0Ag=
 
 get-caller-file@^1.0.1:
   version "1.0.3"

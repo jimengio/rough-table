@@ -5,7 +5,7 @@
 
 import React, { ReactNode, FC, CSSProperties, useRef } from "react";
 import { css, cx } from "emotion";
-import { center, column, flex, rowParted, row, expand } from "@jimengio/shared-utils";
+import { center, column, flex, rowParted, row, expand } from "@jimengio/flex-styles";
 import Pagination from "antd/lib/pagination";
 import { PaginationProps } from "antd/lib/pagination";
 import { IRoughTableColumn } from "./rough-div-table";

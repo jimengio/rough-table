@@ -3,7 +3,7 @@ import { css, cx } from "emotion";
 
 import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
-import { fullHeight } from "@jimengio/shared-utils";
+import { fullHeight } from "@jimengio/flex-styles";
 import ScrollDivTable from "../../../src/scroll-div-table";
 import { DocDemo, DocSnippet, DocBlock } from "@jimengio/doc-frame";
 

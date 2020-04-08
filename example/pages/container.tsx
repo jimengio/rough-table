@@ -5,7 +5,7 @@ import { findRouteTarget, HashRedirect } from "@jimengio/ruled-router/lib/dom";
 
 import "antd/dist/antd.css";
 
-import { row, fullscreen, expand } from "@jimengio/shared-utils";
+import { row, fullscreen, expand } from "@jimengio/flex-styles";
 import { genRouter, GenRouterTypeMain } from "controller/generated-router";
 import DemoWholeBorders from "./demo/whole-borders";
 import DemoPaginated from "./demo/paginated";

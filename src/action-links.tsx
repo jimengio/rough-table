@@ -1,6 +1,6 @@
 import React, { SFC } from "react";
 import { css, cx } from "emotion";
-import { rowCenter, interpose } from "@jimengio/shared-utils";
+import { interpose } from "./util/list";
 import Space from "./space";
 
 let configuredProps = {

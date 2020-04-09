@@ -12,7 +12,7 @@ function qsStringify(queries: { [k: string]: string }) {
 
 // generated
 
-// Generated with router-code-generator@0.2.6-a1
+// Generated with router-code-generator@0.2.6
 
 export let genRouter = {
   basic: {
@@ -93,6 +93,12 @@ export let genRouter = {
     path: () => `/configure`,
     go: () => switchPath(`/configure`),
   },
+  emptyPlaceholder: {
+    name: "empty-placeholder",
+    raw: "empty-placeholder",
+    path: () => `/empty-placeholder`,
+    go: () => switchPath(`/empty-placeholder`),
+  },
   $: {
     name: "home",
     raw: "",
@@ -115,6 +121,7 @@ export type GenRouterTypeMain =
   | GenRouterTypeTree["columnWidth"]
   | GenRouterTypeTree["loading"]
   | GenRouterTypeTree["configure"]
+  | GenRouterTypeTree["emptyPlaceholder"]
   | GenRouterTypeTree["$"];
 
 export interface GenRouterTypeTree {
@@ -192,6 +199,12 @@ export interface GenRouterTypeTree {
   };
   configure: {
     name: "configure";
+    params: {};
+    query: {};
+    next: null;
+  };
+  emptyPlaceholder: {
+    name: "empty-placeholder";
     params: {};
     query: {};
     next: null;

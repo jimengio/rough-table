@@ -8,9 +8,10 @@ import { center, column, flex, rowParted, row, expand } from "@jimengio/flex-sty
 import Pagination from "antd/lib/pagination";
 import { PaginationProps } from "antd/lib/pagination";
 import { ISimpleObject } from "./types";
-import NoDataTableBody, { mergeStyles, getWidthStyle, EmptyCell } from "./common";
+import { mergeStyles, getWidthStyle, EmptyCell } from "./common";
 import { LoadingIndicator, ClampText, IClampTextProps } from "@jimengio/jimo-basics";
 import { CSSTransition } from "react-transition-group";
+import EmptyPlaceholder from "./empty-placeholder";
 
 interface IColumnClampTextProps extends Partial<IClampTextProps> {
   text?: React.ReactNode;
@@ -181,7 +182,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   let bodyElements: ReactNode = props.isLoading ? (
     <div className={styleLoadingEmpty} />
   ) : (
-    <NoDataTableBody emptyLocale={props.emptyLocale || configuredProps.emptyLocale} />
+    <EmptyPlaceholder emptyLocale={props.emptyLocale || configuredProps.emptyLocale} />
   );
 
   if (hasData) {

@@ -14,5 +14,6 @@ export const routerRules: IRouteRule[] = [
   { path: "column-width" },
   { path: "loading" },
   { path: "configure" },
+  { path: "empty-placeholder" },
   { path: "", name: "home" },
 ];

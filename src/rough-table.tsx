@@ -9,7 +9,7 @@ import { center, column, flex, rowParted } from "@jimengio/flex-styles";
 import Pagination from "antd/lib/pagination";
 import Space from "./space";
 import { PaginationProps } from "antd/lib/pagination";
-import NoDataTableBody from "./common";
+import EmptyPlaceholder from "./empty-placeholder";
 
 interface IColumnDefinition {
   title: string;
@@ -150,7 +150,7 @@ export default class RoughTable extends React.Component<IProps, IState> {
     return (
       <tr>
         <td colSpan={length}>
-          <NoDataTableBody emptyLocale={this.props.emptyLocale} />
+          <EmptyPlaceholder emptyLocale={this.props.emptyLocale} />
         </td>
       </tr>
     );

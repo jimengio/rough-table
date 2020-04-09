@@ -150,7 +150,7 @@ export default class RoughTable extends React.Component<IProps, IState> {
     return (
       <tr>
         <td colSpan={length}>
-          <EmptyPlaceholder emptyLocale={this.props.emptyLocale} />
+          <EmptyPlaceholder emptyLocale={this.props.emptyLocale} className={styleAreaBottom} />
         </td>
       </tr>
     );
@@ -206,4 +206,8 @@ const styleBodyContainer = css`
 
 const styleSelectedRow = css`
   background-color: #e6f7ff;
+`;
+
+let styleAreaBottom = css`
+  border-bottom: 1px solid hsla(216, 14%, 93%, 1);
 `;

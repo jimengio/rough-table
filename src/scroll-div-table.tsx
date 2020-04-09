@@ -90,7 +90,7 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
     );
   });
 
-  let bodyElements: ReactNode = <EmptyPlaceholder emptyLocale={props.emptyLocale} />;
+  let bodyElements: ReactNode = <EmptyPlaceholder emptyLocale={props.emptyLocale} className={styleAreaBottom} />;
 
   if (hasData) {
     bodyElements = props.data.map((record, idx) => {
@@ -209,4 +209,8 @@ let styleContentArea = css`
 let styleArea = css`
   position: relative;
   overflow: hidden;
+`;
+
+let styleAreaBottom = css`
+  border-bottom: 1px solid hsla(216, 14%, 93%, 1);
 `;

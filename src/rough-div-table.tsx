@@ -182,7 +182,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   let bodyElements: ReactNode = props.isLoading ? (
     <div className={styleLoadingEmpty} />
   ) : (
-    <EmptyPlaceholder emptyLocale={props.emptyLocale || configuredProps.emptyLocale} />
+    <EmptyPlaceholder emptyLocale={props.emptyLocale || configuredProps.emptyLocale} className={styleAreaBottom} />
   );
 
   if (hasData) {
@@ -352,6 +352,6 @@ let styleLoadingEmpty = css`
   min-height: 80px;
 `;
 
-let styleFakeScroll = css`
-  width: 0px;
+let styleAreaBottom = css`
+  border-bottom: 1px solid hsla(216, 14%, 93%, 1);
 `;

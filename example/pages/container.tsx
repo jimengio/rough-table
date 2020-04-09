@@ -20,6 +20,7 @@ import DemoColumnWidth from "./demo/column-width";
 import DemoLoading from "./demo/loading";
 import DemoRowResizing from "./demo/row-resizing";
 import DemoConfigure from "./demo/configure";
+import DemoEmptyPlaceholder from "./demo/empty-placeholder";
 
 const renderBody = (routerTree: GenRouterTypeMain) => {
   switch (routerTree?.name) {
@@ -47,6 +48,8 @@ const renderBody = (routerTree: GenRouterTypeMain) => {
       return <DemoLoading />;
     case "configure":
       return <DemoConfigure />;
+    case "empty-placeholder":
+      return <DemoEmptyPlaceholder />;
     case "home":
       return <HashRedirect to={genRouter.basic.path()} noDelay />;
   }
@@ -95,7 +98,7 @@ let entries: ISidebarEntry[] = [
     path: genRouter.treeTable.name,
   },
   {
-    title: "Whole borders",
+    title: "Whole Borders",
     cnTitle: "全包围的边框",
     path: genRouter.wholeBorders.name,
   },
@@ -113,6 +116,11 @@ let entries: ISidebarEntry[] = [
     title: "Wide",
     cnTitle: "超宽的横向滚动",
     path: genRouter.wide.name,
+  },
+  {
+    title: "Empty Placeholder",
+    cnTitle: "暂无数据提示",
+    path: genRouter.emptyPlaceholder.name,
   },
 ];
 

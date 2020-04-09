@@ -10,7 +10,8 @@ import Pagination from "antd/lib/pagination";
 import { PaginationProps } from "antd/lib/pagination";
 import { IRoughTableColumn } from "./rough-div-table";
 import { ISimpleObject } from "./types";
-import NoDataTableBody, { mergeStyles, getWidthStyle, EmptyCell } from "./common";
+import { mergeStyles, getWidthStyle, EmptyCell } from "./common";
+import EmptyPlaceholder from "./empty-placeholder";
 
 type ScrollDivTableProps<T = any> = FC<{
   className?: string;
@@ -89,7 +90,7 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
     );
   });
 
-  let bodyElements: ReactNode = <NoDataTableBody emptyLocale={props.emptyLocale} />;
+  let bodyElements: ReactNode = <EmptyPlaceholder emptyLocale={props.emptyLocale} className={styleAreaBottom} />;
 
   if (hasData) {
     bodyElements = props.data.map((record, idx) => {
@@ -208,4 +209,8 @@ let styleContentArea = css`
 let styleArea = css`
   position: relative;
   overflow: hidden;
+`;
+
+let styleAreaBottom = css`
+  border-bottom: 1px solid hsla(216, 14%, 93%, 1);
 `;

@@ -151,7 +151,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   const { selectedKeys, rowPadding = configuredProps.rowPadding, rowKey = "id" } = props;
   let columns = props.columns.filter((col) => col != null && !col.hidden);
 
-  let hasData = props.data.length > 0;
+  let hasData = props.data?.length > 0;
 
   let rowPaddingStyle: CSSProperties = {};
   let headerRowPaddingStyle: CSSProperties = {};
@@ -186,7 +186,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   );
 
   if (hasData) {
-    bodyElements = props.data.map((record, idx) => {
+    bodyElements = props.data?.map((record, idx) => {
       let rowClassName: string;
       if (selectedKeys != null && selectedKeys.includes(record[rowKey])) {
         rowClassName = styleSelectedRow;

@@ -71,7 +71,7 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
     );
   };
 
-  let hasData = props.data.length > 0;
+  let hasData = props.data?.length > 0;
 
   let rowPaddingStyle = {};
   if (rowPadding != null) {
@@ -93,7 +93,7 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
   let bodyElements: ReactNode = <EmptyPlaceholder emptyLocale={props.emptyLocale} className={styleAreaBottom} />;
 
   if (hasData) {
-    bodyElements = props.data.map((record, idx) => {
+    bodyElements = props.data?.map((record, idx) => {
       let rowClassName: string;
       if (selectedKeys != null && selectedKeys.includes(record[rowKey])) {
         rowClassName = styleSelectedRow;

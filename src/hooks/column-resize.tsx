@@ -1,5 +1,5 @@
 import React, { useState, ReactNode, useRef } from "react";
-import { useAtom } from "@jimengio/rex";
+import { useAtom, connectRex } from "@jimengio/rex";
 
 export let useColumnResize = () => {
   // Model
@@ -23,6 +23,10 @@ export let useColumnResize = () => {
     isMoving: () => {
       return movingStateAtom.current;
     },
+    /** reset sizes when necessary, especially when page got resized, static sizes is not consistent */
+    resetSizeStates: () => {
+      sizesAtom.resetWith({});
+    },
     handleMouseDown: (idx: number, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       let el = containerRef.current.children[idx] as HTMLDivElement;
       // Caution, might have bugs in some very special cases, column item altering
@@ -30,25 +34,35 @@ export let useColumnResize = () => {
 
       movingStateAtom.resetWith(true);
 
-      let getBasis = (el: HTMLElement) => {
-        return parseInt(el.style.flexBasis) || parseInt(getComputedStyle(el).flexBasis);
-      };
+      sizesAtom.swapWith((sizes) => {
+        let children = containerRef.current.children;
+        for (let i in children) {
+          let child = children[i] as HTMLDivElement;
+          // read and store all column widths, bypass jumpy flexible widths
+          sizes[i] = child.offsetWidth;
+        }
+      });
 
-      let width0 = el != null ? getBasis(el) || 200 : 200;
-      let width1 = slibling != null ? getBasis(el) || 200 : 200;
+      let width0 = el != null ? el.offsetWidth || 200 : 200;
+      let width1 = slibling != null ? slibling.offsetWidth || 200 : 200;
 
       let x0 = event.clientX;
 
       let listener = (moveEvent: MouseEvent) => {
         let dx = moveEvent.clientX - x0;
 
-        sizesAtom.swapWith((state) => {
-          let newWidth = Math.round(width0 + dx);
-          // seize with from right sibling column
-          let newWidth1 = Math.round(width1 - dx);
+        let newWidth = Math.round(width0 + dx);
+        // seize with from right sibling column
+        let slibingWidth = Math.round(width1 - dx);
 
-          state[idx] = Math.max(20, newWidth);
-          state[idx + 1] = Math.max(20, newWidth1);
+        if (newWidth < 40 || slibingWidth < 40) {
+          // meaningless when column width is too small
+          return;
+        }
+
+        sizesAtom.swapWith((state) => {
+          state[idx] = newWidth;
+          state[idx + 1] = slibingWidth;
         });
       };
 

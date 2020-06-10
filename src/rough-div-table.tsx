@@ -118,6 +118,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
     if (props.watchRowResizing) {
       let onResize = () => {
         checkRowWidth();
+        columnResizePlugin.resetSizeStates();
       };
       window.addEventListener("resize", onResize);
       return () => {

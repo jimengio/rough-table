@@ -12,6 +12,7 @@ import { mergeStyles, getWidthStyle, EmptyCell } from "./common";
 import { LoadingIndicator, ClampText, IClampTextProps } from "@jimengio/jimo-basics";
 import { CSSTransition } from "react-transition-group";
 import EmptyPlaceholder from "./empty-placeholder";
+import { useColumnResize } from "./hooks/column-resize";
 
 interface IColumnClampTextProps extends Partial<IClampTextProps> {
   text?: React.ReactNode;
@@ -79,11 +80,16 @@ type RoughDivTableProps<T = any> = FC<{
 
 let RoughDivTable: RoughDivTableProps = (props) => {
   let scrollRef = useRef<HTMLDivElement>();
-  let headerRef = useRef<HTMLDivElement>();
 
   let [rowMinWidth, setRowMinWidth] = useState(0);
 
   let [scrollSize, setScrollSize] = useState(0);
+
+  let columnResizePlugin = useColumnResize();
+  /** this element MUST container header columns, and children can be accessed by index.
+   * 注意: 当前节点对应 header columns 的容易节点, 使用 index 能直接访问 childrenNodes.
+   */
+  let headerRef = columnResizePlugin.containerRef;
 
   /** Methods */
 
@@ -163,16 +169,35 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   let showEmptySymbol = props.showEmptySymbol != null ? props.showEmptySymbol : configuredProps.showEmptySymbol;
   let wholeBorders = props.wholeBorders != null ? props.wholeBorders : configuredProps.wholeBorders;
 
+  let getDraggerStyle = (idx: number) => {
+    return { flexBasis: columnResizePlugin.getSize(idx) };
+  };
+
   let headElements = (
-    <div className={cx(row, styleRow, styleHeaderBar)} style={headerRowPaddingStyle} ref={headerRef}>
+    <div
+      className={cx(row, styleRow, styleHeaderBar)}
+      style={mergeStyles(headerRowPaddingStyle, { cursor: columnResizePlugin.isMoving() ? "col-resize" : undefined })}
+      ref={headerRef}
+    >
       {columns.map((columnConfig, idx) => {
+        // do not show resizer after last column
+        let showResizer = idx < columns.length - 1;
+
         return (
           <div
             key={idx}
-            className={cx(styleCell, props.cellClassName, columnConfig.className)}
-            style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style)}
+            className={cx(rowParted, styleCell, props.cellClassName, columnConfig.className)}
+            style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style, getDraggerStyle(idx))}
           >
             {columnConfig.title || <EmptyCell showSymbol />}
+            {showResizer ? (
+              <div
+                className={styleResizeDragger}
+                onMouseDown={(event) => {
+                  columnResizePlugin.handleMouseDown(idx, event);
+                }}
+              />
+            ) : null}
           </div>
         );
       })}
@@ -208,7 +233,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
               <div
                 key={colIdx}
                 className={cx(styleCell, props.cellClassName, columnConfig.className)}
-                style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style)}
+                style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style, getDraggerStyle(colIdx))}
               >
                 {value == null || value === "" ? (
                   <EmptyCell showSymbol={showEmptySymbol} />
@@ -273,6 +298,7 @@ const styleHeaderBar = css`
   border-bottom: 1px solid hsla(216, 14%, 93%, 1);
   overflow: hidden;
   color: hsla(0, 0%, 20%, 1);
+  user-select: none;
 
   &:hover {
     background-color: #f2f2f2;
@@ -354,4 +380,11 @@ let styleLoadingEmpty = css`
 
 let styleAreaBottom = css`
   border-bottom: 1px solid hsla(216, 14%, 93%, 1);
+`;
+
+let styleResizeDragger = css`
+  width: 2px;
+  height: 20px;
+  background-color: hsl(216, 14%, 93%);
+  cursor: col-resize;
 `;

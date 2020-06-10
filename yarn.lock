@@ -175,6 +175,13 @@
   resolved "https://registry.npmjs.org/@jimengio/jimo-icons/-/jimo-icons-0.3.10.tgz#4276ccfabb9e481baa636ab15e0eb6208044d3b8"
   integrity sha512-X5xURtsvJQDDwSabfkhffjrJ2I6BUaovpr5iVOoXQVPnQUXwmCtEX9VX1ze016gJ3GAeDMAQMKin/W06UEhgvQ==
 
+"@jimengio/rex@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.npmjs.org/@jimengio/rex/-/rex-0.1.8.tgz#fc322d44a0c24c9d04db3bb3ef1274eecd4951f4"
+  integrity sha512-Fb4x75mV/0pUeOGpSf/lJ211oVRizL5Qn51ETgbsLdFMSnhgudUhdhIYM0ZD9dJJle5SWXMBP2qn5E8wbT6EKw==
+  dependencies:
+    shallowequal "*"
+
 "@jimengio/router-code-generator@^0.2.7":
   version "0.2.7"
   resolved "https://registry.npmjs.org/@jimengio/router-code-generator/-/router-code-generator-0.2.7.tgz#636052b78f8f39eeee35a149f816483ed8f6c348"
@@ -4837,7 +4844,7 @@ sha.js@^2.4.0, sha.js@^2.4.8:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-shallowequal@^1.0.2, shallowequal@^1.1.0:
+shallowequal@*, shallowequal@^1.0.2, shallowequal@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==

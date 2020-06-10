@@ -191,14 +191,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
             style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style, getDraggerStyle(idx))}
           >
             {columnConfig.title || <EmptyCell showSymbol />}
-            {showResizer ? (
-              <div
-                className={styleResizeDragger}
-                onMouseDown={(event) => {
-                  columnResizePlugin.handleMouseDown(idx, event);
-                }}
-              />
-            ) : null}
+            {showResizer ? columnResizePlugin.renderResizer(idx) : null}
           </div>
         );
       })}
@@ -381,11 +374,4 @@ let styleLoadingEmpty = css`
 
 let styleAreaBottom = css`
   border-bottom: 1px solid hsla(216, 14%, 93%, 1);
-`;
-
-let styleResizeDragger = css`
-  width: 1px;
-  height: 14px;
-  background-color: hsl(216, 14%, 93%);
-  cursor: col-resize;
 `;

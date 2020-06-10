@@ -384,8 +384,8 @@ let styleAreaBottom = css`
 `;
 
 let styleResizeDragger = css`
-  width: 2px;
-  height: 20px;
+  width: 1px;
+  height: 14px;
   background-color: hsl(216, 14%, 93%);
   cursor: col-resize;
 `;

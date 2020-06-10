@@ -1,6 +1,7 @@
 import React, { useState, ReactNode, useRef } from "react";
 import { useAtom, connectRex } from "@jimengio/rex";
 
+/** Provide controls for column sizes */
 export let useColumnResize = () => {
   // Model
 
@@ -17,7 +18,6 @@ export let useColumnResize = () => {
     /** get column with by index */
     getSize: (idx: number) => {
       let sizeState = sizesAtom.current;
-      // console.log("reading", i, sizeState);
       return sizeState[idx];
     },
     isMoving: () => {
@@ -43,8 +43,8 @@ export let useColumnResize = () => {
         }
       });
 
-      let width0 = el != null ? el.offsetWidth || 200 : 200;
-      let width1 = slibling != null ? slibling.offsetWidth || 200 : 200;
+      let width0 = el?.offsetWidth ?? 200;
+      let width1 = slibling?.offsetWidth ?? 200;
 
       let x0 = event.clientX;
 

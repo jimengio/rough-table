@@ -115,16 +115,16 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   });
 
   useEffect(() => {
-    if (props.watchRowResizing) {
-      let onResize = () => {
+    let onResize = () => {
+      if (props.watchRowResizing) {
         checkRowWidth();
-        columnResizePlugin.resetSizeStates();
-      };
-      window.addEventListener("resize", onResize);
-      return () => {
-        window.removeEventListener("resize", onResize);
-      };
-    }
+      }
+      columnResizePlugin.resetSizeStates();
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
   // align widths of header columns and body columns by fixed scrollbar area

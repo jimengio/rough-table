@@ -1,4 +1,4 @@
-import React, { useState, ReactNode, useRef } from "react";
+import React, { useState, ReactNode, useRef, useEffect } from "react";
 import { useAtom, connectRex } from "@jimengio/rex";
 import { css } from "emotion";
 
@@ -62,6 +62,19 @@ export let useColumnResize = () => {
     window.addEventListener("mousemove", listener);
   };
 
+  // Effects
+
+  useEffect(() => {
+    /** reset sizes when necessary, especially when page got resized, static sizes is not consistent */
+    let onResize = () => {
+      sizesAtom.resetWith({});
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
   // View
 
   let renderResizer = (idx: number) => {
@@ -87,7 +100,6 @@ export let useColumnResize = () => {
     isMoving: () => {
       return movingStateAtom.current;
     },
-    /** reset sizes when necessary, especially when page got resized, static sizes is not consistent */
     resetSizeStates: () => {
       sizesAtom.resetWith({});
     },
@@ -101,4 +113,5 @@ let styleResizeDragger = css`
   height: 14px;
   cursor: col-resize;
   border-right: 1px solid hsl(216, 14%, 93%);
+  margin-right: -6px; /** since padding-right:8px */
 `;

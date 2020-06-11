@@ -89,7 +89,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   /** this element MUST container header columns, and children can be accessed by index.
    * 注意: 当前节点对应 header columns 的容易节点, 使用 index 能直接访问 childrenNodes.
    */
-  let headerRef = columnResizePlugin.containerRef;
+  let headerRef = useRef(null as HTMLDivElement);
 
   /** Methods */
 
@@ -115,16 +115,15 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   });
 
   useEffect(() => {
-    let onResize = () => {
-      if (props.watchRowResizing) {
+    if (props.watchRowResizing) {
+      let onResize = () => {
         checkRowWidth();
-      }
-      columnResizePlugin.resetSizeStates();
-    };
-    window.addEventListener("resize", onResize);
-    return () => {
-      window.removeEventListener("resize", onResize);
-    };
+      };
+      window.addEventListener("resize", onResize);
+      return () => {
+        window.removeEventListener("resize", onResize);
+      };
+    }
   }, []);
 
   // align widths of header columns and body columns by fixed scrollbar area
@@ -178,7 +177,10 @@ let RoughDivTable: RoughDivTableProps = (props) => {
     <div
       className={cx(row, styleRow, styleHeaderBar)}
       style={mergeStyles(headerRowPaddingStyle, { cursor: columnResizePlugin.isMoving() ? "col-resize" : undefined })}
-      ref={headerRef}
+      ref={(el) => {
+        columnResizePlugin.containerRef.current = el;
+        headerRef.current = el;
+      }}
     >
       {columns.map((columnConfig, idx) => {
         // do not show resizer after last column

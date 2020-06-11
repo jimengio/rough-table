@@ -15,14 +15,15 @@ export let useColumnResize = () => {
   // Methods
 
   let handleMouseDown = (idx: number, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    let el = containerRef.current.children[idx] as HTMLDivElement;
+    let headercolumns = containerRef.current.children;
+    let el = headercolumns[idx] as HTMLDivElement;
     // Caution, might have bugs in some very special cases, column item altering
-    let slibling = containerRef.current.children[idx + 1] as HTMLDivElement;
+    let tailChild = containerRef.current.lastElementChild as HTMLDivElement;
 
     movingStateAtom.resetWith(true);
 
     sizesAtom.swapWith((sizes) => {
-      let children = containerRef.current.children;
+      let children = headercolumns;
       for (let i in children) {
         let child = children[i] as HTMLDivElement;
         // read and store all column widths, bypass jumpy flexible widths
@@ -31,7 +32,7 @@ export let useColumnResize = () => {
     });
 
     let width0 = el?.offsetWidth ?? 200;
-    let width1 = slibling?.offsetWidth ?? 200;
+    let width1 = tailChild?.offsetWidth ?? 200;
 
     let x0 = event.clientX;
 
@@ -49,7 +50,7 @@ export let useColumnResize = () => {
 
       sizesAtom.swapWith((state) => {
         state[idx] = newWidth;
-        state[idx + 1] = slibingWidth;
+        state[headercolumns.length - 1] = slibingWidth;
       });
     };
 

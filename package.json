@@ -1,6 +1,6 @@
 {
   "name": "@jimengio/rough-table",
-  "version": "0.2.21",
+  "version": "0.2.22-a2",
   "description": "",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -71,6 +71,7 @@
     "react": "*"
   },
   "dependencies": {
+    "@jimengio/rex": "^0.1.8",
     "lodash-es": "^4.17.15",
     "react-transition-group": "^4.4.1",
     "use-immer": "^0.4.0"

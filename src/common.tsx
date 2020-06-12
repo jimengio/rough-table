@@ -2,12 +2,26 @@ import React, { FC, CSSProperties, ReactNode } from "react";
 import { css, cx } from "emotion";
 import produce from "immer";
 
-export let mergeStyles = (a: CSSProperties, b: CSSProperties): CSSProperties => {
+export let mergeStyles = (a: CSSProperties, b: CSSProperties, c?: CSSProperties): CSSProperties => {
   if (a == null) {
     return b;
   }
   return produce(a, (draft) => {
-    Object.assign(draft, b);
+    if (b != null) {
+      for (let k in b) {
+        // do not assign undefined/null to base object
+        if (b[k] != null) {
+          draft[k] = b[k];
+        }
+      }
+    }
+    if (c != null) {
+      for (let k in c) {
+        if (c[k] != null) {
+          draft[k] = c[k];
+        }
+      }
+    }
   });
 };
 

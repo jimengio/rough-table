@@ -44,7 +44,7 @@ module.exports = {
     warnings: true,
   },
   plugins: [
-    new ForkTsCheckerWebpackPlugin({ checkSyntacticErrors: true }),
+    new ForkTsCheckerWebpackPlugin({ async: false }),
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/),
     new webpack.DllReferencePlugin({
       manifest: path.resolve(__dirname, "dll/manifest-release.json"),

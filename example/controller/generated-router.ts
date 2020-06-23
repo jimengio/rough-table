@@ -12,7 +12,7 @@ function qsStringify(queries: { [k: string]: string }) {
 
 // generated
 
-// Generated with router-code-generator@0.2.6
+// Generated with router-code-generator@0.2.7
 
 export let genRouter = {
   basic: {
@@ -99,6 +99,12 @@ export let genRouter = {
     path: () => `/empty-placeholder`,
     go: () => switchPath(`/empty-placeholder`),
   },
+  customTheme: {
+    name: "custom-theme",
+    raw: "custom-theme",
+    path: () => `/custom-theme`,
+    go: () => switchPath(`/custom-theme`),
+  },
   $: {
     name: "home",
     raw: "",
@@ -107,24 +113,27 @@ export let genRouter = {
   },
 };
 
-export type GenRouterTypeMain =
-  | GenRouterTypeTree["basic"]
-  | GenRouterTypeTree["paginated"]
-  | GenRouterTypeTree["selected"]
-  | GenRouterTypeTree["wholeBorders"]
-  | GenRouterTypeTree["home"]
-  | GenRouterTypeTree["wide"]
-  | GenRouterTypeTree["rowResizing"]
-  | GenRouterTypeTree["tall"]
-  | GenRouterTypeTree["treeTable"]
-  | GenRouterTypeTree["actionLinks"]
-  | GenRouterTypeTree["columnWidth"]
-  | GenRouterTypeTree["loading"]
-  | GenRouterTypeTree["configure"]
-  | GenRouterTypeTree["emptyPlaceholder"]
-  | GenRouterTypeTree["$"];
+/** Deprecating, use GenRouterTypeTree["next"] instead */
+export type GenRouterTypeMain = GenRouterTypeTree["next"];
 
 export interface GenRouterTypeTree {
+  next:
+    | GenRouterTypeTree["basic"]
+    | GenRouterTypeTree["paginated"]
+    | GenRouterTypeTree["selected"]
+    | GenRouterTypeTree["wholeBorders"]
+    | GenRouterTypeTree["home"]
+    | GenRouterTypeTree["wide"]
+    | GenRouterTypeTree["rowResizing"]
+    | GenRouterTypeTree["tall"]
+    | GenRouterTypeTree["treeTable"]
+    | GenRouterTypeTree["actionLinks"]
+    | GenRouterTypeTree["columnWidth"]
+    | GenRouterTypeTree["loading"]
+    | GenRouterTypeTree["configure"]
+    | GenRouterTypeTree["emptyPlaceholder"]
+    | GenRouterTypeTree["customTheme"]
+    | GenRouterTypeTree["$"];
   basic: {
     name: "basic";
     params: {};
@@ -205,6 +214,12 @@ export interface GenRouterTypeTree {
   };
   emptyPlaceholder: {
     name: "empty-placeholder";
+    params: {};
+    query: {};
+    next: null;
+  };
+  customTheme: {
+    name: "custom-theme";
     params: {};
     query: {};
     next: null;

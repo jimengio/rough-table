@@ -13,6 +13,7 @@ import { LoadingIndicator, ClampText, IClampTextProps } from "@jimengio/jimo-bas
 import { CSSTransition } from "react-transition-group";
 import EmptyPlaceholder from "./empty-placeholder";
 import { useColumnResize } from "./hooks/column-resize";
+import { GlobalThemeVariables } from "./theme";
 
 interface IColumnClampTextProps extends Partial<IClampTextProps> {
   text?: React.ReactNode;
@@ -175,7 +176,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
 
   let headElements = (
     <div
-      className={cx(row, styleRow, styleHeaderBar)}
+      className={cx(row, styleRow, GlobalThemeVariables.row, styleHeaderBar, GlobalThemeVariables.headerRow)}
       style={mergeStyles(headerRowPaddingStyle, { cursor: columnResizePlugin.isMoving() ? "col-resize" : undefined })}
       ref={(el) => {
         columnResizePlugin.containerRef.current = el;
@@ -189,7 +190,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
         return (
           <div
             key={idx}
-            className={cx(rowParted, styleCell, props.cellClassName, columnConfig.className)}
+            className={cx(rowParted, styleCell, GlobalThemeVariables.cell, props.cellClassName, columnConfig.className)}
             style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style, getDraggerStyle(idx))}
           >
             {columnConfig.title || <EmptyCell showSymbol />}
@@ -216,7 +217,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
       return (
         <div
           key={idx}
-          className={cx(row, styleRow, props.onRowClick != null && styleCursorPointer, rowClassName)}
+          className={cx(row, styleRow, GlobalThemeVariables.row, props.onRowClick != null && styleCursorPointer, rowClassName)}
           style={Object.assign({ minWidth: rowMinWidth }, rowPaddingStyle)}
           onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
         >
@@ -228,7 +229,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
             return (
               <div
                 key={colIdx}
-                className={cx(styleCell, props.cellClassName, columnConfig.className)}
+                className={cx(styleCell, GlobalThemeVariables.cell, props.cellClassName, columnConfig.className)}
                 style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style, getDraggerStyle(colIdx))}
               >
                 {value == null || value === "" ? (

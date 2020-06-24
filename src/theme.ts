@@ -8,6 +8,8 @@ export let GlobalThemeVariables = {
   cell: emptyStyle,
   row: emptyStyle,
   headerRow: emptyStyle,
+  resizeDragger: emptyStyle,
+  placeholder: emptyStyle,
 };
 
 export let attachRoughTableThemeVariables = (customVariables: Partial<typeof GlobalThemeVariables>): void => {

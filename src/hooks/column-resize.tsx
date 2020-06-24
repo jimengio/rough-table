@@ -1,6 +1,7 @@
 import React, { useState, ReactNode, useRef, useEffect } from "react";
 import { useAtom, connectRex } from "@jimengio/rex";
-import { css } from "emotion";
+import { css, cx } from "emotion";
+import { GlobalThemeVariables } from "../theme";
 
 /** Provide controls for column sizes */
 export let useColumnResize = () => {
@@ -80,7 +81,7 @@ export let useColumnResize = () => {
   let renderResizer = (idx: number) => {
     return (
       <div
-        className={styleResizeDragger}
+        className={cx(styleResizeDragger, GlobalThemeVariables.resizeDragger)}
         onMouseDown={(event) => {
           handleMouseDown(idx, event);
         }}

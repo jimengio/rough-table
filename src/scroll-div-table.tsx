@@ -12,6 +12,7 @@ import { IRoughTableColumn } from "./rough-div-table";
 import { ISimpleObject } from "./types";
 import { mergeStyles, getWidthStyle, EmptyCell } from "./common";
 import EmptyPlaceholder from "./empty-placeholder";
+import { GlobalThemeVariables } from "./theme";
 
 type ScrollDivTableProps<T = any> = FC<{
   className?: string;
@@ -82,7 +83,7 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
     return (
       <div
         key={idx}
-        className={cx(styleCell, props.cellClassName, columnConfig.className)}
+        className={cx(styleCell, GlobalThemeVariables.cell, props.cellClassName, columnConfig.className)}
         style={mergeStyles(columnConfig.style, { width: columnConfig.width || defaultCellWidth })}
       >
         {columnConfig.title || <EmptyCell showSymbol />}
@@ -102,7 +103,7 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
       return (
         <div
           key={idx}
-          className={cx(styleRow, props.onRowClick != null && styleCursorPointer, rowClassName)}
+          className={cx(styleRow, GlobalThemeVariables.row, props.onRowClick != null && styleCursorPointer, rowClassName)}
           style={mergeStyles({ width: allWidth, minWidth: "100%" }, rowPaddingStyle)}
           onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
         >
@@ -115,7 +116,7 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
             return (
               <div
                 key={colIdx}
-                className={cx(styleCell, props.cellClassName, columnConfig.className)}
+                className={cx(styleCell, GlobalThemeVariables.cell, props.cellClassName, columnConfig.className)}
                 style={mergeStyles(columnConfig.style, getWidthStyle(columnConfig.width))}
               >
                 {value == null || value === "" ? <EmptyCell showSymbol={showEmptySymbol} /> : value}
@@ -132,7 +133,7 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
       <div className={cx(expand, column)}>
         <div className={cx(flex, column, styleArea)} data-area="table-area">
           <div ref={headerRef} className={cx(styleHeaderBar)}>
-            <div className={styleRow} style={mergeStyles({ width: allWidth, minWidth: "100%" }, rowPaddingStyle)}>
+            <div className={cx(styleRow, GlobalThemeVariables.headerRow)} style={mergeStyles({ width: allWidth, minWidth: "100%" }, rowPaddingStyle)}>
               {headElements}
             </div>
           </div>

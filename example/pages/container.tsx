@@ -21,6 +21,7 @@ import DemoLoading from "./demo/loading";
 import DemoRowResizing from "./demo/row-resizing";
 import DemoConfigure from "./demo/configure";
 import DemoEmptyPlaceholder from "./demo/empty-placeholder";
+import CustomThemePage from "./custom-theme";
 
 const renderBody = (routerTree: GenRouterTypeMain) => {
   switch (routerTree?.name) {
@@ -50,6 +51,8 @@ const renderBody = (routerTree: GenRouterTypeMain) => {
       return <DemoConfigure />;
     case "empty-placeholder":
       return <DemoEmptyPlaceholder />;
+    case "custom-theme":
+      return <CustomThemePage />;
     case "home":
       return <HashRedirect to={genRouter.basic.path()} noDelay />;
   }
@@ -121,6 +124,11 @@ let entries: ISidebarEntry[] = [
     title: "Empty Placeholder",
     cnTitle: "暂无数据提示",
     path: genRouter.emptyPlaceholder.name,
+  },
+  {
+    title: "Custom Theme",
+    cnTitle: "主题样式",
+    path: genRouter.customTheme.name,
   },
 ];
 

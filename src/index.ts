@@ -5,3 +5,5 @@ export { default as RoughTreeTable, IItemWithChildren } from "./rough-tree-table
 
 export { default as ActionLinks, IActionLinkItem } from "./action-links";
 export { default as EmptyPlaceholder } from "./empty-placeholder";
+
+export { attachRoughTableThemeVariables } from "./theme";

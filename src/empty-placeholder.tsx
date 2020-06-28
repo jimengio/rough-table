@@ -3,6 +3,7 @@ import { css, cx } from "emotion";
 import { center, Space } from "@jimengio/flex-styles";
 import JimoIcon, { EJimoIcon } from "@jimengio/jimo-icons";
 import { ColorScheme } from "@jimengio/jimo-basics";
+import { GlobalThemeVariables } from "./theme";
 
 let EmptyPlaceholder: FC<{
   className?: string;
@@ -14,9 +15,9 @@ let EmptyPlaceholder: FC<{
   /** Renderers */
   return (
     <div className={cx(center, styleContainer, props.className)}>
-      <JimoIcon className={styleIcon} name={EJimoIcon.emptyData} />
+      <JimoIcon className={cx(styleIcon, GlobalThemeVariables.placeholder)} name={EJimoIcon.emptyData} />
       <Space height={8} />
-      <span className={styleText}>{props.emptyLocale || "no data"}</span>
+      <span className={cx(styleText, GlobalThemeVariables.placeholder)}>{props.emptyLocale || "no data"}</span>
     </div>
   );
 });

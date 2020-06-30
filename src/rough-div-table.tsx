@@ -246,7 +246,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   }
 
   return (
-    <div className={cx(flex, column, styleTable, wholeBorders ? styleWholeBorders : null, props.className)}>
+    <div className={cx(flex, column, styleTable, wholeBorders ? styleWholeBorders : null, props.className)} data-area="rough-table">
       {headElements}
       <div ref={scrollRef} className={cx(styleBody, props.bodyClassName)} onScroll={(event) => handleScroll()}>
         {bodyElements}

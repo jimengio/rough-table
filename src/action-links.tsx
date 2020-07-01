@@ -18,6 +18,7 @@ export interface IActionLinkItem {
   /** hidden or null item to skip rendering the link */
   hidden?: boolean;
   onClick: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
+  "data-action"?: string;
 }
 
 let ActionLinks: SFC<{
@@ -47,7 +48,7 @@ let ActionLinks: SFC<{
           }
         } else {
           return (
-            <a className={styleLink} key={idx} onClick={item.onClick}>
+            <a className={styleLink} key={idx} onClick={item.onClick} data-action={item["data-action"] || item.text}>
               {item.text}
             </a>
           );

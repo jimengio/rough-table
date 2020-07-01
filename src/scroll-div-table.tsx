@@ -129,7 +129,7 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
   }
 
   return (
-    <div className={cx(flex, column, props.wholeBorders ? styleWholeBorders : null, props.className)} data-component="scroll-div-table">
+    <div className={cx(flex, column, props.wholeBorders ? styleWholeBorders : null, props.className)} data-area="scroll-div-table">
       <div className={cx(expand, column)}>
         <div className={cx(flex, column, styleArea)} data-area="table-area">
           <div ref={headerRef} className={cx(styleHeaderBar)}>

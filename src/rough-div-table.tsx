@@ -56,7 +56,12 @@ type RoughDivTableProps<T = any> = FC<{
   columns: IRoughTableColumn<T>[];
   rowPadding?: number;
   cellClassName?: string;
+  headerClassName?: string;
   bodyClassName?: string;
+  rowClassName?: string;
+  resizeDraggerClassName?: string;
+  /** current need is to compute row color based on row index */
+  customBodyRowStyle?: (idx: number) => CSSProperties;
 
   rowKey?: keyof T;
   selectedKeys?: string[];
@@ -176,7 +181,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
 
   let headElements = (
     <div
-      className={cx(row, styleRow, GlobalThemeVariables.row, styleHeaderBar, GlobalThemeVariables.headerRow)}
+      className={cx(row, styleRow, GlobalThemeVariables.row, props.rowClassName, styleHeaderBar, GlobalThemeVariables.headerRow, props.headerClassName)}
       style={mergeStyles(headerRowPaddingStyle, { cursor: columnResizePlugin.isMoving() ? "col-resize" : undefined })}
       ref={(el) => {
         columnResizePlugin.containerRef.current = el;
@@ -194,7 +199,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
             style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style, getDraggerStyle(idx))}
           >
             {columnConfig.title || <EmptyCell showSymbol />}
-            {showResizer ? columnResizePlugin.renderResizer(idx) : null}
+            {showResizer ? columnResizePlugin.renderResizer(idx, props.resizeDraggerClassName) : null}
           </div>
         );
       })}
@@ -217,7 +222,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
       return (
         <div
           key={idx}
-          className={cx(row, styleRow, GlobalThemeVariables.row, props.onRowClick != null && styleCursorPointer, rowClassName)}
+          className={cx(row, styleRow, GlobalThemeVariables.row, props.onRowClick != null && styleCursorPointer, props.rowClassName, rowClassName)}
           style={Object.assign({ minWidth: rowMinWidth }, rowPaddingStyle)}
           onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
         >
@@ -230,7 +235,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
               <div
                 key={colIdx}
                 className={cx(styleCell, GlobalThemeVariables.cell, props.cellClassName, columnConfig.className)}
-                style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style, getDraggerStyle(colIdx))}
+                style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style, getDraggerStyle(colIdx), props.customBodyRowStyle?.(idx))}
               >
                 {value == null || value === "" ? (
                   <EmptyCell showSymbol={showEmptySymbol} />

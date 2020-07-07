@@ -78,10 +78,10 @@ export let useColumnResize = () => {
 
   // View
 
-  let renderResizer = (idx: number) => {
+  let renderResizer = (idx: number, resizeDraggerClassName: string) => {
     return (
       <div
-        className={cx(styleResizeDragger, GlobalThemeVariables.resizeDragger)}
+        className={cx(styleResizeDragger, GlobalThemeVariables.resizeDragger, resizeDraggerClassName)}
         onMouseDown={(event) => {
           handleMouseDown(idx, event);
         }}

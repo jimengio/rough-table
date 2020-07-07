@@ -2,7 +2,7 @@ import React, { FC, CSSProperties, ReactNode } from "react";
 import { css, cx } from "emotion";
 import produce from "immer";
 
-export let mergeStyles = (a: CSSProperties, b: CSSProperties, c?: CSSProperties): CSSProperties => {
+export let mergeStyles = (a: CSSProperties, b: CSSProperties, c?: CSSProperties, d?: CSSProperties): CSSProperties => {
   if (a == null) {
     return b;
   }
@@ -19,6 +19,13 @@ export let mergeStyles = (a: CSSProperties, b: CSSProperties, c?: CSSProperties)
       for (let k in c) {
         if (c[k] != null) {
           draft[k] = c[k];
+        }
+      }
+    }
+    if (d != null) {
+      for (let k in d) {
+        if (d[k] != null) {
+          draft[k] = d[k];
         }
       }
     }

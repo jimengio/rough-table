@@ -1,10 +1,11 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { css } from "emotion";
 import { JimoButton } from "@jimengio/jimo-basics";
 import { attachRoughTableThemeVariables } from "../../src/theme";
 import { DocBlock, DocDemo, DocSnippet } from "@jimengio/doc-frame";
 
 import RoughDivTable, { IRoughTableColumn } from "../../src/rough-div-table";
+import { Space } from "@jimengio/flex-styles";
 
 interface IData {
   code: string;
@@ -30,6 +31,8 @@ let columns: IRoughTableColumn<IData>[] = [
 ];
 
 let CustomThemePage: FC<{ className?: string }> = React.memo((props) => {
+  let [showEmpty, setShowEmpty] = useState(false);
+
   /** Plugins */
   /** Methods */
   /** Effects */
@@ -58,14 +61,25 @@ let CustomThemePage: FC<{ className?: string }> = React.memo((props) => {
       </DocDemo>
 
       <DocDemo title={"属性覆盖"}>
+        <JimoButton
+          text="Toggle empty"
+          onClick={() => {
+            setShowEmpty(!showEmpty);
+          }}
+        />
+        <Space height={16} />
+
         <div style={{ backgroundColor: "hsla(218, 80%, 15%, 1)" }}>
           <RoughDivTable
             headerClassName={styleRowHeader}
             rowClassName={styleCustomRow}
             cellClassName={styleCustomCell}
+            rowSelectClassName={styleCustomRowSelected}
             resizeDraggerClassName={styleCustomResizeDragger}
-            data={data}
+            data={showEmpty ? [] : data}
             columns={columns}
+            selectedKeys={["001", "003"]}
+            rowKey={"code"}
             customBodyRowStyle={(x) => {
               if (x % 2 === 1) {
                 return {
@@ -115,6 +129,7 @@ let code = `
 attachRoughTableThemeVariables({
   cell: styleCell, // 单元格
   row: styleRow, // 表格行
+  rowSelected: styleRowSelected, // 表格选中行
   headerRow: styleHeaderRow, // 头部特殊的行
   resizeDragger: styleResizeDragger, // 拖拽表格列的分割线
   placeholder: stylePlaceholder, // 表格内容为空时的元素, 主要是颜色
@@ -162,4 +177,8 @@ customBodyRowStyle?: (idx: number) => CSSProperties;
 
 let customContent = `
 单个组件的定制样式, 通过暴露的 className 插口来实现.
+`;
+
+let styleCustomRowSelected = css`
+  background-color: hsl(200, 50%, 40%);
 `;

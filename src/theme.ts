@@ -7,6 +7,7 @@ export let GlobalThemeVariables = {
   // elements
   cell: emptyStyle,
   row: emptyStyle,
+  rowSelected: emptyStyle,
   headerRow: emptyStyle,
   resizeDragger: emptyStyle,
   placeholder: emptyStyle,

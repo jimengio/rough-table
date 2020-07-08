@@ -59,6 +59,7 @@ type RoughDivTableProps<T = any> = FC<{
   headerClassName?: string;
   bodyClassName?: string;
   rowClassName?: string;
+  rowSelectClassName?: string;
   resizeDraggerClassName?: string;
   /** current need is to compute row color based on row index */
   customBodyRowStyle?: (idx: number) => CSSProperties;
@@ -219,15 +220,15 @@ let RoughDivTable: RoughDivTableProps = (props) => {
 
   if (hasData) {
     bodyElements = props.data?.map((record, idx) => {
-      let rowClassName: string;
+      let rowStateClassName: string;
       if (selectedKeys != null && selectedKeys.includes(record[rowKey])) {
-        rowClassName = styleSelectedRow;
+        rowStateClassName = cx(styleSelectedRow, GlobalThemeVariables.rowSelected, props.rowSelectClassName);
       }
 
       return (
         <div
           key={idx}
-          className={cx(row, styleRow, GlobalThemeVariables.row, props.onRowClick != null && styleCursorPointer, props.rowClassName, rowClassName)}
+          className={cx(row, styleRow, GlobalThemeVariables.row, props.onRowClick != null && styleCursorPointer, props.rowClassName, rowStateClassName)}
           style={mergeStyles({ minWidth: rowMinWidth }, rowPaddingStyle, props.customBodyRowStyle?.(idx))}
           onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
         >

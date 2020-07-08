@@ -2,7 +2,7 @@
  * to render data with plenty of columns, use ScrollTable
  */
 
-import React, { FC, ReactNode, CSSProperties, useRef, useState, useEffect, useLayoutEffect } from "react";
+import React, { FC, ReactNode, CSSProperties, useRef, useState, useEffect, useLayoutEffect, Ref, MutableRefObject } from "react";
 import { css, cx } from "emotion";
 import { center, column, flex, rowParted, row, expand } from "@jimengio/flex-styles";
 import Pagination from "antd/lib/pagination";
@@ -62,6 +62,11 @@ type RoughDivTableProps<T = any> = FC<{
   resizeDraggerClassName?: string;
   /** current need is to compute row color based on row index */
   customBodyRowStyle?: (idx: number) => CSSProperties;
+
+  /** specical element to insert at body top and bottom, special style for scrolling table */
+  bodyScrollingPad?: (position: "top" | "bottom") => ReactNode;
+  /** ref to expose element */
+  bodyRef?: MutableRefObject<HTMLDivElement>;
 
   rowKey?: keyof T;
   selectedKeys?: string[];
@@ -223,7 +228,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
         <div
           key={idx}
           className={cx(row, styleRow, GlobalThemeVariables.row, props.onRowClick != null && styleCursorPointer, props.rowClassName, rowClassName)}
-          style={Object.assign({ minWidth: rowMinWidth }, rowPaddingStyle)}
+          style={mergeStyles({ minWidth: rowMinWidth }, rowPaddingStyle, props.customBodyRowStyle?.(idx))}
           onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
         >
           {columns.map((columnConfig, colIdx) => {
@@ -235,7 +240,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
               <div
                 key={colIdx}
                 className={cx(styleCell, GlobalThemeVariables.cell, props.cellClassName, columnConfig.className)}
-                style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style, getDraggerStyle(colIdx), props.customBodyRowStyle?.(idx))}
+                style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style, getDraggerStyle(colIdx))}
               >
                 {value == null || value === "" ? (
                   <EmptyCell showSymbol={showEmptySymbol} />
@@ -253,8 +258,19 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   return (
     <div className={cx(flex, column, styleTable, wholeBorders ? styleWholeBorders : null, props.className)} data-area="rough-table">
       {headElements}
-      <div ref={scrollRef} className={cx(styleBody, props.bodyClassName)} onScroll={(event) => handleScroll()}>
+      <div
+        ref={(el) => {
+          scrollRef.current = el;
+          if (props.bodyRef != null) {
+            props.bodyRef.current = el;
+          }
+        }}
+        className={cx(styleBody, props.bodyClassName)}
+        onScroll={(event) => handleScroll()}
+      >
+        {props.bodyScrollingPad?.("top")}
         {bodyElements}
+        {props.bodyScrollingPad?.("bottom")}
       </div>
       {props.pageOptions != null ? renderPagination() : null}
       {props.isLoading ? (

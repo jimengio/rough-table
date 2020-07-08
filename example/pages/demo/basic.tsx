@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useRef, useEffect } from "react";
 import { css } from "emotion";
 import Switch from "antd/lib/switch";
 
@@ -89,12 +89,18 @@ let DemoBasic: FC<{}> = (props) => {
     draft[0].hidden = hideColumn;
   });
 
+  let bodyContainerRef = useRef<HTMLDivElement>();
+
+  useEffect(() => {
+    console.log("body", bodyContainerRef.current);
+  }, []);
+
   return (
     <div className={styleContainer}>
       <DocDemo title="A very simple table" link="https://github.com/jimengio/rough-table/blob/master/example/pages/demo/basic.tsx">
         <DocBlock content={contentBasic} />
         <DocSnippet code={code} />
-        <RoughDivTable data={data} columns={columns} />
+        <RoughDivTable bodyRef={bodyContainerRef} data={data} columns={columns} />
       </DocDemo>
 
       <DocDemo title="Hide column">

@@ -2,7 +2,7 @@
  * to render data with plenty of columns, use ScrollTable
  */
 
-import React, { FC, ReactNode, CSSProperties, useRef, useState, useEffect, useLayoutEffect } from "react";
+import React, { FC, ReactNode, CSSProperties, useRef, useState, useEffect, useLayoutEffect, Ref, MutableRefObject } from "react";
 import { css, cx } from "emotion";
 import { center, column, flex, rowParted, row, expand } from "@jimengio/flex-styles";
 import Pagination from "antd/lib/pagination";
@@ -56,7 +56,17 @@ type RoughDivTableProps<T = any> = FC<{
   columns: IRoughTableColumn<T>[];
   rowPadding?: number;
   cellClassName?: string;
+  headerClassName?: string;
   bodyClassName?: string;
+  rowClassName?: string;
+  resizeDraggerClassName?: string;
+  /** current need is to compute row color based on row index */
+  customBodyRowStyle?: (idx: number) => CSSProperties;
+
+  /** specical element to insert at body top and bottom, special style for scrolling table */
+  bodyScrollingPad?: (position: "top" | "bottom") => ReactNode;
+  /** ref to expose element */
+  bodyRef?: MutableRefObject<HTMLDivElement>;
 
   rowKey?: keyof T;
   selectedKeys?: string[];
@@ -176,7 +186,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
 
   let headElements = (
     <div
-      className={cx(row, styleRow, GlobalThemeVariables.row, styleHeaderBar, GlobalThemeVariables.headerRow)}
+      className={cx(row, styleRow, GlobalThemeVariables.row, props.rowClassName, styleHeaderBar, GlobalThemeVariables.headerRow, props.headerClassName)}
       style={mergeStyles(headerRowPaddingStyle, { cursor: columnResizePlugin.isMoving() ? "col-resize" : undefined })}
       ref={(el) => {
         columnResizePlugin.containerRef.current = el;
@@ -194,7 +204,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
             style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style, getDraggerStyle(idx))}
           >
             {columnConfig.title || <EmptyCell showSymbol />}
-            {showResizer ? columnResizePlugin.renderResizer(idx) : null}
+            {showResizer ? columnResizePlugin.renderResizer(idx, props.resizeDraggerClassName) : null}
           </div>
         );
       })}
@@ -217,8 +227,8 @@ let RoughDivTable: RoughDivTableProps = (props) => {
       return (
         <div
           key={idx}
-          className={cx(row, styleRow, GlobalThemeVariables.row, props.onRowClick != null && styleCursorPointer, rowClassName)}
-          style={Object.assign({ minWidth: rowMinWidth }, rowPaddingStyle)}
+          className={cx(row, styleRow, GlobalThemeVariables.row, props.onRowClick != null && styleCursorPointer, props.rowClassName, rowClassName)}
+          style={mergeStyles({ minWidth: rowMinWidth }, rowPaddingStyle, props.customBodyRowStyle?.(idx))}
           onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
         >
           {columns.map((columnConfig, colIdx) => {
@@ -248,8 +258,19 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   return (
     <div className={cx(flex, column, styleTable, wholeBorders ? styleWholeBorders : null, props.className)} data-area="rough-table">
       {headElements}
-      <div ref={scrollRef} className={cx(styleBody, props.bodyClassName)} onScroll={(event) => handleScroll()}>
+      <div
+        ref={(el) => {
+          scrollRef.current = el;
+          if (props.bodyRef != null) {
+            props.bodyRef.current = el;
+          }
+        }}
+        className={cx(styleBody, props.bodyClassName)}
+        onScroll={(event) => handleScroll()}
+      >
+        {props.bodyScrollingPad?.("top")}
         {bodyElements}
+        {props.bodyScrollingPad?.("bottom")}
       </div>
       {props.pageOptions != null ? renderPagination() : null}
       {props.isLoading ? (

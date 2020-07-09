@@ -28,18 +28,16 @@ export default EmptyPlaceholder;
 let placeholderColor = "hsl(0, 0%, 88%)";
 
 let styleIcon = css`
-  color: ${placeholderColor};
-
   line-height: 80px;
   font-size: 80px;
 `;
 
 let styleText = css`
-  color: ${placeholderColor};
   line-height: 20px;
   font-size: 12px;
 `;
 
 let styleContainer = css`
+  color: ${placeholderColor};
   padding: 12px 16px;
 `;

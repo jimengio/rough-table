@@ -32,6 +32,7 @@ let columns: IRoughTableColumn<IData>[] = [
 
 let CustomThemePage: FC<{ className?: string }> = React.memo((props) => {
   let [showEmpty, setShowEmpty] = useState(false);
+  let [loading, setLoading] = useState(false);
 
   /** Plugins */
   /** Methods */
@@ -61,12 +62,21 @@ let CustomThemePage: FC<{ className?: string }> = React.memo((props) => {
       </DocDemo>
 
       <DocDemo title={"属性覆盖"}>
-        <JimoButton
-          text="Toggle empty"
-          onClick={() => {
-            setShowEmpty(!showEmpty);
-          }}
-        />
+        <div>
+          <JimoButton
+            text="Toggle empty"
+            onClick={() => {
+              setShowEmpty(!showEmpty);
+            }}
+          />
+          <Space width={8} />
+          <JimoButton
+            text="Toggle loading"
+            onClick={() => {
+              setLoading(!loading);
+            }}
+          />
+        </div>
         <Space height={16} />
 
         <div style={{ backgroundColor: "hsla(218, 80%, 15%, 1)" }}>
@@ -76,7 +86,10 @@ let CustomThemePage: FC<{ className?: string }> = React.memo((props) => {
             cellClassName={styleCustomCell}
             rowSelectedClassName={styleCustomRowSelected}
             resizeDraggerClassName={styleCustomResizeDragger}
+            loadingCoverClassName={styleLoadingCover}
+            loadingDotClassName={styleLoadingDot}
             data={showEmpty ? [] : data}
+            isLoading={loading}
             columns={columns}
             selectedKeys={["001", "003"]}
             rowKey={"code"}
@@ -133,6 +146,9 @@ attachRoughTableThemeVariables({
   headerRow: styleHeaderRow, // 头部特殊的行
   resizeDragger: styleResizeDragger, // 拖拽表格列的分割线
   placeholder: stylePlaceholder, // 表格内容为空时的元素, 主要是颜色
+  loadingCover: emptyStyle,
+  loadingDot: emptyStyle,
+  emptyPlaceholder: emptyStyle,
 });
 `;
 
@@ -172,7 +188,10 @@ headerClassName?: string;
 bodyClassName?: string;
 rowClassName?: string;
 resizeDraggerClassName?: string;
+loadingCoverClassName?: string;
+loadingDotClassName?: string;
 customBodyRowStyle?: (idx: number) => CSSProperties;
+placeholderClassName?: string;
 `;
 
 let customContent = `
@@ -181,4 +200,12 @@ let customContent = `
 
 let styleCustomRowSelected = css`
   background-color: hsl(200, 50%, 40%);
+`;
+
+let styleLoadingCover = css`
+  background-color: hsla(218, 93%, 11%, 0.65);
+`;
+
+let styleLoadingDot = css`
+  background-color: hsla(186, 97%, 74%, 1);
 `;

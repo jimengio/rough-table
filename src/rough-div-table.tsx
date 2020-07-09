@@ -54,22 +54,24 @@ type RoughDivTableProps<T = any> = FC<{
   data: T[];
   /** Displayed in headers */
   columns: IRoughTableColumn<T>[];
+  /** left/right padding in each row */
   rowPadding?: number;
   cellClassName?: string;
   headerClassName?: string;
   bodyClassName?: string;
   rowClassName?: string;
-  rowSelectClassName?: string;
+  rowSelectedClassName?: string;
   resizeDraggerClassName?: string;
   /** current need is to compute row color based on row index */
   customBodyRowStyle?: (idx: number) => CSSProperties;
 
   /** specical element to insert at body top and bottom, special style for scrolling table */
   bodyScrollingPad?: (position: "top" | "bottom") => ReactNode;
-  /** ref to expose element */
+  /** ref to expose body scroll element */
   bodyRef?: MutableRefObject<HTMLDivElement>;
 
   rowKey?: keyof T;
+  /** use `rowKey` to specify which field is used as row id */
   selectedKeys?: string[];
   onRowClick?: (record: any) => void;
 
@@ -222,7 +224,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
     bodyElements = props.data?.map((record, idx) => {
       let rowStateClassName: string;
       if (selectedKeys != null && selectedKeys.includes(record[rowKey])) {
-        rowStateClassName = cx(styleSelectedRow, GlobalThemeVariables.rowSelected, props.rowSelectClassName);
+        rowStateClassName = cx(styleSelectedRow, GlobalThemeVariables.rowSelected, props.rowSelectedClassName);
       }
 
       return (

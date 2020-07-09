@@ -74,7 +74,7 @@ let CustomThemePage: FC<{ className?: string }> = React.memo((props) => {
             headerClassName={styleRowHeader}
             rowClassName={styleCustomRow}
             cellClassName={styleCustomCell}
-            rowSelectClassName={styleCustomRowSelected}
+            rowSelectedClassName={styleCustomRowSelected}
             resizeDraggerClassName={styleCustomResizeDragger}
             data={showEmpty ? [] : data}
             columns={columns}

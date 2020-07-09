@@ -27,7 +27,6 @@ interface IProps {
   selectedKeys?: string[];
   rowKey?: string;
   onRowClick?: (record: any) => void;
-  setRowClassName?: (record: any) => string;
   pageOptions?: PaginationProps;
   emptyLocale?: string;
 }

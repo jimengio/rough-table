@@ -62,6 +62,9 @@ type RoughDivTableProps<T = any> = FC<{
   rowClassName?: string;
   rowSelectedClassName?: string;
   resizeDraggerClassName?: string;
+  loadingCoverClassName?: string;
+  loadingDotClassName?: string;
+  placeholderClassName?: string;
   /** current need is to compute row color based on row index */
   customBodyRowStyle?: (idx: number) => CSSProperties;
 
@@ -217,7 +220,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   let bodyElements: ReactNode = props.isLoading ? (
     <div className={styleLoadingEmpty} />
   ) : (
-    <EmptyPlaceholder emptyLocale={props.emptyLocale || configuredProps.emptyLocale} className={styleAreaBottom} />
+    <EmptyPlaceholder emptyLocale={props.emptyLocale || configuredProps.emptyLocale} className={cx(styleAreaBottom, props.placeholderClassName)} />
   );
 
   if (hasData) {
@@ -283,11 +286,11 @@ let RoughDivTable: RoughDivTableProps = (props) => {
           ) : (
             <>
               {props.loadingElement ? (
-                <div className={cx(center, styleCover)}>{props.loadingElement}</div>
+                <div className={cx(center, styleCover, GlobalThemeVariables.loadingCover, props.loadingCoverClassName)}>{props.loadingElement}</div>
               ) : (
                 <CSSTransition in={props.isLoading} timeout={200} classNames="fade-in-out" unmountOnExit>
-                  <div className={cx(center, styleCover)}>
-                    <LoadingIndicator />
+                  <div className={cx(center, styleCover, GlobalThemeVariables.loadingCover, props.loadingCoverClassName)}>
+                    <LoadingIndicator dotClassName={cx(GlobalThemeVariables.loadingDot, props.loadingDotClassName)} />
                   </div>
                 </CSSTransition>
               )}

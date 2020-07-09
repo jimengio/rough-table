@@ -11,6 +11,9 @@ export let GlobalThemeVariables = {
   headerRow: emptyStyle,
   resizeDragger: emptyStyle,
   placeholder: emptyStyle,
+  loadingCover: emptyStyle,
+  loadingDot: emptyStyle,
+  emptyPlaceholder: emptyStyle,
 };
 
 export let attachRoughTableThemeVariables = (customVariables: Partial<typeof GlobalThemeVariables>): void => {

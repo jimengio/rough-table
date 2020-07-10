@@ -2,7 +2,7 @@
  * to render data with plenty of columns, use ScrollTable
  */
 
-import React, { FC, ReactNode, CSSProperties, useRef, useState, useEffect, useLayoutEffect, Ref, MutableRefObject } from "react";
+import React, { FC, ReactNode, CSSProperties, useRef, useState, useEffect, useLayoutEffect, useContext, createContext, Ref, MutableRefObject } from "react";
 import { css, cx } from "emotion";
 import { center, column, flex, rowParted, row, expand } from "@jimengio/flex-styles";
 import Pagination from "antd/lib/pagination";
@@ -95,7 +95,85 @@ type RoughDivTableProps<T = any> = FC<{
   watchRowResizing?: boolean;
 }>;
 
-let RoughDivTable: RoughDivTableProps = (props) => {
+type IRoughTableContext<T = any> = {
+  columns: IRoughTableColumn<T>[];
+
+  rowPaddingStyle?: CSSProperties;
+  cellClassName?: string;
+
+  rowKey?: keyof T;
+  selectedKeys?: string[];
+  rowSelectedClassName?: string;
+  onRowClick?: (record: any) => void;
+
+  getDraggerStyle?(idx: number): CSSProperties;
+  customBodyRowStyle?(idx: number): CSSProperties;
+  rowMinWidth?: number;
+  showEmptySymbol?: boolean;
+};
+
+let RoughTableContext = createContext<IRoughTableContext>({ columns: [] });
+
+type RoughTableRowProps<T = any> = FC<{
+  record: T;
+  index: number;
+  className?: string;
+}>;
+
+export let RoughTableRow: RoughTableRowProps = ({ record, index, className }) => {
+  let {
+    columns,
+    rowPaddingStyle,
+    cellClassName,
+    rowKey,
+    selectedKeys,
+    rowSelectedClassName,
+    onRowClick,
+    getDraggerStyle,
+    customBodyRowStyle,
+    rowMinWidth,
+    showEmptySymbol,
+  } = useContext(RoughTableContext);
+
+  return (
+    <div
+      className={cx(
+        row,
+        styleRow,
+        GlobalThemeVariables.row,
+        {
+          [styleCursorPointer]: !!onRowClick,
+          [rowSelectedClassName]: selectedKeys?.includes(record[rowKey]),
+        },
+        className
+      )}
+      style={Object.assign({ minWidth: rowMinWidth }, rowPaddingStyle, customBodyRowStyle?.(index))}
+      onClick={onRowClick != null ? () => onRowClick(record) : null}
+    >
+      {columns.map((columnConfig, colIdx) => {
+        let value = record[columnConfig.dataIndex as string];
+        if (columnConfig.render != null) {
+          value = columnConfig.render(value, record, index);
+        }
+        return (
+          <div
+            key={colIdx}
+            className={cx(styleCell, GlobalThemeVariables.cell, cellClassName, columnConfig.className)}
+            style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style, getDraggerStyle(index))}
+          >
+            {value == null || value === "" ? (
+              <EmptyCell showSymbol={showEmptySymbol} />
+            ) : (
+              <>{columnConfig.clampText ? <ClampText addTooltip={true} {...columnConfig.clampTextProps} text={value} /> : value}</>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+export let RoughDivTable: RoughDivTableProps = (props) => {
   let scrollRef = useRef<HTMLDivElement>();
 
   let [rowMinWidth, setRowMinWidth] = useState(0);
@@ -190,6 +268,20 @@ let RoughDivTable: RoughDivTableProps = (props) => {
     return { flexBasis: columnResizePlugin.getSize(idx) };
   };
 
+  let context = {
+    columns,
+    rowPaddingStyle,
+    cellClassName: props.cellClassName,
+    rowKey,
+    selectedKeys,
+    rowSelectedClassName: cx(styleSelectedRow, GlobalThemeVariables.rowSelected, props.rowSelectedClassName),
+    onRowClick: props.onRowClick,
+    getDraggerStyle,
+    customBodyRowStyle: props.customBodyRowStyle,
+    rowMinWidth,
+    showEmptySymbol,
+  };
+
   let headElements = (
     <div
       className={cx(row, styleRow, GlobalThemeVariables.row, props.rowClassName, styleHeaderBar, GlobalThemeVariables.headerRow, props.headerClassName)}
@@ -224,41 +316,15 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   );
 
   if (hasData) {
-    bodyElements = props.data?.map((record, idx) => {
-      let rowStateClassName: string;
-      if (selectedKeys != null && selectedKeys.includes(record[rowKey])) {
-        rowStateClassName = cx(styleSelectedRow, GlobalThemeVariables.rowSelected, props.rowSelectedClassName);
-      }
-
-      return (
-        <div
-          key={idx}
-          className={cx(row, styleRow, GlobalThemeVariables.row, props.onRowClick != null && styleCursorPointer, props.rowClassName, rowStateClassName)}
-          style={mergeStyles({ minWidth: rowMinWidth }, rowPaddingStyle, props.customBodyRowStyle?.(idx))}
-          onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
-        >
-          {columns.map((columnConfig, colIdx) => {
-            let value = record[columnConfig.dataIndex as string];
-            if (columnConfig.render != null) {
-              value = columnConfig.render(value, record, idx);
-            }
-            return (
-              <div
-                key={colIdx}
-                className={cx(styleCell, GlobalThemeVariables.cell, props.cellClassName, columnConfig.className)}
-                style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style, getDraggerStyle(colIdx))}
-              >
-                {value == null || value === "" ? (
-                  <EmptyCell showSymbol={showEmptySymbol} />
-                ) : (
-                  <>{columnConfig.clampText ? <ClampText addTooltip={true} {...columnConfig.clampTextProps} text={value} /> : value}</>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      );
-    });
+    bodyElements = (
+      <RoughTableContext.Provider value={context}>
+        {props.data?.map((record, index) => (
+          <RoughTableRow key={index} record={record} index={index} />
+        ))}
+      </RoughTableContext.Provider>
+    );
+  } else if (props.children != null) {
+    bodyElements = <RoughTableContext.Provider value={context}>{props.children}</RoughTableContext.Provider>;
   }
 
   return (

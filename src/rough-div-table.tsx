@@ -56,15 +56,10 @@ type RoughDivTableProps<T = any> = FC<{
   columns: IRoughTableColumn<T>[];
   /** left/right padding in each row */
   rowPadding?: number;
-  cellClassName?: string;
-  headerClassName?: string;
   bodyClassName?: string;
-  rowClassName?: string;
-  rowSelectedClassName?: string;
-  resizeDraggerClassName?: string;
-  loadingCoverClassName?: string;
-  loadingDotClassName?: string;
-  placeholderClassName?: string;
+  theme?: Partial<
+    Pick<typeof GlobalThemeVariables, "cell" | "row" | "rowSelected" | "headerRow" | "resizeDragger" | "loadingCover" | "loadingDot" | "emptyPlaceholder">
+  >;
   /** current need is to compute row color based on row index */
   customBodyRowStyle?: (idx: number) => CSSProperties;
 
@@ -192,7 +187,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
 
   let headElements = (
     <div
-      className={cx(row, styleRow, GlobalThemeVariables.row, props.rowClassName, styleHeaderBar, GlobalThemeVariables.headerRow, props.headerClassName)}
+      className={cx(row, styleRow, GlobalThemeVariables.row, props.theme?.row, styleHeaderBar, GlobalThemeVariables.headerRow, props.theme?.headerRow)}
       style={mergeStyles(headerRowPaddingStyle, { cursor: columnResizePlugin.isMoving() ? "col-resize" : undefined })}
       ref={(el) => {
         columnResizePlugin.containerRef.current = el;
@@ -206,11 +201,11 @@ let RoughDivTable: RoughDivTableProps = (props) => {
         return (
           <div
             key={idx}
-            className={cx(rowParted, styleCell, GlobalThemeVariables.cell, props.cellClassName, columnConfig.className)}
+            className={cx(rowParted, styleCell, GlobalThemeVariables.cell, props.theme?.cell, columnConfig.className)}
             style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style, getDraggerStyle(idx))}
           >
             {columnConfig.title || <EmptyCell showSymbol />}
-            {showResizer ? columnResizePlugin.renderResizer(idx, props.resizeDraggerClassName) : null}
+            {showResizer ? columnResizePlugin.renderResizer(idx, props.theme?.resizeDragger) : null}
           </div>
         );
       })}
@@ -220,20 +215,20 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   let bodyElements: ReactNode = props.isLoading ? (
     <div className={styleLoadingEmpty} />
   ) : (
-    <EmptyPlaceholder emptyLocale={props.emptyLocale || configuredProps.emptyLocale} className={cx(styleAreaBottom, props.placeholderClassName)} />
+    <EmptyPlaceholder emptyLocale={props.emptyLocale || configuredProps.emptyLocale} className={cx(styleAreaBottom, props.theme?.emptyPlaceholder)} />
   );
 
   if (hasData) {
     bodyElements = props.data?.map((record, idx) => {
       let rowStateClassName: string;
       if (selectedKeys != null && selectedKeys.includes(record[rowKey])) {
-        rowStateClassName = cx(styleSelectedRow, GlobalThemeVariables.rowSelected, props.rowSelectedClassName);
+        rowStateClassName = cx(styleSelectedRow, GlobalThemeVariables.rowSelected, props.theme?.rowSelected);
       }
 
       return (
         <div
           key={idx}
-          className={cx(row, styleRow, GlobalThemeVariables.row, props.onRowClick != null && styleCursorPointer, props.rowClassName, rowStateClassName)}
+          className={cx(row, styleRow, GlobalThemeVariables.row, props.onRowClick != null && styleCursorPointer, props.theme?.row, rowStateClassName)}
           style={mergeStyles({ minWidth: rowMinWidth }, rowPaddingStyle, props.customBodyRowStyle?.(idx))}
           onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
         >
@@ -245,7 +240,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
             return (
               <div
                 key={colIdx}
-                className={cx(styleCell, GlobalThemeVariables.cell, props.cellClassName, columnConfig.className)}
+                className={cx(styleCell, GlobalThemeVariables.cell, props.theme?.cell, columnConfig.className)}
                 style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style, getDraggerStyle(colIdx))}
               >
                 {value == null || value === "" ? (
@@ -286,11 +281,11 @@ let RoughDivTable: RoughDivTableProps = (props) => {
           ) : (
             <>
               {props.loadingElement ? (
-                <div className={cx(center, styleCover, GlobalThemeVariables.loadingCover, props.loadingCoverClassName)}>{props.loadingElement}</div>
+                <div className={cx(center, styleCover, GlobalThemeVariables.loadingCover, props.theme?.loadingCover)}>{props.loadingElement}</div>
               ) : (
                 <CSSTransition in={props.isLoading} timeout={200} classNames="fade-in-out" unmountOnExit>
-                  <div className={cx(center, styleCover, GlobalThemeVariables.loadingCover, props.loadingCoverClassName)}>
-                    <LoadingIndicator dotClassName={cx(GlobalThemeVariables.loadingDot, props.loadingDotClassName)} />
+                  <div className={cx(center, styleCover, GlobalThemeVariables.loadingCover, props.theme?.loadingCover)}>
+                    <LoadingIndicator dotClassName={cx(GlobalThemeVariables.loadingDot, props.theme?.loadingDot)} />
                   </div>
                 </CSSTransition>
               )}

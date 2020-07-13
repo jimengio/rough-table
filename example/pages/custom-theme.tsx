@@ -6,6 +6,7 @@ import { DocBlock, DocDemo, DocSnippet } from "@jimengio/doc-frame";
 
 import RoughDivTable, { IRoughTableColumn } from "../../src/rough-div-table";
 import { Space } from "@jimengio/flex-styles";
+import { head } from "lodash-es";
 
 interface IData {
   code: string;
@@ -81,13 +82,15 @@ let CustomThemePage: FC<{ className?: string }> = React.memo((props) => {
 
         <div style={{ backgroundColor: "hsla(218, 80%, 15%, 1)" }}>
           <RoughDivTable
-            headerClassName={styleRowHeader}
-            rowClassName={styleCustomRow}
-            cellClassName={styleCustomCell}
-            rowSelectedClassName={styleCustomRowSelected}
-            resizeDraggerClassName={styleCustomResizeDragger}
-            loadingCoverClassName={styleLoadingCover}
-            loadingDotClassName={styleLoadingDot}
+            theme={{
+              headerRow: styleRowHeader,
+              row: styleCustomRow,
+              cell: styleCustomCell,
+              rowSelected: styleCustomRowSelected,
+              resizeDragger: styleCustomResizeDragger,
+              loadingCover: styleLoadingCover,
+              loadingDot: styleLoadingDot,
+            }}
             data={showEmpty ? [] : data}
             isLoading={loading}
             columns={columns}
@@ -181,17 +184,16 @@ let styleCustomResizeDragger = css`
 `;
 
 let customCode = `
-className?: string;
-rowPadding?: number;
-cellClassName?: string;
-headerClassName?: string;
-bodyClassName?: string;
-rowClassName?: string;
-resizeDraggerClassName?: string;
-loadingCoverClassName?: string;
-loadingDotClassName?: string;
+theme={{
+  headerRow: styleRowHeader,
+  row: styleCustomRow,
+  cell: styleCustomCell,
+  rowSelected: styleCustomRowSelected,
+  resizeDragger: styleCustomResizeDragger,
+  loadingCover: styleLoadingCover,
+  loadingDot: styleLoadingDot,
+}}
 customBodyRowStyle?: (idx: number) => CSSProperties;
-placeholderClassName?: string;
 `;
 
 let customContent = `

@@ -14,6 +14,8 @@ import { CSSTransition } from "react-transition-group";
 import EmptyPlaceholder from "./empty-placeholder";
 import { useColumnResize } from "./hooks/column-resize";
 import { GlobalThemeVariables } from "./theme";
+import { getTableRenderer } from "./registered-renderer";
+import { isFunction } from "util";
 
 interface IColumnClampTextProps extends Partial<IClampTextProps> {
   text?: React.ReactNode;
@@ -34,6 +36,9 @@ export interface IRoughTableColumn<T = ISimpleObject> {
    * @param itemIndex, index of item in data list
    */
   render?: (value: any, record: T, itemIndex?: number) => ReactNode;
+  /** for registered renderers */
+  renderType?: string;
+  renderOptions?: object;
 }
 
 let configuredProps = {
@@ -233,21 +238,39 @@ let RoughDivTable: RoughDivTableProps = (props) => {
           onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
         >
           {columns.map((columnConfig, colIdx) => {
-            let value = record[columnConfig.dataIndex as string];
+            let textValue = record[columnConfig.dataIndex as string];
+            let renderedValue: ReactNode = textValue;
+
             if (columnConfig.render != null) {
-              value = columnConfig.render(value, record, idx);
+              renderedValue = columnConfig.render(textValue, record, idx);
             }
+
+            renderedValue = (() => {
+              if (renderedValue == null || renderedValue === "") {
+                return <EmptyCell showSymbol={showEmptySymbol} />;
+              }
+              if (columnConfig.clampText) {
+                return <ClampText addTooltip={true} {...columnConfig.clampTextProps} text={renderedValue} tooltipText={textValue} />;
+              }
+              /** if render function is present, do not activate renderType */
+              if (columnConfig.render == null && columnConfig.renderType != null) {
+                let renderFn = getTableRenderer(columnConfig.renderType);
+                if (isFunction(renderFn)) {
+                  return renderFn(textValue, columnConfig.renderOptions || {});
+                }
+                return renderedValue;
+              }
+
+              return renderedValue;
+            })();
+
             return (
               <div
                 key={colIdx}
                 className={cx(styleCell, GlobalThemeVariables.cell, props.theme?.cell, columnConfig.className)}
                 style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style, getDraggerStyle(colIdx))}
               >
-                {value == null || value === "" ? (
-                  <EmptyCell showSymbol={showEmptySymbol} />
-                ) : (
-                  <>{columnConfig.clampText ? <ClampText addTooltip={true} {...columnConfig.clampTextProps} text={value} /> : value}</>
-                )}
+                {renderedValue}
               </div>
             );
           })}

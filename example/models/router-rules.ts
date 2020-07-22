@@ -16,5 +16,6 @@ export const routerRules: IRouteRule[] = [
   { path: "configure" },
   { path: "empty-placeholder" },
   { path: "custom-theme" },
+  { path: "registered-renderer" },
   { path: "", name: "home" },
 ];

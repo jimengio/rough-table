@@ -105,6 +105,12 @@ export let genRouter = {
     path: () => `/custom-theme`,
     go: () => switchPath(`/custom-theme`),
   },
+  registeredRenderer: {
+    name: "registered-renderer",
+    raw: "registered-renderer",
+    path: () => `/registered-renderer`,
+    go: () => switchPath(`/registered-renderer`),
+  },
   $: {
     name: "home",
     raw: "",
@@ -133,6 +139,7 @@ export interface GenRouterTypeTree {
     | GenRouterTypeTree["configure"]
     | GenRouterTypeTree["emptyPlaceholder"]
     | GenRouterTypeTree["customTheme"]
+    | GenRouterTypeTree["registeredRenderer"]
     | GenRouterTypeTree["$"];
   basic: {
     name: "basic";
@@ -220,6 +227,12 @@ export interface GenRouterTypeTree {
   };
   customTheme: {
     name: "custom-theme";
+    params: {};
+    query: {};
+    next: null;
+  };
+  registeredRenderer: {
+    name: "registered-renderer";
     params: {};
     query: {};
     next: null;

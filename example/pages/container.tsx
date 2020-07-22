@@ -22,6 +22,7 @@ import DemoRowResizing from "./demo/row-resizing";
 import DemoConfigure from "./demo/configure";
 import DemoEmptyPlaceholder from "./demo/empty-placeholder";
 import CustomThemePage from "./custom-theme";
+import DemoRegisteredRenderer from "./demo/registered-renderer";
 
 const renderBody = (routerTree: GenRouterTypeMain) => {
   switch (routerTree?.name) {
@@ -53,6 +54,8 @@ const renderBody = (routerTree: GenRouterTypeMain) => {
       return <DemoEmptyPlaceholder />;
     case "custom-theme":
       return <CustomThemePage />;
+    case "registered-renderer":
+      return <DemoRegisteredRenderer />;
     case "home":
       return <HashRedirect to={genRouter.basic.path()} noDelay />;
   }
@@ -129,6 +132,11 @@ let entries: ISidebarEntry[] = [
     title: "Custom Theme",
     cnTitle: "主题样式",
     path: genRouter.customTheme.name,
+  },
+  {
+    title: "Register Renderer",
+    cnTitle: "注册渲染器",
+    path: genRouter.registeredRenderer.name,
   },
 ];
 

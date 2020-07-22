@@ -7,14 +7,26 @@ import { Space } from "@jimengio/flex-styles";
 import { registerRoughTableRenderer } from "../../../src/registered-renderer";
 
 let code = `
+// 项目全局定义
+registerRoughTableRenderer("colored", (text, options) => {
+  // TODO, check data from options
+  let color = options.color || "red";
+
+  return (
+    <span className={styleColored} style={{ color: color }}>
+      {text}
+    </span>
+  );
+});
+
+// 使用
 let columns: IRoughTableColumn<IData>[] = [
   { title: "物料编号", dataIndex: "code" },
-  { title: "名称", dataIndex: "name" },
+  { title: "名称(colored...)", dataIndex: "name", renderType: "colored", renderOptions: { color: "blue" } },
+  { title: "名称(colored...)", dataIndex: "source", renderType: "colored", renderOptions: { color: "green" } },
   { title: "型号", dataIndex: "model", render: (item: IData["model"], record: IData) => item },
-  { title: "操作", dataIndex: "model", width: 80, render: (item: any, record: IData) => <ActionLinks actions={actions} spaced /> },
 ];
 
-<RoughDivTable data={data} columns={columns} />
 `;
 
 registerRoughTableRenderer("colored", (text, options) => {
@@ -47,7 +59,7 @@ let data: IData[] = [
 let columns: IRoughTableColumn<IData>[] = [
   { title: "物料编号", dataIndex: "code" },
   { title: "名称(colored...)", dataIndex: "name", renderType: "colored", renderOptions: { color: "blue" } },
-  { title: "名称(colored...)", dataIndex: "source", renderType: "colored", renderOptions: { color: "green" } },
+  { title: "来源(colored...)", dataIndex: "source", renderType: "colored", renderOptions: { color: "green" } },
   { title: "型号", dataIndex: "model", render: (item: IData["model"], record: IData) => item },
 ];
 
@@ -67,9 +79,7 @@ export default DemoRegisteredRenderer;
 
 let styleContainer = null;
 
-let emptyContent = `无数据时显示.`;
-
-let contentBasic = `显示一个简单的表格`;
+let contentBasic = `一个注册渲染器的方案. 全局注册渲染函数以后, 表格可以使用 \`renderType\` 属性指定使用该渲染器渲染. 可以减少一部分业务的重复代码.`;
 
 let styleColored = css`
   color: blue;

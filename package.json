@@ -1,6 +1,6 @@
 {
   "name": "@jimengio/rough-table",
-  "version": "0.2.27-a1",
+  "version": "0.2.27",
   "description": "",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",

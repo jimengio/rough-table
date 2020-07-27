@@ -152,6 +152,9 @@ attachRoughTableThemeVariables({
   loadingCover: emptyStyle,
   loadingDot: emptyStyle,
   emptyPlaceholder: emptyStyle,
+  /** link style */
+  actionLinkItem: emptyStyle,
+  actionLinksSpaceSeparatorWidth: 8,
 });
 `;
 

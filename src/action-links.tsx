@@ -2,6 +2,7 @@ import React, { SFC } from "react";
 import { css, cx } from "emotion";
 import { interpose } from "./util/list";
 import Space from "./space";
+import { GlobalThemeVariables } from "./theme";
 
 let configuredProps = {
   /** 使用空白作为分隔符 */
@@ -42,13 +43,13 @@ let ActionLinks: SFC<{
       {items.map((item, idx) => {
         if (item == null) {
           if (spaced) {
-            return <Space key={idx} width={8} />;
+            return <Space key={idx} width={GlobalThemeVariables.actionLinksSpaceSeparatorWidth || 8} />;
           } else {
-            return <span key={idx} className={styleSeperator} />;
+            return <span key={idx} className={styleSeparator} />;
           }
         } else {
           return (
-            <a className={styleLink} key={idx} onClick={item.onClick} data-action={item["data-action"] || item.text}>
+            <a className={cx(styleLink, GlobalThemeVariables.actionLinkItem)} key={idx} onClick={item.onClick} data-action={item["data-action"] || item.text}>
               {item.text}
             </a>
           );
@@ -60,7 +61,7 @@ let ActionLinks: SFC<{
 
 export default ActionLinks;
 
-const styleSeperator = css`
+const styleSeparator = css`
   margin: 0 8px;
   width: 1px;
   height: 14px;

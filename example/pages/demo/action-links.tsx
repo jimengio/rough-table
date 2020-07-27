@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { css } from "emotion";
 import ActionLinks, { IActionLinkItem } from "../../../src/action-links";
 import { DocDemo, DocSnippet, DocBlock } from "@jimengio/doc-frame";
+import { attachRoughTableThemeVariables } from "../../../src/theme";
 
 let code = `
 let actions: IActionLinkItem[] = [
@@ -56,3 +57,16 @@ let DemoActionLinks: FC<{}> = React.memo((props) => {
 });
 
 export default DemoActionLinks;
+
+// let styleLinks = css`
+//   color: red;
+//   font-size: 12px;
+//   :hover {
+//     color: red;
+//   }
+// `;
+
+// attachRoughTableThemeVariables({
+//   actionLinkItem: styleLinks,
+//   actionLinksSpaceSeparatorWidth: 12,
+// });

@@ -14,6 +14,9 @@ export let GlobalThemeVariables = {
   loadingCover: emptyStyle,
   loadingDot: emptyStyle,
   emptyPlaceholder: emptyStyle,
+  /** link style */
+  actionLinkItem: emptyStyle,
+  actionLinksSpaceSeparatorWidth: 8,
 };
 
 export let attachRoughTableThemeVariables = (customVariables: Partial<typeof GlobalThemeVariables>): void => {

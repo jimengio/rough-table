@@ -111,6 +111,12 @@ export let genRouter = {
     path: () => `/registered-renderer`,
     go: () => switchPath(`/registered-renderer`),
   },
+  alignToRight: {
+    name: "align-to-right",
+    raw: "align-to-right",
+    path: () => `/align-to-right`,
+    go: () => switchPath(`/align-to-right`),
+  },
   $: {
     name: "home",
     raw: "",
@@ -140,6 +146,7 @@ export interface GenRouterTypeTree {
     | GenRouterTypeTree["emptyPlaceholder"]
     | GenRouterTypeTree["customTheme"]
     | GenRouterTypeTree["registeredRenderer"]
+    | GenRouterTypeTree["alignToRight"]
     | GenRouterTypeTree["$"];
   basic: {
     name: "basic";
@@ -233,6 +240,12 @@ export interface GenRouterTypeTree {
   };
   registeredRenderer: {
     name: "registered-renderer";
+    params: {};
+    query: {};
+    next: null;
+  };
+  alignToRight: {
+    name: "align-to-right";
     params: {};
     query: {};
     next: null;

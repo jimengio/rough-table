@@ -17,5 +17,6 @@ export const routerRules: IRouteRule[] = [
   { path: "empty-placeholder" },
   { path: "custom-theme" },
   { path: "registered-renderer" },
+  { path: "align-to-right" },
   { path: "", name: "home" },
 ];

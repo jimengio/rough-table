@@ -23,6 +23,7 @@ import DemoConfigure from "./demo/configure";
 import DemoEmptyPlaceholder from "./demo/empty-placeholder";
 import CustomThemePage from "./custom-theme";
 import DemoRegisteredRenderer from "./demo/registered-renderer";
+import DemoAlignToRight from "./demo/align-to-right";
 
 const renderBody = (routerTree: GenRouterTypeMain) => {
   switch (routerTree?.name) {
@@ -56,6 +57,8 @@ const renderBody = (routerTree: GenRouterTypeMain) => {
       return <CustomThemePage />;
     case "registered-renderer":
       return <DemoRegisteredRenderer />;
+    case "align-to-right":
+      return <DemoAlignToRight />;
     case "home":
       return <HashRedirect to={genRouter.basic.path()} noDelay />;
   }
@@ -137,6 +140,11 @@ let entries: ISidebarEntry[] = [
     title: "Register Renderer",
     cnTitle: "注册渲染器",
     path: genRouter.registeredRenderer.name,
+  },
+  {
+    title: "Align to right",
+    cnTitle: "右对齐",
+    path: genRouter.alignToRight.name,
   },
 ];
 

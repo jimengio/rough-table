@@ -110,9 +110,10 @@ export let useColumnResize = () => {
 };
 
 let styleResizeDragger = css`
+  position: absolute;
+  right: 1px;
   width: 2px;
-  height: 14px;
+  height: 16px;
   cursor: col-resize;
   border-right: 1px solid hsl(216, 14%, 93%);
-  margin-right: -6px; /** since padding-right:8px */
 `;

@@ -24,6 +24,7 @@ interface IColumnClampTextProps extends Partial<IClampTextProps> {
 export interface IRoughTableColumn<T = ISimpleObject> {
   title: ReactNode;
   hidden?: boolean;
+  alignToRight?: boolean;
   clampText?: boolean;
   clampTextProps?: IColumnClampTextProps;
   width?: number | string;
@@ -206,7 +207,14 @@ let RoughDivTable: RoughDivTableProps = (props) => {
         return (
           <div
             key={idx}
-            className={cx(rowParted, styleCell, GlobalThemeVariables.cell, props.theme?.cell, columnConfig.className)}
+            className={cx(
+              rowParted,
+              styleCell,
+              columnConfig.alignToRight && styleAlignRight,
+              GlobalThemeVariables.cell,
+              props.theme?.cell,
+              columnConfig.className
+            )}
             style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style, getDraggerStyle(idx))}
           >
             {columnConfig.title || <EmptyCell showSymbol />}
@@ -267,7 +275,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
             return (
               <div
                 key={colIdx}
-                className={cx(styleCell, GlobalThemeVariables.cell, props.theme?.cell, columnConfig.className)}
+                className={cx(styleCell, columnConfig.alignToRight && styleAlignRight, GlobalThemeVariables.cell, props.theme?.cell, columnConfig.className)}
                 style={mergeStyles(getWidthStyle(columnConfig.width), columnConfig.style, getDraggerStyle(colIdx))}
               >
                 {renderedValue}
@@ -330,7 +338,9 @@ const styleCell = css`
   overflow: hidden;
   text-overflow: ellipsis;
   display: flex;
+  flex-direction: row;
   align-items: center;
+  position: relative;
 `;
 
 const styleHeaderBar = css`
@@ -422,4 +432,10 @@ let styleLoadingEmpty = css`
 
 let styleAreaBottom = css`
   border-bottom: 1px solid hsla(216, 14%, 93%, 1);
+`;
+
+let styleAlignRight = css`
+  justify-content: flex-end;
+  text-align: right;
+  padding-right: 20px;
 `;

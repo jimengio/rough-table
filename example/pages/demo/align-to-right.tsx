@@ -78,4 +78,4 @@ let DemoAlignToRight: FC<{}> = (props) => {
 
 export default DemoAlignToRight;
 
-let styleContainer = null;
+let styleContainer: string = null;

@@ -24,4 +24,4 @@ let DemoEmpty: FC<{}> = (props) => {
 
 export default DemoEmpty;
 
-let styleContainer = null;
+let styleContainer = css``;

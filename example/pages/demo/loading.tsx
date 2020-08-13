@@ -86,4 +86,4 @@ let DemoLoading: FC<{}> = (props) => {
 
 export default DemoLoading;
 
-let styleContainer = null;
+let styleContainer = css``;

@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { isFunction } from "util";
+import { isFunction } from "lodash-es";
 
 type FuncCellRenderer = (value: any, options: any) => ReactNode;
 

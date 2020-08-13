@@ -63,7 +63,7 @@ let DemoSelected: FC<{}> = (props) => {
 
 export default DemoSelected;
 
-let styleContainer = null;
+let styleContainer = css``;
 
 let styleDemo = css`
   max-width: 800px;

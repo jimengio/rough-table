@@ -131,7 +131,7 @@ let DemoBasic: FC<{}> = (props) => {
 
 export default DemoBasic;
 
-let styleContainer = null;
+let styleContainer = css``;
 
 let emptyContent = `无数据时显示.`;
 

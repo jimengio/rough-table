@@ -15,7 +15,7 @@ import EmptyPlaceholder from "./empty-placeholder";
 import { useColumnResize } from "./hooks/column-resize";
 import { GlobalThemeVariables } from "./theme";
 import { getTableRenderer } from "./registered-renderer";
-import { isFunction } from "util";
+import { isFunction } from "lodash-es";
 
 interface IColumnClampTextProps extends Partial<IClampTextProps> {
   text?: React.ReactNode;
@@ -44,10 +44,10 @@ export interface IRoughTableColumn<T = ISimpleObject> {
 
 let configuredProps = {
   rowPadding: 24,
-  emptyLocale: undefined,
+  emptyLocale: undefined as string,
   showEmptySymbol: false,
   wholeBorders: false,
-  loadingElement: undefined,
+  loadingElement: undefined as ReactNode,
 };
 
 /** 页面级别添加 DivTable 组件的默认值 */

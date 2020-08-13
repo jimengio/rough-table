@@ -85,7 +85,7 @@ let DemoWide: FC<{}> = (props) => {
 
 export default DemoWide;
 
-let styleContainer = null;
+let styleContainer = css``;
 
 let styleRestricted = css`
   height: 400px;

@@ -101,7 +101,7 @@ let detectFolded = (path: number[], state: ISimpleObject): boolean => {
 };
 
 let RoughTreeTable: RoughTreeTableProps = React.memo((props) => {
-  let [foldingState, updateFoldingState] = useImmer({});
+  let [foldingState, updateFoldingState] = useImmer({} as Record<string, any>);
 
   /** Methods */
   /** Effects */

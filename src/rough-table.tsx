@@ -5,7 +5,7 @@
 import React, { ReactNode } from "react";
 import produce from "immer";
 import { css, cx } from "emotion";
-import { center, column, flex, rowParted } from "@jimengio/flex-styles";
+import { center, column, expand, rowParted } from "@jimengio/flex-styles";
 import Pagination from "antd/lib/pagination";
 import Space from "./space";
 import { PaginationProps } from "antd/lib/pagination";
@@ -112,9 +112,9 @@ export default class RoughTable extends React.Component<IProps, IState> {
     }
 
     return (
-      <div className={cx(flex, column, styleTableContainer, this.props.className)}>
+      <div className={cx(expand, column, styleTableContainer, this.props.className)}>
         <table className={styleFixedTable}>{headElement}</table>
-        <div className={cx(flex, styleBodyContainer)}>
+        <div className={cx(expand, styleBodyContainer)}>
           <table className={styleFixedTable}>{bodyElement}</table>
         </div>
         {this.props.pageOptions != null ? this.renderPagination() : null}

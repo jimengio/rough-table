@@ -5,7 +5,7 @@
 
 import React, { ReactNode, FC, CSSProperties, useRef } from "react";
 import { css, cx } from "emotion";
-import { center, column, flex, rowParted, row, expand } from "@jimengio/flex-styles";
+import { center, column, rowParted, row, expand } from "@jimengio/flex-styles";
 import Pagination from "antd/lib/pagination";
 import { PaginationProps } from "antd/lib/pagination";
 import { IRoughTableColumn } from "./rough-div-table";
@@ -129,9 +129,9 @@ let ScrollDivTable: ScrollDivTableProps = (props) => {
   }
 
   return (
-    <div className={cx(flex, column, props.wholeBorders ? styleWholeBorders : null, props.className)} data-area="scroll-div-table">
+    <div className={cx(expand, column, props.wholeBorders ? styleWholeBorders : null, props.className)} data-area="scroll-div-table">
       <div className={cx(expand, column)}>
-        <div className={cx(flex, column, styleArea)} data-area="table-area">
+        <div className={cx(expand, column, styleArea)} data-area="table-area">
           <div ref={headerRef} className={cx(styleHeaderBar)}>
             <div className={cx(styleRow, GlobalThemeVariables.headerRow)} style={mergeStyles({ width: allWidth, minWidth: "100%" }, rowPaddingStyle)}>
               {headElements}

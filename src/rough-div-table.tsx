@@ -4,7 +4,7 @@
 
 import React, { FC, ReactNode, CSSProperties, useRef, useState, useEffect, useLayoutEffect, Ref, MutableRefObject } from "react";
 import { css, cx } from "emotion";
-import { center, column, flex, rowParted, row, expand } from "@jimengio/flex-styles";
+import { center, column, rowParted, row, expand } from "@jimengio/flex-styles";
 import Pagination from "antd/lib/pagination";
 import { PaginationProps } from "antd/lib/pagination";
 import { ISimpleObject } from "./types";
@@ -288,7 +288,7 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   }
 
   return (
-    <div className={cx(flex, column, styleTable, wholeBorders ? styleWholeBorders : null, props.className)} data-area="rough-table">
+    <div className={cx(expand, column, styleTable, wholeBorders ? styleWholeBorders : null, props.className)} data-area="rough-table">
       {headElements}
       <div
         ref={(el) => {

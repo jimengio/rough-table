@@ -3,7 +3,7 @@ import { css, cx } from "emotion";
 
 import ScrollDivTable from "../../../src/scroll-div-table";
 import RoughDivTable, { IRoughTableColumn } from "../../../src/rough-div-table";
-import { fullHeight, flex, column } from "@jimengio/flex-styles";
+import { fullHeight, expand, column } from "@jimengio/flex-styles";
 import { DocDemo, DocBlock } from "@jimengio/doc-frame";
 
 let countMany = Array.from({ length: 100 }, (_, n) => n);
@@ -57,7 +57,7 @@ let DemoWide: FC<{}> = (props) => {
         <DocBlock content={content} />
         <div className={cx(column, styleTallArea)}>
           <ScrollDivTable
-            className={flex}
+            className={expand}
             data={data}
             columns={columns}
             rowPadding={24}

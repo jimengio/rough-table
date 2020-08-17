@@ -66,7 +66,7 @@ let DemoWholeBorders: FC<{}> = (props) => {
 
 export default DemoWholeBorders;
 
-let styleContainer = null;
+let styleContainer = css``;
 
 let content = `默认只有上下有边框, 通过参数开启全局边框.`;
 

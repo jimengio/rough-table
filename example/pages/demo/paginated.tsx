@@ -58,7 +58,7 @@ let DemoPaginated: FC<{}> = (props) => {
 
 export default DemoPaginated;
 
-let styleContainer = null;
+let styleContainer = css``;
 
 let code = `
 <RoughDivTable

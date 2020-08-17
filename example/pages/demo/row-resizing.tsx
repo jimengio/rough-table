@@ -64,7 +64,7 @@ let DemoRowResizing: FC<{}> = (props) => {
 
 export default DemoRowResizing;
 
-let styleContainer = null;
+let styleContainer = css``;
 
 let code = `
 <RoughDivTable data={data} columns={columns} rowPadding={24}

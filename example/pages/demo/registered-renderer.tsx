@@ -77,7 +77,7 @@ let DemoRegisteredRenderer: FC<{}> = (props) => {
 
 export default DemoRegisteredRenderer;
 
-let styleContainer = null;
+let styleContainer = css``;
 
 let contentBasic = `一个注册渲染器的方案. 全局注册渲染函数以后, 表格可以使用 \`renderType\` 属性指定使用该渲染器渲染. 可以减少一部分业务的重复代码.`;
 

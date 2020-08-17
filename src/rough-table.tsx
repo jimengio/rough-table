@@ -197,7 +197,7 @@ const styleEmptyCell = css`
   user-select: none;
 `;
 
-const styleTableContainer = null;
+const styleTableContainer = css``;
 
 const styleBodyContainer = css`
   overflow: auto;

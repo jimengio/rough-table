@@ -1,6 +1,6 @@
 {
   "name": "@jimengio/rough-table",
-  "version": "0.2.28-a2",
+  "version": "0.2.28",
   "description": "",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -22,7 +22,7 @@
   "devDependencies": {
     "@jimengio/doc-frame": "^0.1.12",
     "@jimengio/flex-styles": "^0.2.0-a1",
-    "@jimengio/jimo-basics": "^0.1.9",
+    "@jimengio/jimo-basics": "^0.1.10-a1",
     "@jimengio/jimo-icons": "^0.3.12",
     "@jimengio/router-code-generator": "^0.2.7",
     "@jimengio/ruled-router": "^0.2.26",

@@ -1,18 +1,8 @@
-import React, { SFC } from "react";
+import React, { FC } from "react";
 import { css, cx } from "emotion";
 import { interpose } from "./util/list";
 import Space from "./space";
 import { GlobalThemeVariables } from "./theme";
-
-let configuredProps = {
-  /** 使用空白作为分隔符 */
-  spaced: false,
-};
-
-/** 配置页面级别的 ActionLinks 默认属性 */
-export let configureActionLinksProps = (options: Partial<typeof configuredProps>) => {
-  Object.assign(configuredProps, options);
-};
 
 export interface IActionLinkItem {
   text: string;
@@ -22,7 +12,7 @@ export interface IActionLinkItem {
   "data-action"?: string;
 }
 
-let ActionLinks: SFC<{
+let ActionLinks: FC<{
   actions: IActionLinkItem[];
   className?: string;
   spaced?: boolean;
@@ -32,6 +22,8 @@ let ActionLinks: SFC<{
     if (x.hidden != null && x.hidden === true) return false;
     return true;
   });
+
+  let configuredProps = ActionLinks.defaultProps;
 
   // null for rendering spaces...
   let items: IActionLinkItem[] = interpose(actions, null);
@@ -57,6 +49,18 @@ let ActionLinks: SFC<{
       })}
     </div>
   );
+};
+
+let customizableDefaultProps = {
+  /** 使用空白作为分隔符 */
+  spaced: false,
+};
+
+ActionLinks.defaultProps = customizableDefaultProps;
+
+/** 配置页面级别的 ActionLinks 默认属性 */
+export let configureActionLinksProps = (options: Partial<typeof customizableDefaultProps>) => {
+  Object.assign(ActionLinks.defaultProps, options);
 };
 
 export default ActionLinks;

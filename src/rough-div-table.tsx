@@ -42,19 +42,6 @@ export interface IRoughTableColumn<T = ISimpleObject> {
   renderOptions?: object;
 }
 
-let configuredProps = {
-  rowPadding: 24,
-  emptyLocale: undefined as string,
-  showEmptySymbol: false,
-  wholeBorders: false,
-  loadingElement: undefined as ReactNode,
-};
-
-/** 页面级别添加 DivTable 组件的默认值 */
-export let configureDivTableProps = (props: Partial<typeof configuredProps>) => {
-  Object.assign(configuredProps, props);
-};
-
 type RoughDivTableProps<T = any> = FC<{
   className?: string;
   data: T[];
@@ -108,6 +95,8 @@ let RoughDivTable: RoughDivTableProps = (props) => {
    * 注意: 当前节点对应 header columns 的容易节点, 使用 index 能直接访问 childrenNodes.
    */
   let headerRef = useRef(null as HTMLDivElement);
+
+  let configuredProps = RoughDivTable.defaultProps;
 
   /** Methods */
 
@@ -326,6 +315,21 @@ let RoughDivTable: RoughDivTableProps = (props) => {
       ) : null}
     </div>
   );
+};
+
+let customizableDefaultProps = {
+  rowPadding: 24,
+  emptyLocale: undefined as string,
+  showEmptySymbol: false,
+  wholeBorders: false,
+  loadingElement: undefined as ReactNode,
+};
+
+RoughDivTable.defaultProps = customizableDefaultProps;
+
+/** 页面级别添加 DivTable 组件的默认值 */
+export let configureDivTableProps = (props: Partial<typeof customizableDefaultProps>) => {
+  Object.assign(RoughDivTable.defaultProps, props);
 };
 
 export default RoughDivTable;

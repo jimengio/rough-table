@@ -383,6 +383,7 @@ const styleRow = css`
 let styleWholeBorders = css`
   border-left: 1px solid #e5e5e5;
   border-right: 1px solid #e5e5e5;
+  border-top: 1px solid #e5e5e5;
 `;
 
 const styleCursorPointer = css`
@@ -404,6 +405,7 @@ let styleContentArea = css`
 
 let styleTable = css`
   position: relative;
+  border-radius: 1px;
 
   .fade-in-out-enter {
     opacity: 0;

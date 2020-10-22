@@ -277,43 +277,46 @@ let RoughDivTable: RoughDivTableProps = (props) => {
   }
 
   return (
-    <div className={cx(expand, column, styleTable, wholeBorders ? styleWholeBorders : null, props.className)} data-area="rough-table">
-      {headElements}
-      <div
-        ref={(el) => {
-          scrollRef.current = el;
-          if (props.bodyRef != null) {
-            props.bodyRef.current = el;
-          }
-        }}
-        className={cx(styleBody, props.bodyClassName)}
-        onScroll={(event) => handleScroll()}
-      >
-        {props.bodyScrollingPad?.("top")}
-        {bodyElements}
-        {props.bodyScrollingPad?.("bottom")}
+    <>
+      <div className={cx(expand, column, styleTable, wholeBorders ? styleWholeBorders : null, props.className)} data-area="rough-table">
+        {headElements}
+        <div
+          ref={(el) => {
+            scrollRef.current = el;
+            if (props.bodyRef != null) {
+              props.bodyRef.current = el;
+            }
+          }}
+          className={cx(styleBody, props.bodyClassName)}
+          onScroll={(event) => handleScroll()}
+        >
+          {props.bodyScrollingPad?.("top")}
+          {bodyElements}
+          {props.bodyScrollingPad?.("bottom")}
+        </div>
+
+        {props.isLoading ? (
+          <>
+            {configuredProps.loadingElement ? (
+              <div className={cx(center, styleCover)}>{configuredProps.loadingElement}</div>
+            ) : (
+              <>
+                {props.loadingElement ? (
+                  <div className={cx(center, styleCover, GlobalThemeVariables.loadingCover, props.theme?.loadingCover)}>{props.loadingElement}</div>
+                ) : (
+                  <CSSTransition in={props.isLoading} timeout={200} classNames="fade-in-out" unmountOnExit>
+                    <div className={cx(center, styleCover, GlobalThemeVariables.loadingCover, props.theme?.loadingCover)}>
+                      <LoadingIndicator dotClassName={cx(GlobalThemeVariables.loadingDot, props.theme?.loadingDot)} />
+                    </div>
+                  </CSSTransition>
+                )}
+              </>
+            )}
+          </>
+        ) : null}
       </div>
       {props.pageOptions != null ? renderPagination() : null}
-      {props.isLoading ? (
-        <>
-          {configuredProps.loadingElement ? (
-            <div className={cx(center, styleCover)}>{configuredProps.loadingElement}</div>
-          ) : (
-            <>
-              {props.loadingElement ? (
-                <div className={cx(center, styleCover, GlobalThemeVariables.loadingCover, props.theme?.loadingCover)}>{props.loadingElement}</div>
-              ) : (
-                <CSSTransition in={props.isLoading} timeout={200} classNames="fade-in-out" unmountOnExit>
-                  <div className={cx(center, styleCover, GlobalThemeVariables.loadingCover, props.theme?.loadingCover)}>
-                    <LoadingIndicator dotClassName={cx(GlobalThemeVariables.loadingDot, props.theme?.loadingDot)} />
-                  </div>
-                </CSSTransition>
-              )}
-            </>
-          )}
-        </>
-      ) : null}
-    </div>
+    </>
   );
 };
 
@@ -395,7 +398,8 @@ const styleSelectedRow = css`
 `;
 
 let stylePageArea = css`
-  padding: 16px 8px;
+  padding: 16px 0;
+  margin-right: -8px;
 `;
 
 /** requires Chrome 46 */

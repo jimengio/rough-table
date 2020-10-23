@@ -399,7 +399,9 @@ const styleSelectedRow = css`
 
 let stylePageArea = css`
   padding: 16px 0;
-  margin-right: -8px;
+  .ant-pagination-options-quick-jumper input {
+    margin: 0 0 0 8px;
+  }
 `;
 
 /** requires Chrome 46 */

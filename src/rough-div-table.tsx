@@ -230,7 +230,15 @@ let RoughDivTable: RoughDivTableProps = (props) => {
       return (
         <div
           key={idx}
-          className={cx(row, styleRow, GlobalThemeVariables.row, props.onRowClick != null && styleCursorPointer, props.theme?.row, rowStateClassName)}
+          className={cx(
+            row,
+            styleRow,
+            GlobalThemeVariables.row,
+            props.onRowClick != null && styleCursorPointer,
+            props.theme?.row,
+            rowStateClassName,
+            idx === props?.data.length - 1 && wholeBorders && styleWholeBordersTd
+          )}
           style={mergeStyles({ minWidth: rowMinWidth }, rowPaddingStyle, props.customBodyRowStyle?.(idx))}
           onClick={props.onRowClick != null ? () => props.onRowClick(record) : null}
         >
@@ -384,9 +392,11 @@ const styleRow = css`
 `;
 
 let styleWholeBorders = css`
-  border-left: 1px solid #e5e5e5;
-  border-right: 1px solid #e5e5e5;
-  border-top: 1px solid #e5e5e5;
+  border: 1px solid #e5e5e5;
+`;
+
+let styleWholeBordersTd = css`
+  border-bottom: none;
 `;
 
 const styleCursorPointer = css`
@@ -443,7 +453,8 @@ let styleLoadingEmpty = css`
 `;
 
 let styleAreaBottom = css`
-  border-bottom: 1px solid hsla(216, 14%, 93%, 1);
+  // 没有数据时，移除no data提示下方的border
+  /* border-bottom: 1px solid hsla(216, 14%, 93%, 1); */
 `;
 
 let styleAlignRight = css`
